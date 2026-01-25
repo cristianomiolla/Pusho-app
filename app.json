@@ -2,29 +2,67 @@
   "expo": {
     "name": "Pusho",
     "slug": "Pusho",
+    "scheme": "pusho",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "owner": "pezzente",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1a1a1a"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cristianomiolla.pusho",
+      "icon": "./assets/icon-ios.png",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Pusho ha bisogno della fotocamera per contare i tuoi push-up tramite riconoscimento della postura.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "privacyManifests": {
+        "NSPrivacyAccessedAPITypes": [
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+            "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#1a1a1a"
       },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "package": "com.cristianomiolla.pusho",
+      "permissions": [
+        "CAMERA",
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Pusho ha bisogno della fotocamera per contare i tuoi push-up tramite riconoscimento della postura.",
+          "enableMicrophonePermission": false
+        }
+      ],
+      "expo-font",
+      "./plugins/withMediaPipePreserve.js"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ea901221-a265-48f4-9a7c-d49d45f23a40"
+      }
     }
   }
 }

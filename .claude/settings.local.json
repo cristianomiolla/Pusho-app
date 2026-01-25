@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" log --oneline -10)",
+      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" status)",
+      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" diff --staged --stat)",
+      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" diff --stat)",
+      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" add App.tsx app.json assets/ eas.json package-lock.json package.json babel.config.js native-modules/ plugins/ scripts/ src/ supabase/ CLAUDE.md BUILD-ANDROID.md SETUP_MAC_REMOTO.md STORE_SUBMISSION_GUIDE.md .claude/)"
+    ]
+  }
+}
