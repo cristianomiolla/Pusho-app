@@ -357,11 +357,6 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               <Text style={styles.licenseCopyright}>
                 Copyright 2019-2024 The MediaPipe Authors
               </Text>
-              <Text style={styles.licenseText}>
-                Licensed under the Apache License, Version 2.0 (the "License");
-                you may not use this file except in compliance with the License.
-                You may obtain a copy of the License at
-              </Text>
               <TouchableOpacity
                 onPress={() => Linking.openURL('https://www.apache.org/licenses/LICENSE-2.0')}
               >
@@ -369,13 +364,177 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
                   https://www.apache.org/licenses/LICENSE-2.0
                 </Text>
               </TouchableOpacity>
-              <Text style={styles.licenseText}>
-                Unless required by applicable law or agreed to in writing, software
-                distributed under the License is distributed on an "AS IS" BASIS,
-                WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                See the License for the specific language governing permissions and
-                limitations under the License.
+            </View>
+
+            {/* React Native License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>React Native</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.reactNativeDescription')}
               </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) Meta Platforms, Inc. and affiliates
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/facebook/react-native/blob/main/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/facebook/react-native
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Expo License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>Expo</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.expoDescription')}
+              </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2015-present 650 Industries, Inc. (aka Expo)
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/expo/expo/blob/main/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/expo/expo
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Supabase License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>Supabase</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.supabaseDescription')}
+              </Text>
+              <Text style={styles.licenseType}>Apache License 2.0</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2020 Supabase
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/supabase/supabase/blob/master/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/supabase/supabase
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* React Navigation License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>React Navigation</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.reactNavigationDescription')}
+              </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2017 React Navigation Contributors
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/react-navigation/react-navigation/blob/main/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/react-navigation/react-navigation
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Vision Camera License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>React Native Vision Camera</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.visionCameraDescription')}
+              </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2021 Marc Rousavy
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/mrousavy/react-native-vision-camera/blob/main/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/mrousavy/react-native-vision-camera
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Reanimated License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>React Native Reanimated</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.reanimatedDescription')}
+              </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2016 Software Mansion
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/software-mansion/react-native-reanimated/blob/main/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/software-mansion/react-native-reanimated
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Ionicons License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>Ionicons</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.ioniconsDescription')}
+              </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2015-present Ionic
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/ionic-team/ionicons/blob/main/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/ionic-team/ionicons
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Agdasima Font License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>Agdasima Font</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.agdasimaDescription')}
+              </Text>
+              <Text style={styles.licenseType}>SIL Open Font License 1.1</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) Fonts by The Branded Quotes
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://fonts.google.com/specimen/Agdasima/about')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://fonts.google.com/specimen/Agdasima
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* i18next License */}
+            <View style={styles.licenseCard}>
+              <Text style={styles.licenseTitle}>i18next</Text>
+              <Text style={styles.licenseDescription}>
+                {t('profile.i18nextDescription')}
+              </Text>
+              <Text style={styles.licenseType}>MIT License</Text>
+              <Text style={styles.licenseCopyright}>
+                Copyright (c) 2022 i18next
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/i18next/i18next/blob/master/LICENSE')}
+              >
+                <Text style={styles.licenseLink}>
+                  https://github.com/i18next/i18next
+                </Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>
