@@ -18,6 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { DeleteAccountModal } from '../components/DeleteAccountModal';
 
 interface ProfileScreenProps {
   onClose?: () => void;
@@ -25,13 +26,14 @@ interface ProfileScreenProps {
 
 export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
   const { t, i18n } = useTranslation();
-  const { user, profile, signOut, updateProfile } = useAuth();
+  const { user, profile, signOut, updateProfile, deleteAccount } = useAuth();
   const insets = useSafeAreaInsets();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   const [showLicensesModal, setShowLicensesModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
@@ -129,6 +131,18 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
 
   const handleSupport = () => {
     Linking.openURL('mailto:pushoapp@gmail.com?subject=Supporto Pusho');
+  };
+
+  const handleDeleteAccount = () => {
+    setShowDeleteAccountModal(true);
+  };
+
+  const confirmDeleteAccount = async (password: string) => {
+    const result = await deleteAccount(password);
+    if (!result.error) {
+      setShowDeleteAccountModal(false);
+    }
+    return result;
   };
 
   return (
@@ -277,11 +291,20 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.settingRow, styles.lastRow]}
+            style={styles.settingRow}
             onPress={() => setShowLicensesModal(true)}
           >
             <Ionicons name="document-text-outline" size={22} color="#333" />
             <Text style={styles.settingText}>{t('profile.licenses')}</Text>
+            <Ionicons name="chevron-forward" size={20} color="#999" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.settingRow, styles.lastRow]}
+            onPress={handleDeleteAccount}
+          >
+            <Ionicons name="trash-outline" size={22} color="#FF3B30" />
+            <Text style={[styles.settingText, styles.deleteAccountText]}>{t('profile.deleteAccount')}</Text>
             <Ionicons name="chevron-forward" size={20} color="#999" />
           </TouchableOpacity>
         </View>
@@ -318,6 +341,13 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
         icon="log-out-outline"
         iconColor="#FF3B30"
         confirmButtonColor="#FF3B30"
+      />
+
+      {/* Delete Account Modal */}
+      <DeleteAccountModal
+        visible={showDeleteAccountModal}
+        onConfirm={confirmDeleteAccount}
+        onCancel={() => setShowDeleteAccountModal(false)}
       />
 
       {/* Licenses Modal */}
@@ -975,6 +1005,9 @@ const styles = StyleSheet.create({
     color: '#1A1A1A',
     marginLeft: 12,
     flex: 1,
+  },
+  deleteAccountText: {
+    color: '#FF3B30',
   },
   logoutButton: {
     flexDirection: 'row',

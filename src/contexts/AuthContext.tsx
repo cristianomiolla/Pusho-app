@@ -18,6 +18,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: Error | null }>;
   clearPasswordReset: () => void;
+  deleteAccount: (password: string) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -369,6 +370,41 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  // Delete account with password confirmation
+  const deleteAccount = async (password: string) => {
+    if (!user || !user.email) {
+      return { error: new Error('Non autenticato') };
+    }
+
+    try {
+      // Re-authenticate user to verify password
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: password,
+      });
+
+      if (authError) {
+        return { error: new Error('Password non corretta') };
+      }
+
+      // Call the RPC function to delete user and all related data
+      const { error: deleteError } = await supabase.rpc('delete_user');
+
+      if (deleteError) {
+        return { error: new Error('Errore durante l\'eliminazione dell\'account') };
+      }
+
+      // Clear local state
+      setProfile(null);
+      setUser(null);
+      setSession(null);
+
+      return { error: null };
+    } catch (error) {
+      return { error: error as Error };
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -382,6 +418,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         signOut,
         updateProfile,
         clearPasswordReset,
+        deleteAccount,
       }}
     >
       {children}
