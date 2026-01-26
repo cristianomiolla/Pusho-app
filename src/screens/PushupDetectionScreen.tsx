@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { Camera, useCameraDevice, useCameraFormat } from 'react-native-vision-camera';
+import { useKeepAwake } from 'expo-keep-awake';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +31,9 @@ export const PushupDetectionScreen = () => {
   const isFocused = useIsFocused();
   const { setIsGuidedWorkoutActive, triggerHomeRefresh, triggerCommunityRefresh } = useWorkout();
   const { user } = useAuth();
+
+  // Mantieni lo schermo acceso durante l'allenamento
+  useKeepAwake();
 
   // Stato base
   const [showCardsModal, setShowCardsModal] = useState(false);
