@@ -19,7 +19,7 @@ interface HistoryTabProps {
 export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHeaderComponent }) => {
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
-  const [filterPeriod, setFilterPeriod] = useState<FilterPeriod>('week');
+  const [filterPeriod, setFilterPeriod] = useState<FilterPeriod>('all');
   const [animationTrigger, setAnimationTrigger] = useState(-1);
   const [filterContainerWidth, setFilterContainerWidth] = useState(0);
   const filterTranslateX = React.useRef(new Animated.Value(0)).current;
@@ -53,9 +53,9 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
     let endDate: Date = new Date(startOfToday.getTime() + 24 * 60 * 60 * 1000 - 1); // Fine giornata oggi
 
     switch (filterPeriod) {
-      case 'week':
-        startDate = new Date(startOfToday);
-        startDate.setDate(startDate.getDate() - 7);
+      case 'all':
+        // Show all sessions - use a very old date
+        startDate = new Date(0);
         break;
       case 'month':
         startDate = new Date(startOfToday);
@@ -66,8 +66,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         endDate = new Date(customEndDate.getFullYear(), customEndDate.getMonth(), customEndDate.getDate(), 23, 59, 59);
         break;
       default:
-        startDate = new Date(startOfToday);
-        startDate.setDate(startDate.getDate() - 7);
+        startDate = new Date(0);
     }
 
     return sessions.filter(session => {
@@ -150,7 +149,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
   };
 
   const filterButtons: { period: FilterPeriod; label: string }[] = [
-    { period: 'week', label: t('history.week') },
+    { period: 'all', label: t('history.all') },
     { period: 'month', label: t('history.month') },
     { period: 'custom', label: t('history.custom') },
   ];

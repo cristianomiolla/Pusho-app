@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import {
   fetchTopPushers,
@@ -20,6 +20,14 @@ interface UseCommunityDataReturn {
   refresh: () => Promise<void>;
 }
 
+interface CachedData {
+  leaderboard: LeaderboardEntry[];
+  userRanking: UserRanking | null;
+  totalUsers: number;
+}
+
+type CacheByPeriod = Partial<Record<CommunityPeriod, CachedData>>;
+
 export const useCommunityData = (
   period: CommunityPeriod = 'week'
 ): UseCommunityDataReturn => {
@@ -30,8 +38,21 @@ export const useCommunityData = (
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async () => {
+  // Cache per periodo - persiste tra i cambi di periodo
+  const cacheRef = useRef<CacheByPeriod>({});
+
+  const fetchData = useCallback(async (forceRefresh = false) => {
     if (!user?.id) {
+      setIsLoading(false);
+      return;
+    }
+
+    // Usa la cache se disponibile e non è un refresh forzato
+    const cachedData = cacheRef.current[period];
+    if (cachedData && !forceRefresh) {
+      setLeaderboard(cachedData.leaderboard);
+      setUserRanking(cachedData.userRanking);
+      setTotalUsers(cachedData.totalUsers);
       setIsLoading(false);
       return;
     }
@@ -47,6 +68,13 @@ export const useCommunityData = (
         fetchTotalUsers(),
       ]);
 
+      // Salva in cache
+      cacheRef.current[period] = {
+        leaderboard: topPushers,
+        userRanking: ranking,
+        totalUsers: total,
+      };
+
       setLeaderboard(topPushers);
       setUserRanking(ranking);
       setTotalUsers(total);
@@ -58,6 +86,13 @@ export const useCommunityData = (
     }
   }, [user?.id, period]);
 
+  // Refresh forzato che invalida la cache
+  const refresh = useCallback(async () => {
+    // Invalida tutta la cache quando si fa refresh manuale
+    cacheRef.current = {};
+    await fetchData(true);
+  }, [fetchData]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -68,6 +103,6 @@ export const useCommunityData = (
     totalUsers,
     isLoading,
     error,
-    refresh: fetchData,
+    refresh,
   };
 };
