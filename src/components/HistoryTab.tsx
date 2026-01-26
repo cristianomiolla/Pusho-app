@@ -16,6 +16,8 @@ interface HistoryTabProps {
   ListHeaderComponent?: React.ReactNode;
 }
 
+const PAGE_SIZE = 20;
+
 export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHeaderComponent }) => {
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -23,6 +25,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
   const [animationTrigger, setAnimationTrigger] = useState(-1);
   const [filterContainerWidth, setFilterContainerWidth] = useState(0);
   const filterTranslateX = React.useRef(new Animated.Value(0)).current;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // Date picker state
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -57,10 +60,6 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         // Show all sessions - use a very old date
         startDate = new Date(0);
         break;
-      case 'month':
-        startDate = new Date(startOfToday);
-        startDate.setMonth(startDate.getMonth() - 1);
-        break;
       case 'custom':
         startDate = new Date(customStartDate.getFullYear(), customStartDate.getMonth(), customStartDate.getDate());
         endDate = new Date(customEndDate.getFullYear(), customEndDate.getMonth(), customEndDate.getDate(), 23, 59, 59);
@@ -74,6 +73,24 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
       return sessionDate >= startDate && sessionDate <= endDate;
     });
   }, [sessions, filterPeriod, customStartDate, customEndDate]);
+
+  // Reset visible count when filter changes
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [filterPeriod, customStartDate, customEndDate]);
+
+  // Sessions to display (paginated)
+  const visibleSessions = useMemo(() => {
+    return filteredSessions.slice(0, visibleCount);
+  }, [filteredSessions, visibleCount]);
+
+  const hasMoreSessions = filteredSessions.length > visibleCount;
+  const remainingSessions = filteredSessions.length - visibleCount;
+
+  const loadMore = () => {
+    haptics.light();
+    setVisibleCount(prev => prev + PAGE_SIZE);
+  };
 
   // Handler per il date picker
   const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
@@ -150,7 +167,6 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
 
   const filterButtons: { period: FilterPeriod; label: string }[] = [
     { period: 'all', label: t('history.all') },
-    { period: 'month', label: t('history.month') },
     { period: 'custom', label: t('history.custom') },
   ];
 
@@ -355,7 +371,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
               </Text>
             </View>
           ) : (
-            filteredSessions.map((session) => {
+            visibleSessions.map((session) => {
               const isCardSession = !!session.workoutCardId;
               const sessionTitle = isCardSession && session.workoutCardName
                 ? session.workoutCardName
@@ -419,6 +435,20 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                 </ModernCard>
               );
             })
+          )}
+
+          {/* Load More Button */}
+          {hasMoreSessions && (
+            <TouchableOpacity
+              style={styles.loadMoreButton}
+              onPress={loadMore}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="chevron-down" size={20} color="#666" />
+              <Text style={styles.loadMoreText}>
+                {t('history.loadMore', { count: Math.min(remainingSessions, PAGE_SIZE) })}
+              </Text>
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -878,5 +908,21 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     opacity: 0.02,
+  },
+  loadMoreButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    backgroundColor: '#F5F5F7',
+    borderRadius: 12,
+    marginTop: 4,
+    gap: 8,
+  },
+  loadMoreText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
   },
 });

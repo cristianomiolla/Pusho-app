@@ -38,7 +38,7 @@ export interface WorkoutStats {
   averageQuality: number;
 }
 
-export type FilterPeriod = 'all' | 'month' | 'custom';
+export type FilterPeriod = 'all' | 'custom';
 
 // Stati dell'allenamento guidato con scheda
 export type GuidedWorkoutState =

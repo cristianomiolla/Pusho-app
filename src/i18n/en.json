@@ -159,9 +159,6 @@
     "startFirst": "Complete your first workout to see stats",
     "today": "Today",
     "yesterday": "Yesterday",
-    "thisWeek": "This week",
-    "thisMonth": "This month",
-    "allTime": "All time",
     "statistics": "Statistics",
     "activity": "History",
     "totalPushups": "Total Push-ups",
@@ -170,7 +167,6 @@
     "sessions": "Sessions",
     "avgQuality": "Avg Quality",
     "all": "All",
-    "month": "Month",
     "custom": "Custom",
     "noSessionsYet": "No sessions yet",
     "noSessionsInPeriod": "No sessions in this period",
@@ -180,7 +176,8 @@
     "selectPeriod": "Select Period",
     "from": "From",
     "to": "To",
-    "daysAgo": "{{count}} days ago"
+    "daysAgo": "{{count}} days ago",
+    "loadMore": "Load {{count}} more"
   },
   "profile": {
     "title": "Profile",

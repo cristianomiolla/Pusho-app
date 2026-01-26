@@ -159,9 +159,6 @@
     "startFirst": "Completa il tuo primo allenamento per vedere le statistiche",
     "today": "Oggi",
     "yesterday": "Ieri",
-    "thisWeek": "Questa settimana",
-    "thisMonth": "Questo mese",
-    "allTime": "Sempre",
     "statistics": "Statistiche",
     "activity": "Storico",
     "totalPushups": "Push-up Totali",
@@ -170,7 +167,6 @@
     "sessions": "Sessioni",
     "avgQuality": "Qualità Media",
     "all": "Tutti",
-    "month": "Mese",
     "custom": "Personalizza",
     "noSessionsYet": "Nessuna sessione ancora",
     "noSessionsInPeriod": "Nessuna sessione in questo periodo",
@@ -180,7 +176,8 @@
     "selectPeriod": "Seleziona Periodo",
     "from": "Da",
     "to": "A",
-    "daysAgo": "{{count}} giorni fa"
+    "daysAgo": "{{count}} giorni fa",
+    "loadMore": "Carica altri {{count}}"
   },
   "profile": {
     "title": "Profilo",
