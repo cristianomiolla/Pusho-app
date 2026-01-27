@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cancelButton: {
-    backgroundColor: colors.gray50,
+    backgroundColor: colors.gray100,
   },
   confirmButton: {
     backgroundColor: colors.error,

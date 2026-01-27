@@ -15,11 +15,11 @@ export const colors = {
   // ============================================
   // NEUTRAL COLORS
   // ============================================
-  black: '#000000',
+  black: '#181818',
   white: '#FFFFFF',
 
   // Grigi scuri (per testi e sfondi dark)
-  gray900: '#1C1C1E', // Quasi nero - sfondo dark, testi principali
+  gray900: '#181818', // Quasi nero - sfondo dark, testi principali
   gray800: '#2C2C2E', // Tab bar background, card scure
   gray700: '#444444', // Testi scuri, icone settings
   gray500: '#666666', // Testi secondari, icone
@@ -27,11 +27,10 @@ export const colors = {
 
   // Grigi chiari (per sfondi e bordi)
   gray200: '#E5E5EA', // Bordi, divider lines
-  gray100: '#F2F2F7', // Sfondi chip/card light
-  gray50: '#F5F5F7', // Sfondi contenitori, background light
+  gray100: '#F5F5F7', // Sfondi chip/card light, contenitori
 
   // Alias semantici
-  background: '#F5F5F7', // Sfondo principale app (alias di gray50)
+  background: '#F2F2F7', // Sfondo principale app (alias di gray100)
 
   // ============================================
   // SEMANTIC COLORS - Quality/Feedback (iOS style)
@@ -43,14 +42,12 @@ export const colors = {
 
   // Special
   gold: '#FFD700', // Oro - stelle, trofei, premium
-  link: '#007AFF', // Blu iOS - link, azioni
 
   // ============================================
   // TRANSPARENT COLORS
   // ============================================
   transparent: {
     // Nero con trasparenza
-    black05: 'rgba(0, 0, 0, 0.05)',
     black10: 'rgba(0, 0, 0, 0.1)',
     black30: 'rgba(0, 0, 0, 0.3)',
     black50: 'rgba(0, 0, 0, 0.5)', // Overlay modal
@@ -77,6 +74,7 @@ export const colors = {
     primary60: 'rgba(189, 238, 231, 0.6)',
 
     // Rosso con trasparenza
+    error10: 'rgba(255, 59, 48, 0.1)',
     error15: 'rgba(255, 59, 48, 0.15)',
     error20: 'rgba(255, 59, 48, 0.2)',
     error40: 'rgba(255, 59, 48, 0.4)',
@@ -106,9 +104,7 @@ export const colors = {
 // GRADIENTS
 // ============================================
 export const gradients = {
-  primary: ['#BDEEE7', '#5BBFB3'] as const, // Mint to Teal
   primaryLight: ['#BDEEE7', '#E6F9F7'] as const, // Mint to Light Cyan
-  progress: ['#E6F9F7', '#BDEEE7'] as const, // Per progress bar
 };
 
 // ============================================
@@ -120,43 +116,5 @@ export const getQualityColor = (quality: number): string => {
   return colors.error;
 };
 
-// ============================================
-// MAPPING COLORI HARDCODED -> COSTANTI
-// ============================================
-/**
- * Guida alla migrazione dei colori hardcoded:
- *
- * PRIMARY:
- * #BDEEE7 -> colors.primary
- * #5BBFB3, #1A6B5C, #00A896 -> colors.primaryDark
- *
- * NEUTRALI:
- * #000, #000000 -> colors.black
- * #FFF, #FFFFFF -> colors.white
- * #1A1A1A, #1C1C1E -> colors.gray900
- * #2C2C2E -> colors.gray800
- * #333, #444 -> colors.gray700
- * #555, #666 -> colors.gray500
- * #999, #CCC -> colors.gray400
- * #DDD, #E5E5EA -> colors.gray200
- * #EBEBEB, #E8E8E8, #F2F2F2 -> colors.gray100
- * #F5F5F7, #F8F8F8 -> colors.gray50 / colors.background
- *
- * SEMANTIC (iOS style):
- * #34C759, #4CAF50 -> colors.success
- * #FF9500, #FFC107, #FFB800 -> colors.warning
- * #FF3B30, #F44336 -> colors.error
- * #D32F2F -> colors.errorText
- * #FFD700 -> colors.gold
- *
- * LIGHT ACCENTS:
- * #E6F9F7 -> colors.primaryLight
- * #FFF4CC -> colors.goldLight
- * #F0DCC8 -> colors.bronzeLight
- * #FFEBEE -> colors.errorLight
- *
- * TRANSPARENT: usa colors.transparent.[color][opacity]
- * es: rgba(0, 0, 0, 0.5) -> colors.transparent.black50
- */
 
 export default colors;

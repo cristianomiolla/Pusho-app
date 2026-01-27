@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.goldLight,
   },
   positionContainerSilver: {
-    backgroundColor: colors.gray100,
+    backgroundColor: colors.gray200,
   },
   positionContainerBronze: {
     backgroundColor: colors.bronzeLight,
