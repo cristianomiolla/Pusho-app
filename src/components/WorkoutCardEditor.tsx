@@ -450,7 +450,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
         cancelText={t('common.cancel')}
         onConfirm={handleConfirmSave}
         onCancel={handleCancelSave}
-        icon="checkmark-circle-outline"
+        icon="check-circle-outline"
         iconColor="#34C759"
         confirmButtonColor="#000"
       />
@@ -464,7 +464,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
         cancelText={t('common.cancel')}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
-        icon="trash-outline"
+        icon="trash-can-outline"
         iconColor="#FF3B30"
       />
     </KeyboardAvoidingView>
