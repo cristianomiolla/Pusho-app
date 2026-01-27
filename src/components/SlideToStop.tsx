@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -26,6 +26,12 @@ export const SlideToStop: React.FC<SlideToStopProps> = ({ onStop }) => {
 
   const slideAnim = useRef(new Animated.Value(0)).current;
   const backgroundAnim = useRef(new Animated.Value(0)).current;
+
+  // Ref per mantenere sempre la versione aggiornata di onStop
+  const onStopRef = useRef(onStop);
+  useEffect(() => {
+    onStopRef.current = onStop;
+  }, [onStop]);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -65,8 +71,8 @@ export const SlideToStop: React.FC<SlideToStopProps> = ({ onStop }) => {
               useNativeDriver: false,
             }),
           ]).start(() => {
-            // Callback immediato dopo animazione
-            onStop();
+            // Callback immediato dopo animazione - usa ref per avere valori aggiornati
+            onStopRef.current();
           });
         } else {
           // Slide non completato: ritorna indietro senza vibrazione
