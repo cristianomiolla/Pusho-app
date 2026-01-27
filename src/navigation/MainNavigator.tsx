@@ -33,11 +33,13 @@ export const MainNavigator = () => {
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
-  const { isGuidedWorkoutActive } = useWorkout();
+  const { isGuidedWorkoutActive, isFreeWorkoutActive } = useWorkout();
 
   // Blocca il tasto back hardware di Android quando l'allenamento è attivo
+  const isWorkoutActive = isGuidedWorkoutActive || isFreeWorkoutActive;
+
   useEffect(() => {
-    if (!isGuidedWorkoutActive) return;
+    if (!isWorkoutActive) return;
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       // Ritorna true per indicare che abbiamo gestito l'evento (blocca il back)
@@ -45,13 +47,13 @@ export const MainNavigator = () => {
     });
 
     return () => backHandler.remove();
-  }, [isGuidedWorkoutActive]);
+  }, [isWorkoutActive]);
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: (isLandscape || isGuidedWorkoutActive) ? { display: 'none' } : {
+        tabBarStyle: (isLandscape || isWorkoutActive) ? { display: 'none' } : {
           position: 'absolute',
           backgroundColor: '#1C1C1E',
           borderTopWidth: 0,

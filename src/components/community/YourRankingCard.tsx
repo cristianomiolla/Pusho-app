@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
   },
   youBadge: {
     marginLeft: 'auto',
+    marginRight: 4,
     backgroundColor: '#000',
     paddingHorizontal: 10,
     paddingVertical: 4,

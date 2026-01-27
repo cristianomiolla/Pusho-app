@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 interface WorkoutContextType {
   isGuidedWorkoutActive: boolean;
   setIsGuidedWorkoutActive: (active: boolean) => void;
+  isFreeWorkoutActive: boolean;
+  setIsFreeWorkoutActive: (active: boolean) => void;
   shouldRefreshHome: boolean;
   triggerHomeRefresh: () => void;
   clearHomeRefresh: () => void;
@@ -15,6 +17,7 @@ const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
 
 export const WorkoutProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isGuidedWorkoutActive, setIsGuidedWorkoutActive] = useState(false);
+  const [isFreeWorkoutActive, setIsFreeWorkoutActive] = useState(false);
   const [shouldRefreshHome, setShouldRefreshHome] = useState(false);
   const [shouldRefreshCommunity, setShouldRefreshCommunity] = useState(false);
 
@@ -38,6 +41,8 @@ export const WorkoutProvider: React.FC<{ children: ReactNode }> = ({ children })
     <WorkoutContext.Provider value={{
       isGuidedWorkoutActive,
       setIsGuidedWorkoutActive,
+      isFreeWorkoutActive,
+      setIsFreeWorkoutActive,
       shouldRefreshHome,
       triggerHomeRefresh,
       clearHomeRefresh,

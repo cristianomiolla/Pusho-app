@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { Camera, useCameraDevice, useCameraFormat } from 'react-native-vision-camera';
 import { useKeepAwake } from 'expo-keep-awake';
-import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useIsFocused, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useCameraPermission } from '../hooks/useCameraPermission';
@@ -12,6 +12,7 @@ import { useCompletionSound } from '../hooks/useCompletionSound';
 import { SkeletonOverlay } from '../components/SkeletonOverlay';
 import { WorkoutCardsModal } from '../components/WorkoutCardsModal';
 import { WorkoutConfirmModal } from '../components/WorkoutConfirmModal';
+import { FreeWorkoutConfirmModal } from '../components/FreeWorkoutConfirmModal';
 import { SlideToStop } from '../components/SlideToStop';
 import { RestScreen } from '../components/RestScreen';
 import { WorkoutCompletedScreen } from '../components/WorkoutCompletedScreen';
@@ -29,7 +30,8 @@ export const PushupDetectionScreen = () => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
   const isFocused = useIsFocused();
-  const { setIsGuidedWorkoutActive, triggerHomeRefresh, triggerCommunityRefresh } = useWorkout();
+  const navigation = useNavigation();
+  const { setIsGuidedWorkoutActive, setIsFreeWorkoutActive, triggerHomeRefresh, triggerCommunityRefresh } = useWorkout();
   const { user } = useAuth();
 
   // Mantieni lo schermo acceso durante l'allenamento
@@ -55,6 +57,11 @@ export const PushupDetectionScreen = () => {
   const [guidedSession, setGuidedSession] = useState<GuidedWorkoutSession | null>(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const restTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Stato per nuovo flusso selezione
+  const [isFreeWorkoutMode, setIsFreeWorkoutMode] = useState(false);
+  const [showFreeConfirmModal, setShowFreeConfirmModal] = useState(false);
+  const [hasUserSelectedMode, setHasUserSelectedMode] = useState(false);
 
   // Schede da Supabase
   const [workoutCards, setWorkoutCards] = useState<WorkoutCard[]>([]);
@@ -93,9 +100,27 @@ export const PushupDetectionScreen = () => {
     }
   };
 
+  // Ref per tracciare se c'è un allenamento in corso (senza causare re-render)
+  const isWorkoutInProgressRef = useRef(false);
+  isWorkoutInProgressRef.current = guidedSession !== null || isFreeWorkoutMode;
+
   useFocusEffect(
     React.useCallback(() => {
       StatusBar.setBarStyle('light-content');
+
+      return () => {
+        // Cleanup quando si esce dalla schermata: resetta tutto
+        // (solo se non c'è un allenamento in corso)
+        if (!isWorkoutInProgressRef.current) {
+          setHasUserSelectedMode(false);
+          setIsFreeWorkoutMode(false);
+          setIsFreeWorkoutActive(false);
+          // Non resettare showCardsModal qui - verrà gestito dall'effetto auto-show
+          setShowFreeConfirmModal(false);
+          setFreeWorkoutStartTime(null);
+          setFreeWorkoutTime(0);
+        }
+      };
     }, [])
   );
 
@@ -115,8 +140,48 @@ export const PushupDetectionScreen = () => {
     frameProcessor,
   } = usePoseDetection(isPoseDetectionActive);
 
-  const { count, isReady, debugInfo, reset, averageDepth, averageDownTime, qualityScore } = usePushupCounter(pose);
+  const { count, isReady, reset, averageDepth, averageDownTime, qualityScore } = usePushupCounter(pose);
   const { playCompletionSound } = useCompletionSound();
+
+  // ====== AUTO-SHOW MODAL DI SELEZIONE ======
+
+  // Mostra modal automaticamente quando camera e model sono pronti e schermata è focused
+  useEffect(() => {
+    if (isFocused && hasPermission && isModelLoaded && !hasUserSelectedMode && !guidedSession && !isFreeWorkoutMode) {
+      setShowCardsModal(true);
+    }
+  }, [isFocused, hasPermission, isModelLoaded, hasUserSelectedMode, guidedSession, isFreeWorkoutMode]);
+
+  // ====== GESTIONE ALLENAMENTO LIBERO ======
+
+  const handleSelectFreeWorkout = () => {
+    setShowCardsModal(false);
+    setShowFreeConfirmModal(true);
+  };
+
+  const handleConfirmFreeWorkout = () => {
+    setShowFreeConfirmModal(false);
+    setIsFreeWorkoutMode(true);
+    setHasUserSelectedMode(true);
+    setIsFreeWorkoutActive(true); // Nasconde navbar
+  };
+
+  const handleCancelFreeWorkout = () => {
+    setShowFreeConfirmModal(false);
+    setShowCardsModal(true); // Torna alla selezione
+  };
+
+  const handleStopFreeWorkout = () => {
+    // Mostra popup completamento con i risultati attuali
+    setFreeWorkoutStats({
+      pushups: count,
+      time: freeWorkoutTime,
+      qualityScore,
+      averageDepth,
+      averageDownTime,
+    });
+    setShowFreeWorkoutCompleted(true);
+  };
 
   // ====== GESTIONE ALLENAMENTO GUIDATO ======
 
@@ -143,12 +208,14 @@ export const PushupDetectionScreen = () => {
 
     setGuidedSession(newSession);
     setShowConfirmModal(false);
+    setHasUserSelectedMode(true); // Impedisce auto-show modal
     reset(); // Reset counter all'avvio
   };
 
   const handleCancelStart = () => {
     setShowConfirmModal(false);
     setSelectedCard(null);
+    setShowCardsModal(true); // Torna alla selezione
   };
 
   // Effetto: sincronizza stato workout context con sessione guidata
@@ -279,7 +346,9 @@ export const PushupDetectionScreen = () => {
     // Torna allo stato iniziale
     setGuidedSession(null);
     setSelectedCard(null);
+    setHasUserSelectedMode(false);
     reset();
+    navigation.navigate('Allenamenti' as never); // Torna alla Home
   };
 
   // STEP 8: Salva e esci (allenamento guidato)
@@ -319,16 +388,17 @@ export const PushupDetectionScreen = () => {
     handleStopWorkout();
   };
 
-  // Mostra schermata completamento allenamento libero
-  const handleShowFreeWorkoutCompleted = () => {
-    setFreeWorkoutStats({
-      pushups: count,
-      time: freeWorkoutTime,
-      qualityScore,
-      averageDepth,
-      averageDownTime,
-    });
-    setShowFreeWorkoutCompleted(true);
+  // Reset comune per uscire dall'allenamento libero
+  const resetFreeWorkoutAndGoHome = () => {
+    setShowFreeWorkoutCompleted(false);
+    setFreeWorkoutStats({ pushups: 0, time: 0, qualityScore: 0, averageDepth: 0, averageDownTime: 0 });
+    reset();
+    setFreeWorkoutStartTime(null);
+    setFreeWorkoutTime(0);
+    setIsFreeWorkoutMode(false);
+    setIsFreeWorkoutActive(false);
+    setHasUserSelectedMode(false);
+    navigation.navigate('Allenamenti' as never);
   };
 
   // Salva allenamento libero
@@ -336,7 +406,6 @@ export const PushupDetectionScreen = () => {
     if (!user) return;
 
     try {
-      // Crea una serie con i pushups totali (per il calcolo del max)
       const sets = [{
         pushups: freeWorkoutStats.pushups,
         quality: freeWorkoutStats.qualityScore,
@@ -350,29 +419,18 @@ export const PushupDetectionScreen = () => {
         sets,
       }, user.id);
 
-      // Segnala alla Home e Community di ricaricare i dati
       triggerHomeRefresh();
       triggerCommunityRefresh();
     } catch (error) {
       console.error('Error saving free workout:', error);
     }
 
-    handleExitFreeWorkout();
+    resetFreeWorkoutAndGoHome();
   };
 
   // Esci senza salvare allenamento libero
   const handleExitFreeWorkout = () => {
-    setShowFreeWorkoutCompleted(false);
-    setFreeWorkoutStats({
-      pushups: 0,
-      time: 0,
-      qualityScore: 0,
-      averageDepth: 0,
-      averageDownTime: 0,
-    });
-    reset();
-    setFreeWorkoutStartTime(null);
-    setFreeWorkoutTime(0);
+    resetFreeWorkoutAndGoHome();
   };
 
   // Effetto: avvia timer modalità libera al primo push-up
@@ -560,8 +618,9 @@ export const PushupDetectionScreen = () => {
         />
       )}
 
-      {/* UI Normale (quando non in stati speciali) */}
-      {guidedSession?.state !== 'rest' &&
+      {/* UI Normale (quando non in stati speciali e utente ha selezionato modalità) */}
+      {hasUserSelectedMode &&
+        guidedSession?.state !== 'rest' &&
         guidedSession?.state !== 'completed' &&
         !showFreeWorkoutCompleted && (
           <View style={[styles.overlay, isLandscape && styles.overlayLandscape]}>
@@ -629,31 +688,14 @@ export const PushupDetectionScreen = () => {
                         </Text>
                       </View>
                       <TouchableOpacity
-                        style={styles.resetButtonSmall}
+                        style={styles.resetButton}
                         onPress={handleFreeReset}
                       >
-                        <Text style={styles.resetButtonSmallText}>RESET</Text>
+                        <MaterialCommunityIcons name="refresh" size={20} color="#000" />
+                        <Text style={styles.resetButtonText}>RESET</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
-
-                  {count >= 2 ? (
-                    <TouchableOpacity
-                      style={styles.selectCardButtonFull}
-                      onPress={handleShowFreeWorkoutCompleted}
-                    >
-                      <MaterialCommunityIcons name="content-save-outline" size={18} color="#000" />
-                      <Text style={styles.selectCardButtonText}>{t('workout.saveWorkout')}</Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      style={styles.selectCardButtonFull}
-                      onPress={() => setShowCardsModal(true)}
-                    >
-                      <MaterialCommunityIcons name="file-document-outline" size={18} color="#000" />
-                      <Text style={styles.selectCardButtonText}>{t('workout.selectCard')}</Text>
-                    </TouchableOpacity>
-                  )}
                 </>
               )}
             </View>
@@ -673,9 +715,9 @@ export const PushupDetectionScreen = () => {
               </Text>
             </View>
 
-            {/* STEP 2: SlideToStop (solo se allenamento guidato attivo) */}
-            {guidedSession && (
-              <SlideToStop onStop={handleStopWorkout} />
+            {/* STEP 2: SlideToStop (allenamento guidato o libero) */}
+            {(guidedSession || isFreeWorkoutMode) && (
+              <SlideToStop onStop={isFreeWorkoutMode ? handleStopFreeWorkout : handleStopWorkout} />
             )}
           </View>
         )}
@@ -683,13 +725,27 @@ export const PushupDetectionScreen = () => {
       {/* STEP 1: Modale selezione schede */}
       <WorkoutCardsModal
         visible={showCardsModal}
-        onClose={() => setShowCardsModal(false)}
+        onClose={() => {
+          setShowCardsModal(false);
+          // Se l'utente non ha ancora scelto una modalità, torna alla Home
+          if (!hasUserSelectedMode && !guidedSession && !isFreeWorkoutMode) {
+            navigation.navigate('Allenamenti' as never);
+          }
+        }}
         workoutCards={workoutCards}
         onSelectCard={handleSelectCard}
         onToggleFavorite={handleToggleFavorite}
+        onSelectFreeWorkout={handleSelectFreeWorkout}
       />
 
-      {/* STEP 1: Modale conferma avvio */}
+      {/* Modale conferma avvio allenamento libero */}
+      <FreeWorkoutConfirmModal
+        visible={showFreeConfirmModal}
+        onConfirm={handleConfirmFreeWorkout}
+        onCancel={handleCancelFreeWorkout}
+      />
+
+      {/* STEP 1: Modale conferma avvio scheda */}
       <WorkoutConfirmModal
         visible={showConfirmModal}
         workoutCard={selectedCard}
@@ -807,6 +863,20 @@ const styles = StyleSheet.create({
   freeInfoSection: {
     gap: 10,
   },
+  resetButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#BDEEE7',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 12,
+  },
+  resetButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#000',
+  },
   counterText: {
     fontSize: 64,
     color: '#BDEEE7',
@@ -814,68 +884,6 @@ const styles = StyleSheet.create({
   },
   counterTextLandscape: {
     fontSize: 48,
-  },
-  resetButtonSmall: {
-    backgroundColor: '#BDEEE7',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  resetButtonSmallText: {
-    fontSize: 12,
-    color: '#000',
-    fontWeight: '700',
-    letterSpacing: 0.5,
-  },
-  freeButtonsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-    marginTop: 16,
-  },
-  selectCardButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    backgroundColor: '#BDEEE7',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 12,
-  },
-  selectCardButtonFull: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    backgroundColor: '#BDEEE7',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginTop: 16,
-    alignSelf: 'stretch',
-  },
-  selectCardButtonText: {
-    fontSize: 14,
-    color: '#000',
-    fontWeight: '700',
-  },
-  saveWorkoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    backgroundColor: '#BDEEE7',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 12,
-  },
-  saveWorkoutButtonText: {
-    fontSize: 14,
-    color: '#000',
-    fontWeight: '700',
   },
   centerContent: {
     flex: 1,
@@ -896,30 +904,6 @@ const styles = StyleSheet.create({
   centerInstructionLandscape: {
     fontSize: 24,
     letterSpacing: 1,
-  },
-  centerDebugText: {
-    fontSize: 16,
-    color: '#FFFFFF',
-    textAlign: 'center',
-    marginTop: 20,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
-  },
-  perfText: {
-    fontSize: 11,
-    color: 'rgba(189, 238, 231, 0.7)',
-    textAlign: 'center',
-    marginTop: 8,
-    fontWeight: '500',
-    letterSpacing: 0.5,
-  },
-  perfTextLandscape: {
-    fontSize: 9,
-    marginTop: 4,
-    textAlign: 'left',
   },
   message: {
     color: '#fff',

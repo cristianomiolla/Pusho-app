@@ -12,6 +12,7 @@ interface WorkoutCardsModalProps {
   workoutCards: WorkoutCard[];
   onSelectCard: (card: WorkoutCard) => void;
   onToggleFavorite: (cardId: string) => void;
+  onSelectFreeWorkout: () => void;
 }
 
 export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
@@ -20,6 +21,7 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
   workoutCards,
   onSelectCard,
   onToggleFavorite,
+  onSelectFreeWorkout,
 }) => {
   const { t } = useTranslation();
   const favoriteCards = workoutCards.filter(card => card.isFavorite);
@@ -35,7 +37,13 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
   const handleSelectCard = (card: WorkoutCard) => {
     haptics.light();
     onSelectCard(card);
-    onClose();
+    // Non chiamare onClose qui - viene gestito dal parent
+  };
+
+  const handleSelectFreeWorkout = () => {
+    haptics.light();
+    onSelectFreeWorkout();
+    // Non chiamare onClose qui - viene gestito dal parent
   };
 
   return (
@@ -57,6 +65,22 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
 
           {/* Content */}
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+            {/* Free Workout Option */}
+            <TouchableOpacity
+              onPress={handleSelectFreeWorkout}
+              activeOpacity={0.7}
+              style={styles.freeWorkoutCard}
+            >
+              <View style={styles.freeWorkoutIcon}>
+                <MaterialCommunityIcons name="infinity" size={28} color="#000" />
+              </View>
+              <View style={styles.freeWorkoutContent}>
+                <Text style={styles.freeWorkoutTitle}>{t('workout.freeWorkout')}</Text>
+                <Text style={styles.freeWorkoutSubtitle}>{t('workout.freeWorkoutDescription')}</Text>
+              </View>
+              <MaterialCommunityIcons name="chevron-right" size={24} color="#1A6B5C" />
+            </TouchableOpacity>
+
             {/* Favorite Cards */}
             {favoriteCards.length > 0 && (
               <View style={styles.favoritesSection}>
@@ -288,5 +312,36 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#CCC',
     marginTop: 4,
+  },
+  freeWorkoutCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#BDEEE7',
+    borderRadius: 16,
+    padding: 16,
+    marginTop: 12,
+    marginBottom: 8,
+    gap: 12,
+  },
+  freeWorkoutIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  freeWorkoutContent: {
+    flex: 1,
+  },
+  freeWorkoutTitle: {
+    fontSize: 18,
+    fontFamily: 'Agdasima-Bold',
+    color: '#000',
+  },
+  freeWorkoutSubtitle: {
+    fontSize: 13,
+    color: 'rgba(0,0,0,0.6)',
+    marginTop: 2,
   },
 });

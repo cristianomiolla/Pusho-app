@@ -51,22 +51,21 @@ export const SlideToStop: React.FC<SlideToStopProps> = ({ onStop }) => {
           // Slide completato: conferma stop con vibrazione
           haptics.success();
 
-          // Anima fino alla fine
+          // Anima velocemente fino alla fine e chiama onStop subito
           Animated.parallel([
-            Animated.spring(slideAnim, {
+            Animated.timing(slideAnim, {
               toValue: maxSlide,
+              duration: 100,
               useNativeDriver: true,
-              tension: 50,
-              friction: 7,
             }),
             Animated.timing(backgroundAnim, {
               toValue: 1,
-              duration: 200,
+              duration: 100,
               useNativeDriver: false,
             }),
           ]).start(() => {
-            // Callback dopo animazione
-            setTimeout(onStop, 100);
+            // Callback immediato dopo animazione
+            onStop();
           });
         } else {
           // Slide non completato: ritorna indietro senza vibrazione
