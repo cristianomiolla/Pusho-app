@@ -180,7 +180,9 @@
     "from": "Da",
     "to": "A",
     "daysAgo": "{{count}} giorni fa",
-    "loadMore": "Carica altri {{count}}"
+    "loadMore": "Carica altri {{count}}",
+    "sessionDetailTime": "alle {{time}}",
+    "setsBreakdown": "Dettaglio Serie"
   },
   "profile": {
     "title": "Profilo",

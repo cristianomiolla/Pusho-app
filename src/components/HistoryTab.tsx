@@ -7,6 +7,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { haptics } from '../utils/haptics';
 import { ModernCard } from './ModernCard';
 import { SlotMachineNumber } from './SlotMachineNumber';
+import { SessionDetailModal } from './SessionDetailModal';
 import { WorkoutSession, WorkoutStats, FilterPeriod } from '../types/workout';
 
 interface HistoryTabProps {
@@ -26,6 +27,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
   const [filterContainerWidth, setFilterContainerWidth] = useState(0);
   const filterTranslateX = React.useRef(new Animated.Value(0)).current;
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [selectedSession, setSelectedSession] = useState<WorkoutSession | null>(null);
 
   // Date picker state
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -378,61 +380,70 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                 : t('history.freeWorkout');
 
               return (
-                <ModernCard key={session.id} style={styles.sessionCard}>
-                  {/* Header con titolo e data */}
-                  <View style={styles.sessionHeader}>
-                    <Text style={styles.sessionTitle}>{sessionTitle}</Text>
-                    <Text style={styles.sessionDate}>{formatDate(session.date)}</Text>
-                  </View>
-
-                  {/* Metriche come chip */}
-                  <View style={styles.sessionContent}>
-                    <View style={styles.chip}>
-                      <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
-                      <Text style={styles.chipText}>{session.totalPushups}</Text>
+                <TouchableOpacity
+                  key={session.id}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    haptics.light();
+                    setSelectedSession(session);
+                  }}
+                >
+                  <ModernCard style={styles.sessionCard}>
+                    {/* Header con titolo e data */}
+                    <View style={styles.sessionHeader}>
+                      <Text style={styles.sessionTitle}>{sessionTitle}</Text>
+                      <Text style={styles.sessionDate}>{formatDate(session.date)}</Text>
                     </View>
 
-                    {isCardSession && (
+                    {/* Metriche come chip */}
+                    <View style={styles.sessionContent}>
                       <View style={styles.chip}>
-                        <MaterialCommunityIcons name="repeat" size={15} color="#666" />
+                        <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
+                        <Text style={styles.chipText}>{session.totalPushups}</Text>
+                      </View>
+
+                      {isCardSession && (
+                        <View style={styles.chip}>
+                          <MaterialCommunityIcons name="repeat" size={15} color="#666" />
+                          <Text style={styles.chipText}>
+                            {session.completedSets || session.sets.length}
+                            {session.targetSets && `/${session.targetSets}`}
+                          </Text>
+                        </View>
+                      )}
+
+                      <View style={styles.chip}>
+                        <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
                         <Text style={styles.chipText}>
-                          {session.completedSets || session.sets.length}
-                          {session.targetSets && `/${session.targetSets}`}
+                          {formatDuration(session.duration)}
                         </Text>
                       </View>
-                    )}
 
-                    <View style={styles.chip}>
-                      <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
-                      <Text style={styles.chipText}>
-                        {formatDuration(session.duration)}
-                      </Text>
-                    </View>
-
-                    {/* Chip qualità */}
-                    <View
-                      style={[
-                        styles.chip,
-                        styles.qualityChip,
-                        { backgroundColor: getQualityColor(session.averageQuality) + '20' }
-                      ]}
-                    >
-                      <MaterialCommunityIcons
-                        name="star"
-                        size={15}
-                        color={getQualityColor(session.averageQuality)}
-                      />
-                      <Text
+                      {/* Chip qualità */}
+                      <View
                         style={[
-                          styles.chipText,
-                          { color: getQualityColor(session.averageQuality) }
+                          styles.chip,
+                          styles.qualityChip,
+                          { backgroundColor: getQualityColor(session.averageQuality) + '20' }
                         ]}
                       >
-                        {session.averageQuality}%
-                      </Text>
+                        <MaterialCommunityIcons
+                          name="star"
+                          size={15}
+                          color={getQualityColor(session.averageQuality)}
+                        />
+                        <Text
+                          style={[
+                            styles.chipText,
+                            { color: getQualityColor(session.averageQuality) }
+                          ]}
+                        >
+                          {session.averageQuality}%
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                </ModernCard>
+                  </ModernCard>
+                </TouchableOpacity>
               );
             })
           )}
@@ -468,7 +479,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           <View style={styles.dateModalContent} onStartShouldSetResponder={() => true}>
             {/* Icon */}
             <View style={styles.dateModalIconContainer}>
-              <MaterialCommunityIcons name="calendar" size={48} color="#BDEEE7" />
+              <MaterialCommunityIcons name="calendar" size={48} color="#555" />
             </View>
 
             {/* Title */}
@@ -584,6 +595,13 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           maximumDate={new Date()}
         />
       )}
+
+      {/* Session Detail Modal */}
+      <SessionDetailModal
+        visible={selectedSession !== null}
+        session={selectedSession}
+        onClose={() => setSelectedSession(null)}
+      />
     </ScrollView>
   );
 };
@@ -829,7 +847,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(189, 238, 231, 0.15)',
+    backgroundColor: '#BDEEE7',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,

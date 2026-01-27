@@ -182,12 +182,12 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   statValue: {
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: 'Agdasima-Bold',
     color: '#BDEEE7',
   },
   statLabel: {
-    fontSize: 10,
+    fontSize: 11,
     color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
     fontWeight: '500',

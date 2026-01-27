@@ -180,7 +180,9 @@
     "from": "From",
     "to": "To",
     "daysAgo": "{{count}} days ago",
-    "loadMore": "Load {{count}} more"
+    "loadMore": "Load {{count}} more",
+    "sessionDetailTime": "at {{time}}",
+    "setsBreakdown": "Sets Breakdown"
   },
   "profile": {
     "title": "Profile",
