@@ -14,7 +14,6 @@ import { colors } from '../theme';
 interface HistoryTabProps {
   sessions: WorkoutSession[];
   stats: WorkoutStats;
-  isActive?: boolean;
   ListHeaderComponent?: React.ReactNode;
 }
 

@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
   NativeSyntheticEvent,
   NativeScrollEvent,
   KeyboardAvoidingView,
@@ -37,7 +36,6 @@ interface WorkoutCardEditorProps {
   onDelete?: () => void;
 }
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const ITEM_HEIGHT = 60;
 const VISIBLE_ITEMS = 5;
 
@@ -214,10 +212,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
     return (
       <View
         key={value}
-        style={[
-          styles.wheelItem,
-          isSelected && styles.wheelItemSelected,
-        ]}
+        style={styles.wheelItem}
       >
         <Text
           style={[
@@ -606,7 +601,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  wheelItemSelected: {},
   wheelItemText: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',

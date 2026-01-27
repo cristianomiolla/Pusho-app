@@ -4,7 +4,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { HeaderLocation, TopPushersCard, YourRankingCard, LocalChallengesSection, SpotlightCard, LockedFeatureSection } from '../components/community';
-import { Location, CommunityPeriod, LocationRadius, LocalChallenge, SpotlightUser, UserRanking } from '../types/community';
+import { Location, CommunityPeriod, LocalChallenge, SpotlightUser, UserRanking } from '../types/community';
 import { useCommunityData } from '../hooks/useCommunityData';
 import { useWorkout } from '../contexts/WorkoutContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -36,7 +36,6 @@ export const CommunityScreen = () => {
 
   // Stati per filtri
   const [period, setPeriod] = useState<CommunityPeriod>('week');
-  const [radius] = useState<LocationRadius>('city');
 
   // Fetch dati reali dal database
   const { leaderboard, userRanking, totalUsers, isLoading, error, refresh } = useCommunityData(period);
@@ -181,7 +180,6 @@ export const CommunityScreen = () => {
           <HeaderLocation
             location={location}
             period={period}
-            radius={radius}
             onChangeArea={handleChangeArea}
             onChangePeriod={handleChangePeriod}
           />

@@ -3,13 +3,12 @@ import { StyleSheet, Text, View, TouchableOpacity, Animated, LayoutChangeEvent }
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../theme';
-import { Location, CommunityPeriod, LocationRadius } from '../../types/community';
+import { Location, CommunityPeriod } from '../../types/community';
 import { haptics } from '../../utils/haptics';
 
 interface HeaderLocationProps {
   location: Location;
   period: CommunityPeriod;
-  radius: LocationRadius;
   onChangeArea: () => void;
   onChangePeriod: (period: CommunityPeriod) => void;
 }
@@ -17,7 +16,6 @@ interface HeaderLocationProps {
 export const HeaderLocation: React.FC<HeaderLocationProps> = ({
   location,
   period,
-  radius,
   onChangeArea,
   onChangePeriod,
 }) => {
@@ -194,9 +192,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1,
-  },
-  periodChipActive: {
-    // Stile gestito dal background animato
   },
   periodChipText: {
     fontSize: 13,
