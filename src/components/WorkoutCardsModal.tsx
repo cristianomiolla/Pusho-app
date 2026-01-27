@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { haptics } from '../utils/haptics';
 import { WorkoutCard } from '../types/workout';
 import { ModernCard } from './ModernCard';
+import { colors } from '../theme';
 
 interface WorkoutCardsModalProps {
   visible: boolean;
@@ -59,7 +60,7 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
           <View style={styles.header}>
             <Text style={styles.title}>{t('workout.selectCardTitle')}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <MaterialCommunityIcons name="close" size={28} color="#000" />
+              <MaterialCommunityIcons name="close" size={28} color={colors.black} />
             </TouchableOpacity>
           </View>
 
@@ -72,13 +73,13 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
               style={styles.freeWorkoutCard}
             >
               <View style={styles.freeWorkoutIcon}>
-                <MaterialCommunityIcons name="infinity" size={28} color="#000" />
+                <MaterialCommunityIcons name="infinity" size={28} color={colors.black} />
               </View>
               <View style={styles.freeWorkoutContent}>
                 <Text style={styles.freeWorkoutTitle}>{t('workout.freeWorkout')}</Text>
                 <Text style={styles.freeWorkoutSubtitle}>{t('workout.freeWorkoutDescription')}</Text>
               </View>
-              <MaterialCommunityIcons name="chevron-right" size={24} color="#1A6B5C" />
+              <MaterialCommunityIcons name="chevron-right" size={24} color={colors.primaryDark} />
             </TouchableOpacity>
 
             {/* Favorite Cards */}
@@ -114,7 +115,7 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
             {/* Empty State */}
             {workoutCards.length === 0 && (
               <View style={styles.emptyState}>
-                <MaterialCommunityIcons name="file-document-outline" size={64} color="#CCC" />
+                <MaterialCommunityIcons name="file-document-outline" size={64} color={colors.gray400} />
                 <Text style={styles.emptyText}>{t('workout.noCardsAvailable')}</Text>
                 <Text style={styles.emptySubtext}>
                   {t('workout.createCardFromTab')}
@@ -160,7 +161,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onPress, onToggleFavorite }) 
             <MaterialCommunityIcons
               name={card.isFavorite ? 'star' : 'star-outline'}
               size={18}
-              color={card.isFavorite ? '#FFD700' : '#999'}
+              color={card.isFavorite ? colors.gold : colors.gray400}
             />
           </TouchableOpacity>
         </View>
@@ -168,17 +169,17 @@ const CardItem: React.FC<CardItemProps> = ({ card, onPress, onToggleFavorite }) 
         {/* Metriche come chip */}
         <View style={styles.sessionContent}>
           <View style={styles.chip}>
-            <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
+            <MaterialCommunityIcons name="arm-flex-outline" size={15} color={colors.gray500} />
             <Text style={styles.chipText}>{card.repsPerSet}</Text>
           </View>
 
           <View style={styles.chip}>
-            <MaterialCommunityIcons name="repeat" size={15} color="#666" />
+            <MaterialCommunityIcons name="repeat" size={15} color={colors.gray500} />
             <Text style={styles.chipText}>{card.sets}</Text>
           </View>
 
           <View style={styles.chip}>
-            <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
+            <MaterialCommunityIcons name="clock-outline" size={15} color={colors.gray500} />
             <Text style={styles.chipText}>{formatRestTime(card.restTime)}</Text>
           </View>
 
@@ -202,11 +203,11 @@ const CardItem: React.FC<CardItemProps> = ({ card, onPress, onToggleFavorite }) 
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'flex-end',
   },
   modalContainer: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     maxHeight: '80%',
@@ -217,12 +218,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    borderBottomColor: colors.gray200,
   },
   title: {
     fontSize: 24,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   closeButton: {
     padding: 4,
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 16,
     paddingHorizontal: 4,
   },
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
   sessionTitle: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     flex: 1,
     marginRight: 8,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: colors.gray100,
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 16,
@@ -280,20 +281,20 @@ const styles = StyleSheet.create({
   chipText: {
     fontSize: 14,
     fontFamily: 'Agdasima-Bold',
-    color: '#444',
+    color: colors.gray700,
   },
   presetChip: {
     marginLeft: 'auto',
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
   },
   presetChipText: {
     fontSize: 14,
     fontFamily: 'Agdasima-Bold',
-    color: '#1A6B5C',
+    color: colors.primaryDark,
   },
   variantText: {
     fontSize: 13,
-    color: '#666',
+    color: colors.gray500,
     marginTop: 10,
     fontStyle: 'italic',
   },
@@ -305,18 +306,18 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#999',
+    color: colors.gray400,
     marginTop: 16,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#CCC',
+    color: colors.gray400,
     marginTop: 4,
   },
   freeWorkoutCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     borderRadius: 16,
     padding: 16,
     marginTop: 12,
@@ -327,7 +328,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: colors.transparent.black10,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -337,11 +338,11 @@ const styles = StyleSheet.create({
   freeWorkoutTitle: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   freeWorkoutSubtitle: {
     fontSize: 13,
-    color: 'rgba(0,0,0,0.6)',
+    color: colors.transparent.black60,
     marginTop: 2,
   },
 });

@@ -7,6 +7,7 @@ import { PushupDetectionScreen } from '../screens/PushupDetectionScreen';
 import { AllenamentiScreen } from '../screens/AllenamentiScreen';
 import { CommunityScreen } from '../screens/CommunityScreen';
 import { useWorkout } from '../contexts/WorkoutContext';
+import { colors } from '../theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +56,7 @@ export const MainNavigator = () => {
         headerShown: false,
         tabBarStyle: (isLandscape || isWorkoutActive) ? { display: 'none' } : {
           position: 'absolute',
-          backgroundColor: '#1C1C1E',
+          backgroundColor: colors.gray900,
           borderTopWidth: 0,
           elevation: 0,
           height: 80,
@@ -64,7 +65,7 @@ export const MainNavigator = () => {
           marginHorizontal: 20,
           marginBottom: insets.bottom > 0 ? insets.bottom : 10,
           borderRadius: 40,
-          shadowColor: '#000',
+          shadowColor: colors.black,
           shadowOffset: { width: 0, height: 10 },
           shadowOpacity: 0.3,
           shadowRadius: 20,
@@ -77,14 +78,14 @@ export const MainNavigator = () => {
         tabBarShowLabel: false,
         tabBarButton: (props) => <CustomTabBarButton {...props} focused={props.accessibilityState?.selected} isCTA={route.name === 'Start'} />,
         tabBarIcon: ({ focused }) => {
-          const iconColor = focused ? '#FFFFFF' : '#666666';
+          const iconColor = focused ? colors.white : colors.gray500;
 
           if (route.name === 'Allenamenti') {
             return <MaterialCommunityIcons name="home" size={26} color={iconColor} />;
           } else if (route.name === 'Start') {
             return (
               <View style={{ width: 34, height: 34, justifyContent: 'center', alignItems: 'center' }}>
-                <MaterialCommunityIcons name="arm-flex" size={34} color="#000000" />
+                <MaterialCommunityIcons name="arm-flex" size={34} color={colors.black} />
               </View>
             );
           } else if (route.name === 'Community') {
@@ -127,10 +128,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#2C2C2E',
+    backgroundColor: colors.gray800,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -144,11 +145,11 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'visible',
-    shadowColor: '#BDEEE7',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.6,
     shadowRadius: 16,

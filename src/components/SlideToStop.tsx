@@ -10,6 +10,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { haptics } from '../utils/haptics';
+import { colors } from '../theme';
 
 interface SlideToStopProps {
   onStop: () => void;
@@ -105,7 +106,7 @@ export const SlideToStop: React.FC<SlideToStopProps> = ({ onStop }) => {
 
   const backgroundColor = backgroundAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['rgba(255, 59, 48, 0.2)', 'rgba(255, 59, 48, 0.9)'],
+    outputRange: [colors.transparent.error20, colors.transparent.error90],
   });
 
   const textOpacity = backgroundAnim.interpolate({
@@ -129,7 +130,7 @@ export const SlideToStop: React.FC<SlideToStopProps> = ({ onStop }) => {
           ]}
           {...panResponder.panHandlers}
         >
-          <MaterialCommunityIcons name="stop" size={28} color="#FFFFFF" />
+          <MaterialCommunityIcons name="stop" size={28} color={colors.white} />
         </Animated.View>
       </Animated.View>
     </View>
@@ -144,16 +145,16 @@ const styles = StyleSheet.create({
   sliderTrack: {
     height: 60,
     borderRadius: 30,
-    backgroundColor: 'rgba(255, 59, 48, 0.2)',
+    backgroundColor: colors.transparent.error20,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     borderWidth: 2,
-    borderColor: 'rgba(255, 59, 48, 0.4)',
+    borderColor: colors.transparent.error40,
   },
   sliderText: {
     fontSize: 14,
-    color: '#FFFFFF',
+    color: colors.white,
     fontWeight: '600',
     letterSpacing: 0.5,
   },
@@ -163,10 +164,10 @@ const styles = StyleSheet.create({
     width: 70,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#FF3B30',
+    backgroundColor: colors.error,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#FF3B30',
+    shadowColor: colors.error,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 8,

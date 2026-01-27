@@ -9,6 +9,7 @@ import { useCommunityData } from '../hooks/useCommunityData';
 import { useWorkout } from '../contexts/WorkoutContext';
 import { useAuth } from '../contexts/AuthContext';
 import { LeaderboardEntry } from '../types/community';
+import { colors } from '../theme';
 
 export const CommunityScreen = () => {
   const { t } = useTranslation();
@@ -171,8 +172,8 @@ export const CommunityScreen = () => {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              tintColor="#BDEEE7"
-              colors={['#BDEEE7']}
+              tintColor={colors.primary}
+              colors={[colors.primary]}
             />
           }
         >
@@ -188,7 +189,7 @@ export const CommunityScreen = () => {
           {/* Loading State */}
           {showLoading ? (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#BDEEE7" />
+              <ActivityIndicator size="large" color={colors.primary} />
               <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : error ? (
@@ -227,7 +228,7 @@ export const CommunityScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: '#666',
+    color: colors.gray500,
     fontWeight: '600',
   },
   errorContainer: {
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 16,
-    color: '#FF6B6B',
+    color: colors.error,
     fontWeight: '600',
     textAlign: 'center',
   },

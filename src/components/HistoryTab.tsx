@@ -9,6 +9,7 @@ import { ModernCard } from './ModernCard';
 import { SlotMachineNumber } from './SlotMachineNumber';
 import { SessionDetailModal } from './SessionDetailModal';
 import { WorkoutSession, WorkoutStats, FilterPeriod } from '../types/workout';
+import { colors } from '../theme';
 
 interface HistoryTabProps {
   sessions: WorkoutSession[];
@@ -162,9 +163,9 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
   };
 
   const getQualityColor = (quality: number): string => {
-    if (quality >= 80) return '#34C759';
-    if (quality >= 60) return '#FF9500';
-    return '#FF3B30';
+    if (quality >= 80) return colors.success;
+    if (quality >= 60) return colors.warning;
+    return colors.error;
   };
 
   const filterButtons: { period: FilterPeriod; label: string }[] = [
@@ -209,7 +210,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         <ModernCard style={styles.overviewCard}>
           <View style={styles.overviewGrid}>
             <View style={styles.overviewItem}>
-              <MaterialCommunityIcons name="arm-flex-outline" size={18} color="#666" />
+              <MaterialCommunityIcons name="arm-flex-outline" size={18} color={colors.gray500} />
               <View style={styles.numberContainer}>
                 <SlotMachineNumber
                   key={`total-${animationTrigger}`}
@@ -224,7 +225,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.overviewDivider} />
 
             <View style={styles.overviewItem}>
-              <MaterialCommunityIcons name="trophy-outline" size={18} color="#666" />
+              <MaterialCommunityIcons name="trophy-outline" size={18} color={colors.gray500} />
               <View style={styles.numberContainer}>
                 <SlotMachineNumber
                   key={`max-${animationTrigger}`}
@@ -239,7 +240,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.overviewDivider} />
 
             <View style={styles.overviewItem}>
-              <MaterialCommunityIcons name="clock-outline" size={18} color="#666" />
+              <MaterialCommunityIcons name="clock-outline" size={18} color={colors.gray500} />
               <View style={styles.numberContainer}>
                 <View style={styles.timeContainer}>
                   {Math.floor(stats.totalTimeUnderTension / 3600) > 0 && (
@@ -272,7 +273,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           <View style={styles.additionalStatsGrid}>
             <View style={styles.additionalStatItem}>
               <View style={styles.additionalStatContent}>
-                <MaterialCommunityIcons name="calendar-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={20} color={colors.gray500} />
                 <View style={styles.additionalStatText}>
                   <View style={styles.additionalStatValueContainer}>
                     <SlotMachineNumber
@@ -291,7 +292,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
 
             <View style={styles.additionalStatItem}>
               <View style={styles.additionalStatContent}>
-                <MaterialCommunityIcons name="star-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="star-outline" size={20} color={colors.gray500} />
                 <View style={styles.additionalStatText}>
                   <View style={styles.additionalStatValueContainer}>
                     <SlotMachineNumber
@@ -364,7 +365,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         <View style={styles.sessionsContainer}>
           {filteredSessions.length === 0 ? (
             <View style={styles.emptyState}>
-              <MaterialCommunityIcons name="arm-flex-outline" size={64} color="#E5E5EA" />
+              <MaterialCommunityIcons name="arm-flex-outline" size={64} color={colors.gray200} />
               <Text style={styles.emptyText}>
                 {sessions.length === 0 ? t('history.noSessionsYet') : t('history.noSessionsInPeriod')}
               </Text>
@@ -398,13 +399,13 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                     {/* Metriche come chip */}
                     <View style={styles.sessionContent}>
                       <View style={styles.chip}>
-                        <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
+                        <MaterialCommunityIcons name="arm-flex-outline" size={15} color={colors.gray500} />
                         <Text style={styles.chipText}>{session.totalPushups}</Text>
                       </View>
 
                       {isCardSession && (
                         <View style={styles.chip}>
-                          <MaterialCommunityIcons name="repeat" size={15} color="#666" />
+                          <MaterialCommunityIcons name="repeat" size={15} color={colors.gray500} />
                           <Text style={styles.chipText}>
                             {session.completedSets || session.sets.length}
                             {session.targetSets && `/${session.targetSets}`}
@@ -413,7 +414,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                       )}
 
                       <View style={styles.chip}>
-                        <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
+                        <MaterialCommunityIcons name="clock-outline" size={15} color={colors.gray500} />
                         <Text style={styles.chipText}>
                           {formatDuration(session.duration)}
                         </Text>
@@ -455,7 +456,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
               onPress={loadMore}
               activeOpacity={0.7}
             >
-              <MaterialCommunityIcons name="chevron-down" size={20} color="#666" />
+              <MaterialCommunityIcons name="chevron-down" size={20} color={colors.gray500} />
               <Text style={styles.loadMoreText}>
                 {t('history.loadMore', { count: Math.min(remainingSessions, PAGE_SIZE) })}
               </Text>
@@ -479,7 +480,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           <View style={styles.dateModalContent} onStartShouldSetResponder={() => true}>
             {/* Icon */}
             <View style={styles.dateModalIconContainer}>
-              <MaterialCommunityIcons name="calendar" size={48} color="#555" />
+              <MaterialCommunityIcons name="calendar" size={48} color={colors.gray500} />
             </View>
 
             {/* Title */}
@@ -489,7 +490,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.dateRow}>
               <Text style={styles.dateLabel}>{t('history.from')}</Text>
               <View style={styles.datePickerButton}>
-                <MaterialCommunityIcons name="calendar-outline" size={18} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={18} color={colors.gray500} />
                 <Text style={styles.datePickerText}>
                   {customStartDate.toLocaleDateString('it-IT', {
                     day: 'numeric',
@@ -528,7 +529,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.dateRow}>
               <Text style={styles.dateLabel}>{t('history.to')}</Text>
               <View style={styles.datePickerButton}>
-                <MaterialCommunityIcons name="calendar-outline" size={18} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={18} color={colors.gray500} />
                 <Text style={styles.datePickerText}>
                   {customEndDate.toLocaleDateString('it-IT', {
                     day: 'numeric',
@@ -622,7 +623,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 16,
     paddingHorizontal: 4,
   },
@@ -648,7 +649,7 @@ const styles = StyleSheet.create({
   overviewValue: {
     fontSize: 24,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   timeContainer: {
     flexDirection: 'row',
@@ -657,21 +658,21 @@ const styles = StyleSheet.create({
   timeUnit: {
     fontSize: 16,
     fontFamily: 'Agdasima-Bold',
-    color: '#666',
+    color: colors.gray500,
     marginLeft: 1,
     marginRight: 4,
     marginBottom: 2,
   },
   overviewLabel: {
     fontSize: 11,
-    color: '#666',
+    color: colors.gray500,
     fontWeight: '500',
     textAlign: 'center',
   },
   overviewDivider: {
     width: 1,
     height: 40,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.gray200,
   },
   additionalStatsCard: {
     paddingVertical: 16,
@@ -700,42 +701,42 @@ const styles = StyleSheet.create({
   additionalStatValue: {
     fontSize: 20,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   additionalStatPercentSymbol: {
     fontSize: 14,
     fontFamily: 'Agdasima-Bold',
-    color: '#666',
+    color: colors.gray500,
     marginLeft: 1,
     marginBottom: -1.5,
   },
   additionalStatLabel: {
     fontSize: 12,
-    color: '#666',
+    color: colors.gray500,
     fontWeight: '500',
     marginTop: 6,
   },
   additionalStatDivider: {
     width: 1,
     height: 40,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.gray200,
     marginHorizontal: 16,
   },
   filterContainer: {
     flexDirection: 'row',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 12,
     marginBottom: 12,
     position: 'relative',
   },
   filterActiveBackground: {
     position: 'absolute',
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     borderRadius: 10,
     top: 0,
     bottom: 0,
     left: 0,
-    shadowColor: '#BDEEE7',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
@@ -751,11 +752,11 @@ const styles = StyleSheet.create({
   filterText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#999',
+    color: colors.gray400,
     letterSpacing: 0.1,
   },
   filterTextActive: {
-    color: '#000',
+    color: colors.black,
   },
   sessionsContainer: {
     gap: 12,
@@ -773,14 +774,14 @@ const styles = StyleSheet.create({
   sessionTitle: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     flex: 1,
     marginRight: 8,
   },
   sessionDate: {
     fontSize: 12,
-    color: '#999',
+    color: colors.gray400,
     fontWeight: '500',
   },
   sessionContent: {
@@ -791,7 +792,7 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: colors.gray100,
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 16,
@@ -800,7 +801,7 @@ const styles = StyleSheet.create({
   chipText: {
     fontSize: 14,
     fontFamily: 'Agdasima-Bold',
-    color: '#444',
+    color: colors.gray700,
   },
   qualityChip: {
     marginLeft: 'auto',
@@ -813,31 +814,31 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     marginTop: 16,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: colors.gray400,
     marginTop: 8,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   dateModalContent: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     padding: 24,
     width: '100%',
     maxWidth: 340,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
@@ -847,7 +848,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -855,7 +856,7 @@ const styles = StyleSheet.create({
   dateModalTitle: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -869,7 +870,7 @@ const styles = StyleSheet.create({
   dateLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     width: 30,
   },
   datePickerButton: {
@@ -877,7 +878,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 12,
     paddingVertical: 14,
     paddingHorizontal: 16,
@@ -885,7 +886,7 @@ const styles = StyleSheet.create({
   datePickerText: {
     fontSize: 15,
     fontWeight: '500',
-    color: '#333',
+    color: colors.gray700,
   },
   dateModalButtonContainer: {
     flexDirection: 'row',
@@ -899,12 +900,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   dateModalCancelText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
   },
   dateModalConfirmButton: {
     flex: 1,
@@ -912,12 +913,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#000',
+    backgroundColor: colors.black,
   },
   dateModalConfirmText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFF',
+    color: colors.white,
   },
   iosHiddenPicker: {
     position: 'absolute',
@@ -933,7 +934,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 16,
     paddingHorizontal: 24,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 12,
     marginTop: 4,
     gap: 8,
@@ -941,6 +942,6 @@ const styles = StyleSheet.create({
   loadMoreText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
   },
 });

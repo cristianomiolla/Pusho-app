@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, TextStyle } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -7,6 +7,7 @@ import Animated, {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
+import { colors } from '../theme';
 
 interface SlotMachineNumberProps {
   value: number;
@@ -105,6 +106,6 @@ const styles = StyleSheet.create({
   digit: {
     fontSize: 24,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
 });

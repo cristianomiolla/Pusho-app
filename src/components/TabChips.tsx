@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Animated, LayoutChangeEvent } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { haptics } from '../utils/haptics';
+import { colors } from '../theme';
 
 interface Tab {
   id: string;
@@ -70,7 +71,7 @@ export const TabChips: React.FC<TabChipsProps> = ({ tabs, activeTab, onTabChange
                 <MaterialCommunityIcons
                   name={tab.icon}
                   size={20}
-                  color={activeTab === tab.id ? '#FFF' : '#666'}
+                  color={activeTab === tab.id ? colors.white : colors.gray500}
                 />
               )}
               <Text
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
   },
   switcherContainer: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     borderRadius: 18,
     padding: 6,
     position: 'relative',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.5,
     shadowRadius: 16,
@@ -110,12 +111,12 @@ const styles = StyleSheet.create({
   },
   activeBackground: {
     position: 'absolute',
-    backgroundColor: '#000000',
+    backgroundColor: colors.black,
     borderRadius: 13,
     top: 6,
     bottom: 6,
     left: 6,
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
@@ -137,10 +138,10 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.3,
   },
   tabTextActive: {
-    color: '#FFF',
+    color: colors.white,
   },
 });

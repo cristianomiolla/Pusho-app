@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ModernCard } from '../ModernCard';
 import { LeaderboardEntry } from '../../types/community';
+import { colors } from '../../theme';
 
 interface TopPushersCardProps {
   entries: LeaderboardEntry[];
@@ -125,14 +126,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.2,
   },
   list: {
@@ -144,12 +145,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 12,
     borderRadius: 16,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: colors.gray100,
   },
   rowCurrentUser: {
-    backgroundColor: '#E6F9F7',
+    backgroundColor: colors.primaryLight,
     borderWidth: 2,
-    borderColor: '#BDEEE7',
+    borderColor: colors.primary,
   },
   positionContainer: {
     width: 32,
@@ -163,27 +164,27 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   positionContainerGold: {
-    backgroundColor: '#FFF4CC',
+    backgroundColor: colors.goldLight,
   },
   positionContainerSilver: {
-    backgroundColor: '#E8E8E8',
+    backgroundColor: colors.gray100,
   },
   positionContainerBronze: {
-    backgroundColor: '#F0DCC8',
+    backgroundColor: colors.bronzeLight,
   },
   positionText: {
     fontSize: 13,
     fontFamily: 'Agdasima-Bold',
-    color: '#666',
+    color: colors.gray500,
   },
   positionGoldText: {
-    color: '#000',
+    color: colors.black,
   },
   positionSilverText: {
-    color: '#000',
+    color: colors.black,
   },
   positionBronzeText: {
-    color: '#000',
+    color: colors.black,
   },
   avatarContainer: {
     marginRight: 12,
@@ -193,20 +194,20 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#DDD',
+    backgroundColor: colors.gray200,
   },
   avatarPlaceholder: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarPlaceholderText: {
     fontSize: 18,
     fontWeight: '800',
-    color: '#000',
+    color: colors.black,
   },
   userInfo: {
     flex: 1,
@@ -221,17 +222,17 @@ const styles = StyleSheet.create({
   nickname: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
   nicknameHighlight: {
-    color: '#00A896',
+    color: colors.primaryDark,
   },
   youBadge: {
     fontSize: 12,
     fontFamily: 'Agdasima-Bold',
-    color: '#FFF',
-    backgroundColor: '#000',
+    color: colors.white,
+    backgroundColor: colors.black,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 14,
@@ -245,12 +246,12 @@ const styles = StyleSheet.create({
   pushups: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
   divider: {
     height: 1,
-    backgroundColor: '#DDD',
+    backgroundColor: colors.gray200,
     marginVertical: 16,
   },
 });

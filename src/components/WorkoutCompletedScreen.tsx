@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { colors, getQualityColor } from '../theme';
 
 interface WorkoutCompletedScreenProps {
   totalPushups: number;
@@ -14,13 +15,6 @@ interface WorkoutCompletedScreenProps {
   averageDepth?: number; // angolo medio in gradi
   averageDownTime?: number; // tempo medio DOWN in ms
 }
-
-// Helper per ottenere colore basato su quality score
-const getQualityColor = (score: number): string => {
-  if (score >= 70) return '#4CAF50'; // Verde
-  if (score >= 40) return '#FFC107'; // Giallo
-  return '#F44336'; // Rosso
-};
 
 export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
   totalPushups,
@@ -38,14 +32,14 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
   const minutes = Math.floor(totalTime / 60);
   const seconds = totalTime % 60;
   const timeString = `${minutes}:${String(seconds).padStart(2, '0')}`;
-  const qualityColor = showQuality ? getQualityColor(qualityScore) : '#BDEEE7';
+  const qualityColor = showQuality ? getQualityColor(qualityScore) : colors.primary;
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         {/* Icon */}
         <View style={styles.iconContainer}>
-          <MaterialCommunityIcons name="trophy" size={48} color="#FFD700" />
+          <MaterialCommunityIcons name="trophy" size={48} color={colors.gold} />
         </View>
 
         {/* Title */}
@@ -59,21 +53,21 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
         {/* Summary */}
         <View style={styles.summaryContainer}>
           <View style={styles.statCard}>
-            <MaterialCommunityIcons name="arm-flex-outline" size={32} color="#BDEEE7" />
+            <MaterialCommunityIcons name="arm-flex-outline" size={32} color={colors.primary} />
             <Text style={styles.statValue}>{totalPushups}</Text>
             <Text style={styles.statLabel}>{t('workout.totalPushups')}</Text>
           </View>
 
           {showSets && (
             <View style={styles.statCard}>
-              <MaterialCommunityIcons name="repeat" size={32} color="#BDEEE7" />
+              <MaterialCommunityIcons name="repeat" size={32} color={colors.primary} />
               <Text style={styles.statValue}>{totalSets}</Text>
               <Text style={styles.statLabel}>{t('workout.setsCompleted')}</Text>
             </View>
           )}
 
           <View style={styles.statCard}>
-            <MaterialCommunityIcons name="timer-outline" size={32} color="#BDEEE7" />
+            <MaterialCommunityIcons name="timer-outline" size={32} color={colors.primary} />
             <Text style={styles.statValue}>{timeString}</Text>
             <Text style={styles.statLabel}>{t('workout.totalTime')}</Text>
           </View>
@@ -112,7 +106,7 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
             onPress={onSave}
             activeOpacity={0.7}
           >
-            <MaterialCommunityIcons name="check-circle" size={20} color="#000" />
+            <MaterialCommunityIcons name="check-circle" size={20} color={colors.black} />
             <Text style={styles.saveButtonText}>{t('common.save')}</Text>
           </TouchableOpacity>
         </View>
@@ -124,21 +118,21 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   content: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: colors.gray900,
     borderRadius: 24,
     width: '100%',
     maxWidth: 340,
     padding: 24,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
@@ -148,7 +142,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(255, 215, 0, 0.15)',
+    backgroundColor: colors.transparent.gold15,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -156,13 +150,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#BDEEE7',
+    color: colors.primary,
     textAlign: 'center',
     marginBottom: 12,
   },
   message: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.transparent.white70,
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 24,
@@ -175,7 +169,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: 'rgba(189, 238, 231, 0.08)',
+    backgroundColor: colors.transparent.primary08,
     borderRadius: 12,
     padding: 12,
     alignItems: 'center',
@@ -184,11 +178,11 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#BDEEE7',
+    color: colors.primary,
   },
   statLabel: {
     fontSize: 11,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.transparent.white60,
     textAlign: 'center',
     fontWeight: '500',
   },
@@ -207,25 +201,25 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   exitButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: colors.transparent.white08,
   },
   exitButtonText: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: colors.transparent.white90,
     fontWeight: '600',
   },
   saveButton: {
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
   },
   saveButtonText: {
     fontSize: 16,
-    color: '#000',
+    color: colors.black,
     fontWeight: '600',
   },
   // Stili per Quality Card
   qualityCard: {
     width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.transparent.white05,
     borderRadius: 16,
     padding: 16,
     marginBottom: 24,
@@ -251,7 +245,7 @@ const styles = StyleSheet.create({
   },
   qualityHint: {
     fontSize: 11,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: colors.transparent.white50,
     textAlign: 'center',
   },
 });

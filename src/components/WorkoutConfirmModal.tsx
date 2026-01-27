@@ -5,11 +5,11 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import type { WorkoutCard } from '../types/workout';
+import { colors } from '../theme';
 
 interface WorkoutConfirmModalProps {
   visible: boolean;
@@ -40,7 +40,7 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
         <View style={styles.modalContainer}>
           {/* Icon */}
           <View style={styles.iconContainer}>
-            <MaterialCommunityIcons name="arm-flex" size={48} color="#BDEEE7" />
+            <MaterialCommunityIcons name="arm-flex" size={48} color={colors.primary} />
           </View>
 
           {/* Title */}
@@ -52,19 +52,19 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
 
             <View style={styles.detailsContainer}>
               <View style={styles.detailRow}>
-                <MaterialCommunityIcons name="arm-flex-outline" size={20} color="#BDEEE7" />
+                <MaterialCommunityIcons name="arm-flex-outline" size={20} color={colors.primary} />
                 <Text style={styles.detailLabel}>{t('workout.pushupPerSet')}</Text>
                 <Text style={styles.detailValue}>{workoutCard.repsPerSet}</Text>
               </View>
 
               <View style={styles.detailRow}>
-                <MaterialCommunityIcons name="repeat" size={20} color="#BDEEE7" />
+                <MaterialCommunityIcons name="repeat" size={20} color={colors.primary} />
                 <Text style={styles.detailLabel}>{t('workout.numberOfSets')}</Text>
                 <Text style={styles.detailValue}>{workoutCard.sets}</Text>
               </View>
 
               <View style={styles.detailRow}>
-                <MaterialCommunityIcons name="timer-outline" size={20} color="#BDEEE7" />
+                <MaterialCommunityIcons name="timer-outline" size={20} color={colors.primary} />
                 <Text style={styles.detailLabel}>{t('workout.restTime')}</Text>
                 <Text style={styles.detailValue}>{workoutCard.restTime}s</Text>
               </View>
@@ -79,7 +79,7 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
 
             {/* Info importante */}
             <View style={styles.infoBox}>
-              <MaterialCommunityIcons name="information" size={18} color="#FFB800" />
+              <MaterialCommunityIcons name="information" size={18} color={colors.warning} />
               <Text style={styles.infoText}>
                 {t('workout.navigationDisabled')}
               </Text>
@@ -101,7 +101,7 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
               onPress={onConfirm}
               activeOpacity={0.8}
             >
-              <MaterialCommunityIcons name="check-circle" size={20} color="#000" />
+              <MaterialCommunityIcons name="check-circle" size={20} color={colors.black} />
               <Text style={styles.confirmButtonText}>{t('workout.start')}</Text>
             </TouchableOpacity>
           </View>
@@ -114,21 +114,21 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   modalContainer: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: colors.gray900,
     borderRadius: 24,
     width: '100%',
     maxWidth: 340,
     padding: 24,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(189, 238, 231, 0.15)',
+    backgroundColor: colors.transparent.primary15,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#BDEEE7',
+    color: colors.primary,
     textAlign: 'center',
     marginBottom: 12,
   },
@@ -157,12 +157,12 @@ const styles = StyleSheet.create({
   cardName: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#FFFFFF',
+    color: colors.white,
     textAlign: 'center',
     marginBottom: 8,
   },
   detailsContainer: {
-    backgroundColor: 'rgba(189, 238, 231, 0.05)',
+    backgroundColor: colors.transparent.primary05,
     borderRadius: 12,
     padding: 16,
     gap: 12,
@@ -175,24 +175,24 @@ const styles = StyleSheet.create({
   detailLabel: {
     flex: 1,
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.transparent.white70,
     fontWeight: '500',
   },
   detailValue: {
     fontSize: 16,
-    color: '#BDEEE7',
+    color: colors.primary,
     fontFamily: 'Agdasima-Bold',
   },
   variantContainer: {
-    backgroundColor: 'rgba(189, 238, 231, 0.08)',
+    backgroundColor: colors.transparent.primary08,
     borderRadius: 10,
     padding: 12,
     borderLeftWidth: 3,
-    borderLeftColor: '#BDEEE7',
+    borderLeftColor: colors.primary,
   },
   variantLabel: {
     fontSize: 12,
-    color: '#BDEEE7',
+    color: colors.primary,
     fontWeight: '600',
     marginBottom: 4,
     textTransform: 'uppercase',
@@ -200,23 +200,23 @@ const styles = StyleSheet.create({
   },
   variantText: {
     fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: colors.transparent.white80,
     lineHeight: 18,
   },
   infoBox: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: 'rgba(255, 184, 0, 0.1)',
+    backgroundColor: colors.transparent.warning10,
     borderRadius: 8,
     padding: 10,
     borderWidth: 1,
-    borderColor: 'rgba(255, 184, 0, 0.3)',
+    borderColor: colors.transparent.warning30,
   },
   infoText: {
     flex: 1,
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: colors.transparent.white80,
     lineHeight: 16,
   },
   buttonContainer: {
@@ -234,19 +234,19 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   cancelButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: colors.transparent.white08,
   },
   cancelButtonText: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: colors.transparent.white90,
     fontWeight: '600',
   },
   confirmButton: {
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
   },
   confirmButtonText: {
     fontSize: 16,
-    color: '#000',
+    color: colors.black,
     fontWeight: '600',
   },
 });

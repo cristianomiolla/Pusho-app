@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import { ModernCard } from '../ModernCard';
 import { UserRanking } from '../../types/community';
+import { colors } from '../../theme';
 
 interface YourRankingCardProps {
   ranking: UserRanking;
@@ -121,7 +122,7 @@ export const YourRankingCard: React.FC<YourRankingCardProps> = ({ ranking }) => 
               {/* Fill con badge integrato */}
               <View style={[styles.progressFillContainer, isLast ? styles.progressFillMinimal : { width: `${Math.max(progressPercentage, 22)}%` }]}>
                 <LinearGradient
-                  colors={['#BDEEE7', '#5BBFB3']}
+                  colors={[colors.primary, colors.primaryDark]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={styles.progressFill}
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     flex: 1,
   },
@@ -178,18 +179,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 8,
     paddingVertical: 16,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: colors.gray100,
     borderRadius: 16,
     marginBottom: 20,
   },
   rankingLabel: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.2,
   },
   positionBadge: {
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 12,
@@ -197,13 +198,13 @@ const styles = StyleSheet.create({
   positionText: {
     fontSize: 36,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
   totalUsers: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   progressSection: {
     gap: 12,
@@ -217,25 +218,25 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: colors.gray100,
     justifyContent: 'center',
     alignItems: 'center',
   },
   positionCircleTarget: {
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
   },
   positionCircleText: {
     fontSize: 12,
     fontFamily: 'Agdasima-Bold',
-    color: '#999',
+    color: colors.gray400,
   },
   positionCircleTextTarget: {
-    color: '#2A9D8F',
+    color: colors.primaryDark,
   },
   progressTrack: {
     flex: 1,
     height: 28,
-    backgroundColor: '#EBEBEB',
+    backgroundColor: colors.gray100,
     borderRadius: 14,
     flexDirection: 'row',
     alignItems: 'center',
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
   youBadge: {
     marginLeft: 'auto',
     marginRight: 4,
-    backgroundColor: '#000',
+    backgroundColor: colors.black,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 14,
@@ -275,17 +276,17 @@ const styles = StyleSheet.create({
   youBadgeText: {
     fontSize: 12,
     fontFamily: 'Agdasima-Bold',
-    color: '#FFF',
+    color: colors.white,
     letterSpacing: 0.3,
   },
   distanceText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     textAlign: 'center',
   },
   percentileBadge: {
-    backgroundColor: '#FFD700',
+    backgroundColor: colors.gold,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
   percentileText: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
 });

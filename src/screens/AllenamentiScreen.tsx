@@ -13,6 +13,7 @@ import { WorkoutSession, WorkoutStats, WorkoutCard } from '../types/workout';
 import * as cardsService from '../services/cards.service';
 import * as workoutService from '../services/workout.service';
 import * as statsService from '../services/stats.service';
+import { colors } from '../theme';
 
 type MainTab = 'history' | 'cards';
 
@@ -130,7 +131,7 @@ export const AllenamentiScreen = () => {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#BDEEE7" />
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       </SafeAreaView>
     );
@@ -201,7 +202,7 @@ export const AllenamentiScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
@@ -221,11 +222,11 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: colors.gray900,
   },
   subtitle: {
     fontSize: 14,
-    color: '#666',
+    color: colors.gray500,
     marginTop: 2,
   },
   avatarButton: {
@@ -235,14 +236,14 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.gray900,
     justifyContent: 'center',
     alignItems: 'center',
   },
   avatarSmallText: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#BDEEE7',
+    color: colors.primary,
   },
   content: {
     flex: 1,

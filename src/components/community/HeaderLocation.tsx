@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, LayoutChangeEvent } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { colors } from '../../theme';
 import { Location, CommunityPeriod, LocationRadius } from '../../types/community';
 import { haptics } from '../../utils/haptics';
 
@@ -57,7 +58,7 @@ export const HeaderLocation: React.FC<HeaderLocationProps> = ({
       <View style={styles.locationRow}>
         <View style={styles.locationInfo}>
           <View style={styles.cityRow}>
-            <MaterialCommunityIcons name="map-marker" size={20} color="#BDEEE7" />
+            <MaterialCommunityIcons name="map-marker" size={20} color={colors.primary} />
             <Text style={styles.cityText}>{location.city}</Text>
           </View>
         </View>
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 12,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   locationRow: {
     flexDirection: 'row',
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   cityText: {
     fontSize: 28,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
   changeButton: {
@@ -143,12 +144,12 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 20,
     paddingVertical: 8,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     borderRadius: 12,
   },
   changeButtonText: {
     fontSize: 14,
-    color: '#000',
+    color: colors.black,
     fontFamily: 'Agdasima-Bold',
     letterSpacing: 0.5,
   },
@@ -158,30 +159,30 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: colors.gray200,
     borderRadius: 12,
   },
   changeButtonTextDisabled: {
     fontSize: 14,
-    color: '#999',
+    color: colors.gray400,
     fontFamily: 'Agdasima-Bold',
     letterSpacing: 0.5,
   },
   periodSelector: {
     flexDirection: 'row',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 14,
     padding: 4,
     position: 'relative',
   },
   periodActiveBackground: {
     position: 'absolute',
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     borderRadius: 10,
     top: 4,
     bottom: 4,
     left: 4,
-    shadowColor: '#BDEEE7',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
@@ -200,10 +201,10 @@ const styles = StyleSheet.create({
   periodChipText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#999',
+    color: colors.gray400,
     letterSpacing: 0.1,
   },
   periodChipTextActive: {
-    color: '#000',
+    color: colors.black,
   },
 });

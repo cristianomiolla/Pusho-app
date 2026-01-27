@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ModernCard } from '../ModernCard';
 import { haptics } from '../../utils/haptics';
 import { LocalChallenge } from '../../types/community';
+import { colors } from '../../theme';
 
 interface LocalChallengesSectionProps {
   challenges: LocalChallenge[];
@@ -84,13 +85,13 @@ const ChallengeCard: React.FC<{
         {/* Footer info */}
         <View style={styles.challengeFooter}>
           <View style={styles.footerItem}>
-            <MaterialCommunityIcons name="account-group" size={14} color="#666" />
+            <MaterialCommunityIcons name="account-group" size={14} color={colors.gray500} />
             <Text style={styles.footerText}>
               {t('community.participants', { count: challenge.participants.toLocaleString() })}
             </Text>
           </View>
           <View style={styles.footerItem}>
-            <MaterialCommunityIcons name="clock-outline" size={14} color="#666" />
+            <MaterialCommunityIcons name="clock-outline" size={14} color={colors.gray500} />
             <Text style={styles.footerText}>{getTimeRemainingText()}</Text>
           </View>
         </View>
@@ -153,14 +154,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 16,
     paddingHorizontal: 4,
   },
   sectionSubtitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.2,
     paddingHorizontal: 4,
     marginTop: -12,
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
   progressSection: {
@@ -200,33 +201,33 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.1,
   },
   progressValue: {
     fontSize: 16,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   percentageText: {
     fontSize: 20,
     fontFamily: 'Agdasima-Bold',
-    color: '#FF6B35',
+    color: colors.warning,
     letterSpacing: 0.2,
   },
   progressBarBackground: {
     height: 8,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: colors.gray200,
     borderRadius: 4,
     overflow: 'hidden',
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     borderRadius: 4,
   },
   progressBarComplete: {
-    backgroundColor: '#00A896',
+    backgroundColor: colors.primaryDark,
   },
   challengeFooter: {
     flexDirection: 'row',
@@ -240,28 +241,28 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.1,
   },
   contributionBadge: {
     marginTop: 12,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: '#FFF9E6',
+    backgroundColor: colors.goldLight,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#FFD700',
+    borderColor: colors.gold,
   },
   contributionText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     textAlign: 'center',
     letterSpacing: 0.1,
   },
   contributionValue: {
     fontSize: 15,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
 });

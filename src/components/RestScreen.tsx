@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { colors } from '../theme';
 
 interface RestScreenProps {
   timeRemaining: number; // in secondi
@@ -26,7 +27,7 @@ export const RestScreen: React.FC<RestScreenProps> = ({
       <View style={styles.content}>
         {/* Icon */}
         <View style={styles.iconContainer}>
-          <MaterialCommunityIcons name="clock-outline" size={48} color="#BDEEE7" />
+          <MaterialCommunityIcons name="clock-outline" size={48} color={colors.primary} />
         </View>
 
         {/* Title */}
@@ -48,7 +49,7 @@ export const RestScreen: React.FC<RestScreenProps> = ({
           onPress={onSkip}
           activeOpacity={0.7}
         >
-          <MaterialCommunityIcons name="skip-next" size={20} color="#000" />
+          <MaterialCommunityIcons name="skip-next" size={20} color={colors.black} />
           <Text style={styles.skipButtonText}>{t('workout.skipRest')}</Text>
         </TouchableOpacity>
       </View>
@@ -59,21 +60,21 @@ export const RestScreen: React.FC<RestScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   content: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: colors.gray900,
     borderRadius: 24,
     width: '100%',
     maxWidth: 340,
     padding: 24,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(189, 238, 231, 0.15)',
+    backgroundColor: colors.transparent.primary15,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -91,20 +92,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#BDEEE7',
+    color: colors.primary,
     textAlign: 'center',
     marginBottom: 12,
   },
   message: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.transparent.white70,
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 24,
   },
   timerContainer: {
     width: '100%',
-    backgroundColor: 'rgba(189, 238, 231, 0.08)',
+    backgroundColor: colors.transparent.primary08,
     paddingVertical: 32,
     borderRadius: 16,
     alignItems: 'center',
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   timerText: {
     fontSize: 64,
     fontFamily: 'Agdasima-Bold',
-    color: '#BDEEE7',
+    color: colors.primary,
     letterSpacing: 4,
   },
   skipButton: {
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     width: '100%',
     paddingVertical: 14,
     borderRadius: 16,
@@ -129,6 +130,6 @@ const styles = StyleSheet.create({
   skipButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000',
+    color: colors.black,
   },
 });

@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { AuthNavigator } from './AuthNavigator';
 import { MainNavigator } from './MainNavigator';
 import { ResetPasswordScreen } from '../screens/auth';
+import { colors } from '../theme';
 
 export const RootNavigator = () => {
   const { user, isLoading, pendingPasswordReset, clearPasswordReset } = useAuth();
@@ -12,7 +13,7 @@ export const RootNavigator = () => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#1A1A1A" />
+        <ActivityIndicator size="large" color={colors.gray900} />
       </View>
     );
   }
@@ -31,6 +32,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
 });

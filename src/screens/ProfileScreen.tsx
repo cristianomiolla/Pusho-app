@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { DeleteAccountModal } from '../components/DeleteAccountModal';
+import { colors } from '../theme';
 
 interface ProfileScreenProps {
   onClose?: () => void;
@@ -150,7 +151,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
       {/* Header con paddingTop per safe area */}
       <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
         <TouchableOpacity onPress={onClose} style={styles.headerButton}>
-          <MaterialCommunityIcons name="close" size={28} color="#666" />
+          <MaterialCommunityIcons name="close" size={28} color={colors.gray500} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('profile.title')}</Text>
         <View style={styles.headerButton} />
@@ -185,7 +186,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
                 style={styles.editButton}
                 onPress={() => setIsEditing(true)}
               >
-                <MaterialCommunityIcons name="pencil" size={16} color="#007AFF" />
+                <MaterialCommunityIcons name="pencil" size={16} color={colors.link} />
                 <Text style={styles.editButtonText}>{t('common.edit')}</Text>
               </TouchableOpacity>
             )}
@@ -199,7 +200,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
                 <TextInput
                   style={styles.input}
                   placeholder={t('profile.nicknamePlaceholder')}
-                  placeholderTextColor="#999"
+                  placeholderTextColor={colors.gray400}
                   value={nickname}
                   onChangeText={setNickname}
                   autoCapitalize="none"
@@ -229,7 +230,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
                   disabled={isSaving}
                 >
                   {isSaving ? (
-                    <ActivityIndicator color="#FFF" size="small" />
+                    <ActivityIndicator color={colors.white} size="small" />
                   ) : (
                     <Text style={styles.saveButtonText}>{t('common.save')}</Text>
                   )}
@@ -246,13 +247,13 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               )}
 
               <View style={styles.infoRow}>
-                <MaterialCommunityIcons name="account-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="account-outline" size={20} color={colors.gray500} />
                 <Text style={styles.infoLabel}>{t('profile.nickname')}</Text>
                 <Text style={styles.infoValue}>{profile?.nickname || '-'}</Text>
               </View>
 
               <View style={[styles.infoRow, styles.lastRow]}>
-                <MaterialCommunityIcons name="calendar-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={20} color={colors.gray500} />
                 <Text style={styles.infoLabel}>{t('profile.registeredOn')}</Text>
                 <Text style={styles.infoValue}>
                   {profile?.created_at ? formatDate(profile.created_at) : '-'}
@@ -267,45 +268,45 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
           <Text style={[styles.sectionTitle, { marginBottom: 16 }]}>{t('profile.settings')}</Text>
 
           <TouchableOpacity style={styles.settingRow} onPress={handleLeaveReview}>
-            <MaterialCommunityIcons name="star-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="star-outline" size={22} color={colors.gray700} />
             <Text style={styles.settingText}>{t('profile.leaveReview')}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={colors.gray400} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingRow} onPress={() => setShowPrivacyModal(true)}>
-            <MaterialCommunityIcons name="shield-check-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="shield-check-outline" size={22} color={colors.gray700} />
             <Text style={styles.settingText}>{t('profile.privacy')}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={colors.gray400} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingRow} onPress={() => setShowTermsModal(true)}>
-            <MaterialCommunityIcons name="file-document-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="file-document-outline" size={22} color={colors.gray700} />
             <Text style={styles.settingText}>{t('profile.terms')}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={colors.gray400} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingRow} onPress={handleSupport}>
-            <MaterialCommunityIcons name="help-circle-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="help-circle-outline" size={22} color={colors.gray700} />
             <Text style={styles.settingText}>{t('profile.support')}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={colors.gray400} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.settingRow}
             onPress={() => setShowLicensesModal(true)}
           >
-            <MaterialCommunityIcons name="file-document-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="file-document-outline" size={22} color={colors.gray700} />
             <Text style={styles.settingText}>{t('profile.licenses')}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={colors.gray400} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.settingRow, styles.lastRow]}
             onPress={handleDeleteAccount}
           >
-            <MaterialCommunityIcons name="trash-can-outline" size={22} color="#FF3B30" />
+            <MaterialCommunityIcons name="trash-can-outline" size={22} color={colors.error} />
             <Text style={[styles.settingText, styles.deleteAccountText]}>{t('profile.deleteAccount')}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={colors.gray400} />
           </TouchableOpacity>
         </View>
 
@@ -316,10 +317,10 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color="#FF3B30" />
+            <ActivityIndicator color={colors.error} />
           ) : (
             <>
-              <MaterialCommunityIcons name="logout" size={22} color="#FF3B30" />
+              <MaterialCommunityIcons name="logout" size={22} color={colors.error} />
               <Text style={styles.logoutText}>{t('auth.logout')}</Text>
             </>
           )}
@@ -339,8 +340,8 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
         onConfirm={confirmLogout}
         onCancel={() => setShowLogoutDialog(false)}
         icon="log-out-outline"
-        iconColor="#FF3B30"
-        confirmButtonColor="#FF3B30"
+        iconColor={colors.error}
+        confirmButtonColor={colors.error}
       />
 
       {/* Delete Account Modal */}
@@ -363,7 +364,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               onPress={() => setShowLicensesModal(false)}
               style={styles.headerButton}
             >
-              <MaterialCommunityIcons name="close" size={28} color="#666" />
+              <MaterialCommunityIcons name="close" size={28} color={colors.gray500} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('profile.licenses')}</Text>
             <View style={styles.headerButton} />
@@ -583,7 +584,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               onPress={() => setShowPrivacyModal(false)}
               style={styles.headerButton}
             >
-              <MaterialCommunityIcons name="close" size={28} color="#666" />
+              <MaterialCommunityIcons name="close" size={28} color={colors.gray500} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('profile.privacyTitle')}</Text>
             <View style={styles.headerButton} />
@@ -688,7 +689,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               onPress={() => setShowTermsModal(false)}
               style={styles.headerButton}
             >
-              <MaterialCommunityIcons name="close" size={28} color="#666" />
+              <MaterialCommunityIcons name="close" size={28} color={colors.gray500} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('profile.termsTitle')}</Text>
             <View style={styles.headerButton} />
@@ -800,11 +801,11 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
   },
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   contentContainer: {
     paddingHorizontal: 20,
@@ -816,9 +817,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 12,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.gray200,
   },
   headerButton: {
     padding: 4,
@@ -830,7 +831,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   avatarSection: {
     alignItems: 'center',
@@ -845,33 +846,33 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.gray900,
     justifyContent: 'center',
     alignItems: 'center',
   },
   avatarText: {
     fontSize: 40,
     fontWeight: '700',
-    color: '#BDEEE7',
+    color: colors.primary,
   },
   nicknameDisplay: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: colors.gray900,
     marginBottom: 4,
   },
   email: {
     fontSize: 14,
-    color: '#666',
+    color: colors.gray500,
   },
   section: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     padding: 20,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.5,
     shadowRadius: 16,
@@ -886,7 +887,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#999',
+    color: colors.gray400,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -898,7 +899,7 @@ const styles = StyleSheet.create({
   editButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#007AFF',
+    color: colors.link,
   },
   inputContainer: {
     marginBottom: 16,
@@ -906,39 +907,39 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: colors.gray700,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#1A1A1A',
+    color: colors.gray900,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: colors.gray200,
   },
   errorContainer: {
-    backgroundColor: '#FFEBEE',
+    backgroundColor: colors.errorLight,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
   errorText: {
     fontSize: 14,
-    color: '#D32F2F',
+    color: colors.errorText,
     textAlign: 'center',
   },
   successContainer: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: colors.transparent.success15,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
   successText: {
     fontSize: 14,
-    color: '#2E7D32',
+    color: colors.success,
     textAlign: 'center',
   },
   editButtons: {
@@ -947,7 +948,7 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
@@ -955,11 +956,11 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
   },
   saveButton: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.gray900,
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
@@ -970,24 +971,24 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFF',
+    color: colors.white,
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    borderBottomColor: colors.gray100,
   },
   infoLabel: {
     fontSize: 15,
-    color: '#666',
+    color: colors.gray500,
     marginLeft: 12,
     flex: 1,
   },
   infoValue: {
     fontSize: 15,
-    color: '#1A1A1A',
+    color: colors.gray900,
     fontWeight: '500',
   },
   settingRow: {
@@ -995,32 +996,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    borderBottomColor: colors.gray100,
   },
   lastRow: {
     borderBottomWidth: 0,
   },
   settingText: {
     fontSize: 16,
-    color: '#1A1A1A',
+    color: colors.gray900,
     marginLeft: 12,
     flex: 1,
   },
   deleteAccountText: {
-    color: '#FF3B30',
+    color: colors.error,
   },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     padding: 16,
     marginBottom: 16,
     gap: 8,
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.5,
     shadowRadius: 16,
@@ -1029,17 +1030,17 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FF3B30',
+    color: colors.error,
   },
   version: {
     textAlign: 'center',
     fontSize: 12,
-    color: '#999',
+    color: colors.gray400,
     marginBottom: 20,
   },
   licensesModalContainer: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
   },
   licensesHeader: {
     flexDirection: 'row',
@@ -1047,13 +1048,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 12,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.gray200,
   },
   licensesContent: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   licensesContentContainer: {
     padding: 20,
@@ -1061,82 +1062,82 @@ const styles = StyleSheet.create({
   },
   licensesIntro: {
     fontSize: 15,
-    color: '#666',
+    color: colors.gray500,
     marginBottom: 20,
     lineHeight: 22,
   },
   licenseCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E5E5EA',
+    borderColor: colors.gray200,
   },
   licenseTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: colors.gray900,
     marginBottom: 8,
   },
   licenseDescription: {
     fontSize: 14,
-    color: '#666',
+    color: colors.gray500,
     marginBottom: 12,
     lineHeight: 20,
   },
   licenseType: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#007AFF',
+    color: colors.link,
     marginBottom: 8,
   },
   licenseCopyright: {
     fontSize: 12,
-    color: '#999',
+    color: colors.gray400,
     marginBottom: 12,
   },
   licenseText: {
     fontSize: 12,
-    color: '#666',
+    color: colors.gray500,
     lineHeight: 18,
     marginBottom: 8,
   },
   licenseLink: {
     fontSize: 12,
-    color: '#007AFF',
+    color: colors.link,
     marginBottom: 12,
     textDecorationLine: 'underline',
   },
   privacyLastUpdated: {
     fontSize: 12,
-    color: '#999',
+    color: colors.gray400,
     marginBottom: 16,
     fontStyle: 'italic',
   },
   privacyIntro: {
     fontSize: 15,
-    color: '#666',
+    color: colors.gray500,
     marginBottom: 24,
     lineHeight: 22,
   },
   privacySectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: colors.gray900,
     marginTop: 20,
     marginBottom: 12,
   },
   privacySubtitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#333',
+    color: colors.gray700,
     marginTop: 12,
     marginBottom: 8,
   },
   privacyText: {
     fontSize: 14,
-    color: '#666',
+    color: colors.gray500,
     lineHeight: 21,
     marginBottom: 8,
   },

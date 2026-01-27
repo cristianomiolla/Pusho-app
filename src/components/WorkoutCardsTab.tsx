@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ModernCard } from './ModernCard';
 import { WorkoutCardEditor } from './WorkoutCardEditor';
 import { WorkoutCard } from '../types/workout';
+import { colors } from '../theme';
 
 interface WorkoutCardsTabProps {
   workoutCards: WorkoutCard[];
@@ -116,7 +117,7 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
             <MaterialCommunityIcons
               name={card.isFavorite ? 'star' : 'star-outline'}
               size={18}
-              color={card.isFavorite ? '#FFD700' : '#999'}
+              color={card.isFavorite ? colors.gold : colors.gray400}
             />
           </TouchableOpacity>
         </View>
@@ -124,17 +125,17 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
         {/* Metriche come chip */}
         <View style={styles.sessionContent}>
           <View style={styles.chip}>
-            <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
+            <MaterialCommunityIcons name="arm-flex-outline" size={15} color={colors.gray500} />
             <Text style={styles.chipText}>{card.repsPerSet}</Text>
           </View>
 
           <View style={styles.chip}>
-            <MaterialCommunityIcons name="repeat" size={15} color="#666" />
+            <MaterialCommunityIcons name="repeat" size={15} color={colors.gray500} />
             <Text style={styles.chipText}>{card.sets}</Text>
           </View>
 
           <View style={styles.chip}>
-            <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
+            <MaterialCommunityIcons name="clock-outline" size={15} color={colors.gray500} />
             <Text style={styles.chipText}>{formatRestTime(card.restTime)}</Text>
           </View>
 
@@ -183,7 +184,7 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
             </View>
           ) : (
             <View style={styles.emptyState}>
-              <MaterialCommunityIcons name="clipboard-outline" size={64} color="#E5E5EA" />
+              <MaterialCommunityIcons name="clipboard-outline" size={64} color={colors.gray200} />
               <Text style={styles.emptyText}>{t('cards.noCards')}</Text>
               <Text style={styles.emptySubtext}>
                 {t('cards.createFirst')}
@@ -199,7 +200,7 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
         onPress={handleOpenCreateModal}
         activeOpacity={0.8}
       >
-        <MaterialCommunityIcons name="plus" size={32} color="#000" />
+        <MaterialCommunityIcons name="plus" size={32} color={colors.black} />
       </TouchableOpacity>
 
       {/* Modal Creazione/Modifica Scheda */}
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 16,
     paddingHorizontal: 4,
   },
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   sessionTitle: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     flex: 1,
     marginRight: 8,
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: colors.gray100,
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 16,
@@ -285,20 +286,20 @@ const styles = StyleSheet.create({
   chipText: {
     fontSize: 14,
     fontFamily: 'Agdasima-Bold',
-    color: '#444',
+    color: colors.gray700,
   },
   presetChip: {
     marginLeft: 'auto',
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
   },
   presetChipText: {
     fontSize: 14,
     fontFamily: 'Agdasima-Bold',
-    color: '#1A6B5C',
+    color: colors.primaryDark,
   },
   variantText: {
     fontSize: 13,
-    color: '#666',
+    color: colors.gray500,
     marginTop: 10,
     fontStyle: 'italic',
   },
@@ -309,12 +310,12 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     marginTop: 16,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: colors.gray400,
     marginTop: 8,
   },
   fab: {
@@ -323,10 +324,10 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#BDEEE7',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.6,
     shadowRadius: 16,

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { colors } from '../../theme';
 
 interface LockedFeatureSectionProps {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ export const LockedFeatureSection: React.FC<LockedFeatureSectionProps> = ({
       {/* Overlay bloccato */}
       <View style={styles.overlay}>
         <View style={styles.lockBadge}>
-          <MaterialCommunityIcons name="lock" size={24} color="#000" />
+          <MaterialCommunityIcons name="lock" size={24} color={colors.black} />
           <Text style={styles.lockText}>{t('community.comingSoon')}</Text>
         </View>
       </View>
@@ -53,9 +54,9 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     borderRadius: 24,
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   lockText: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
   },
 });

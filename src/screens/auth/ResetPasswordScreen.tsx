@@ -18,6 +18,7 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from '../../services/auth.service';
+import { colors } from '../../theme';
 
 const SUPABASE_AUTH_TOKEN_KEY = 'sb-ykkurwsutpujavfjtvra-auth-token';
 
@@ -140,7 +141,7 @@ export const ResetPasswordScreen: React.FC<ResetPasswordScreenProps> = ({
               <TextInput
                 style={[styles.input, fieldErrors.password && styles.inputError]}
                 placeholder={t('auth.passwordPlaceholder')}
-                placeholderTextColor="#999"
+                placeholderTextColor={colors.gray400}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -159,7 +160,7 @@ export const ResetPasswordScreen: React.FC<ResetPasswordScreenProps> = ({
               <TextInput
                 style={[styles.input, fieldErrors.confirmPassword && styles.inputError]}
                 placeholder={t('auth.confirmPasswordPlaceholderFull')}
-                placeholderTextColor="#999"
+                placeholderTextColor={colors.gray400}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
@@ -185,7 +186,7 @@ export const ResetPasswordScreen: React.FC<ResetPasswordScreenProps> = ({
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color="#FFF" />
+                <ActivityIndicator color={colors.white} />
               ) : (
                 <Text style={styles.resetButtonText}>{t('auth.setNewPassword')}</Text>
               )}
@@ -200,7 +201,7 @@ export const ResetPasswordScreen: React.FC<ResetPasswordScreenProps> = ({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
@@ -217,12 +218,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: colors.gray900,
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: colors.gray500,
     lineHeight: 24,
   },
   form: {
@@ -234,50 +235,50 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: colors.gray700,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#1A1A1A',
+    color: colors.gray900,
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 3,
   },
   inputError: {
-    borderColor: '#FF3B30',
+    borderColor: colors.error,
   },
   fieldError: {
     fontSize: 12,
-    color: '#FF3B30',
+    color: colors.error,
     marginTop: 4,
   },
   hint: {
     fontSize: 12,
-    color: '#999',
+    color: colors.gray400,
     marginTop: 4,
   },
   errorContainer: {
-    backgroundColor: '#FFEBEE',
+    backgroundColor: colors.transparent.error10,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
   errorText: {
     fontSize: 14,
-    color: '#D32F2F',
+    color: colors.error,
     textAlign: 'center',
   },
   resetButton: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.gray900,
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
   resetButtonText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FFF',
+    color: colors.white,
   },
   // Success screen styles
   successContainer: {
@@ -304,19 +305,19 @@ const styles = StyleSheet.create({
   successTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: colors.gray900,
     marginBottom: 16,
     textAlign: 'center',
   },
   successText: {
     fontSize: 16,
-    color: '#666',
+    color: colors.gray500,
     textAlign: 'center',
     marginBottom: 32,
     lineHeight: 24,
   },
   continueButton: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.gray900,
     borderRadius: 12,
     paddingVertical: 14,
     paddingHorizontal: 32,
@@ -324,6 +325,6 @@ const styles = StyleSheet.create({
   continueButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFF',
+    color: colors.white,
   },
 });

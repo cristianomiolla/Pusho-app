@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { colors } from '../theme';
 
 interface ConfirmDialogProps {
   visible: boolean;
@@ -25,8 +26,8 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   onConfirm,
   onCancel,
   icon = 'alert-circle-outline',
-  iconColor = '#FF3B30',
-  confirmButtonColor = '#FF3B30',
+  iconColor = colors.error,
+  confirmButtonColor = colors.error,
 }) => {
   const { t } = useTranslation();
 
@@ -35,7 +36,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   // Determina il colore di sfondo in base al tipo di icona
   const getIconBackgroundColor = () => {
     if (icon === 'check-circle-outline' || icon === 'check-circle') {
-      return '#34C75915'; // Verde con trasparenza
+      return colors.transparent.success15;
     }
     return `${iconColor}15`; // Default: colore icona con trasparenza
   };
@@ -88,21 +89,21 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   dialog: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     padding: 24,
     width: '100%',
     maxWidth: 340,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
@@ -119,13 +120,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 12,
     textAlign: 'center',
   },
   message: {
     fontSize: 16,
-    color: '#666',
+    color: colors.gray500,
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 24,
@@ -143,19 +144,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cancelButton: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.gray50,
   },
   confirmButton: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: colors.error,
   },
   cancelText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
   },
   confirmText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFF',
+    color: colors.white,
   },
 });

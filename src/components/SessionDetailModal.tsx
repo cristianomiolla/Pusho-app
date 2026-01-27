@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'rea
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { WorkoutSession } from '../types/workout';
+import { colors } from '../theme';
 
 interface SessionDetailModalProps {
   visible: boolean;
@@ -11,9 +12,9 @@ interface SessionDetailModalProps {
 }
 
 const getQualityColor = (score: number): string => {
-  if (score >= 70) return '#4CAF50'; // Verde
-  if (score >= 40) return '#FFC107'; // Giallo
-  return '#F44336'; // Rosso
+  if (score >= 70) return colors.success;
+  if (score >= 40) return colors.warning;
+  return colors.error;
 };
 
 export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
@@ -76,7 +77,7 @@ export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
               <MaterialCommunityIcons
                 name={isCardSession ? "clipboard-text-outline" : "arm-flex-outline"}
                 size={48}
-                color="#555"
+                color={colors.gray500}
               />
             </View>
 
@@ -91,14 +92,14 @@ export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
             {/* Summary */}
             <View style={styles.summaryContainer}>
               <View style={styles.statCard}>
-                <MaterialCommunityIcons name="arm-flex-outline" size={26} color="#666" />
+                <MaterialCommunityIcons name="arm-flex-outline" size={26} color={colors.gray500} />
                 <Text style={styles.statValue}>{session.totalPushups}</Text>
                 <Text style={styles.statLabel}>{t('workout.totalPushups')}</Text>
               </View>
 
               {isCardSession && (
                 <View style={styles.statCard}>
-                  <MaterialCommunityIcons name="repeat" size={26} color="#666" />
+                  <MaterialCommunityIcons name="repeat" size={26} color={colors.gray500} />
                   <Text style={styles.statValue}>
                     {session.completedSets || session.sets.length}
                     {session.targetSets && `/${session.targetSets}`}
@@ -108,7 +109,7 @@ export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
               )}
 
               <View style={styles.statCard}>
-                <MaterialCommunityIcons name="timer-outline" size={26} color="#666" />
+                <MaterialCommunityIcons name="timer-outline" size={26} color={colors.gray500} />
                 <Text style={styles.statValue}>{timeString}</Text>
                 <Text style={styles.statLabel}>{t('workout.totalTime')}</Text>
               </View>
@@ -145,20 +146,20 @@ export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   content: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     width: '100%',
     maxWidth: 340,
     maxHeight: '85%',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.3,
     shadowRadius: 30,
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
@@ -180,13 +181,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#1A1A1A',
+    color: colors.gray900,
     textAlign: 'center',
     marginBottom: 8,
   },
   dateText: {
     fontSize: 14,
-    color: '#444',
+    color: colors.gray700,
     textAlign: 'center',
     textTransform: 'capitalize',
     marginBottom: 20,
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: colors.gray100,
     borderRadius: 12,
     padding: 12,
     alignItems: 'center',
@@ -208,17 +209,17 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   statLabel: {
     fontSize: 11,
-    color: '#666',
+    color: colors.gray500,
     textAlign: 'center',
     fontWeight: '500',
   },
   qualityCard: {
     width: '100%',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 16,
     padding: 16,
     marginBottom: 20,
@@ -245,13 +246,13 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 14,
     borderRadius: 16,
-    backgroundColor: '#000',
+    backgroundColor: colors.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
   closeButtonText: {
     fontSize: 16,
-    color: '#FFF',
+    color: colors.white,
     fontWeight: '600',
   },
 });

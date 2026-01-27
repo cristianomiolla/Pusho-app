@@ -22,6 +22,7 @@ import * as cardsService from '../services/cards.service';
 import * as workoutService from '../services/workout.service';
 import type { Pose } from '../types/pose';
 import type { WorkoutCard, GuidedWorkoutSession } from '../types/workout';
+import { colors } from '../theme';
 
 export const PushupDetectionScreen = () => {
   const { t } = useTranslation();
@@ -518,7 +519,7 @@ export const PushupDetectionScreen = () => {
     return (
       <View style={styles.container}>
         <View style={styles.permissionContainer}>
-          <MaterialCommunityIcons name="camera-outline" size={64} color="#BDEEE7" />
+          <MaterialCommunityIcons name="camera-outline" size={64} color={colors.primary} />
           <Text style={styles.permissionTitle}>
             {t('workout.cameraPermissionRequired')}
           </Text>
@@ -628,12 +629,12 @@ export const PushupDetectionScreen = () => {
             <View style={styles.modeBadgeCard}>
               {guidedSession ? (
                 <>
-                  <MaterialCommunityIcons name="file-document" size={18} color="#BDEEE7" />
+                  <MaterialCommunityIcons name="file-document" size={18} color={colors.primary} />
                   <Text style={styles.modeBadgeText}>{guidedSession.card.name}</Text>
                 </>
               ) : (
                 <>
-                  <MaterialCommunityIcons name="infinity" size={18} color="#BDEEE7" />
+                  <MaterialCommunityIcons name="infinity" size={18} color={colors.primary} />
                   <Text style={styles.modeBadgeText}>{t('workout.freeWorkout')}</Text>
                 </>
               )}
@@ -654,14 +655,14 @@ export const PushupDetectionScreen = () => {
                     {/* Info a destra, impilate verticalmente */}
                     <View style={styles.guidedInfoSection}>
                       <View style={styles.guidedInfoItem}>
-                        <MaterialCommunityIcons name="repeat" size={20} color="#BDEEE7" />
+                        <MaterialCommunityIcons name="repeat" size={20} color={colors.primary} />
                         <Text style={styles.guidedInfoValue}>
                           {guidedSession.currentSet}/{guidedSession.card.sets}
                         </Text>
                         <Text style={styles.guidedInfoLabel}>{t('workout.sets')}</Text>
                       </View>
                       <View style={styles.guidedInfoItem}>
-                        <MaterialCommunityIcons name="timer-outline" size={20} color="#BDEEE7" />
+                        <MaterialCommunityIcons name="timer-outline" size={20} color={colors.primary} />
                         <Text style={styles.guidedInfoValue}>
                           {formatTime(getSessionTime())}
                         </Text>
@@ -682,7 +683,7 @@ export const PushupDetectionScreen = () => {
                     {/* Info a destra */}
                     <View style={styles.freeInfoSection}>
                       <View style={styles.guidedInfoItem}>
-                        <MaterialCommunityIcons name="timer-outline" size={20} color="#BDEEE7" />
+                        <MaterialCommunityIcons name="timer-outline" size={20} color={colors.primary} />
                         <Text style={styles.guidedInfoValue}>
                           {formatTime(freeWorkoutTime)}
                         </Text>
@@ -691,7 +692,7 @@ export const PushupDetectionScreen = () => {
                         style={styles.resetButton}
                         onPress={handleFreeReset}
                       >
-                        <MaterialCommunityIcons name="refresh" size={20} color="#000" />
+                        <MaterialCommunityIcons name="refresh" size={20} color={colors.black} />
                         <Text style={styles.resetButtonText}>RESET</Text>
                       </TouchableOpacity>
                     </View>
@@ -759,7 +760,7 @@ export const PushupDetectionScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.black,
   },
   overlay: {
     flex: 1,
@@ -773,11 +774,11 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   topCard: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: colors.transparent.black30,
     borderRadius: 16,
     padding: 20,
     borderWidth: 1,
-    borderColor: 'rgba(189, 238, 231, 0.2)',
+    borderColor: colors.transparent.primary20,
   },
   topCardLandscape: {
     alignSelf: 'flex-start',
@@ -792,17 +793,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     gap: 8,
-    backgroundColor: 'rgba(189, 238, 231, 0.15)',
+    backgroundColor: colors.transparent.primary15,
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: 'rgba(189, 238, 231, 0.3)',
+    borderColor: colors.transparent.primary30,
   },
   modeBadgeText: {
     fontSize: 16,
-    color: '#BDEEE7',
+    color: colors.primary,
     fontFamily: 'Agdasima-Bold',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -820,12 +821,12 @@ const styles = StyleSheet.create({
   guidedCounterText: {
     fontSize: 64,
     fontFamily: 'Agdasima-Bold',
-    color: '#BDEEE7',
+    color: colors.primary,
     lineHeight: 68,
   },
   guidedCounterGoal: {
     fontSize: 36,
-    color: 'rgba(189, 238, 231, 0.5)',
+    color: colors.transparent.primary50,
   },
   guidedInfoSection: {
     gap: 10,
@@ -834,7 +835,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: 'rgba(189, 238, 231, 0.1)',
+    backgroundColor: colors.transparent.primary10,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
@@ -842,12 +843,12 @@ const styles = StyleSheet.create({
   guidedInfoValue: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#BDEEE7',
+    color: colors.primary,
   },
   guidedInfoLabel: {
     fontSize: 14,
     fontWeight: '500',
-    color: 'rgba(189, 238, 231, 0.6)',
+    color: colors.transparent.primary60,
     marginLeft: -4,
   },
   // Stili modalità libera
@@ -867,7 +868,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
@@ -875,11 +876,11 @@ const styles = StyleSheet.create({
   resetButtonText: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#000',
+    color: colors.black,
   },
   counterText: {
     fontSize: 64,
-    color: '#BDEEE7',
+    color: colors.primary,
     fontFamily: 'Agdasima-Bold',
   },
   counterTextLandscape: {
@@ -892,12 +893,12 @@ const styles = StyleSheet.create({
   },
   centerInstruction: {
     fontSize: 28,
-    color: '#FFFFFF',
+    color: colors.white,
     fontWeight: '700',
     textAlign: 'center',
     letterSpacing: 1.5,
     textTransform: 'uppercase',
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowColor: colors.transparent.black80,
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
   },
@@ -906,7 +907,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   message: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 16,
     textAlign: 'center',
     paddingHorizontal: 40,
@@ -919,27 +920,27 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   permissionTitle: {
-    color: '#BDEEE7',
+    color: colors.primary,
     fontSize: 22,
     fontWeight: '700',
     textAlign: 'center',
     marginTop: 16,
   },
   permissionSubtitle: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.transparent.white70,
     fontSize: 16,
     textAlign: 'center',
     lineHeight: 24,
   },
   permissionButton: {
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 12,
     marginTop: 16,
   },
   permissionButtonText: {
-    color: '#000',
+    color: colors.black,
     fontSize: 16,
     fontWeight: '700',
   },

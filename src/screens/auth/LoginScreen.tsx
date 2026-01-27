@@ -19,6 +19,7 @@ import {
   validatePassword,
   translateAuthError,
 } from '../../services/auth.service';
+import { colors } from '../../theme';
 
 interface LoginScreenProps {
   onNavigateToRegister: () => void;
@@ -103,7 +104,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               <TextInput
                 style={[styles.input, fieldErrors.email && styles.inputError]}
                 placeholder={t('auth.emailPlaceholder')}
-                placeholderTextColor="#999"
+                placeholderTextColor={colors.gray400}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -122,7 +123,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               <TextInput
                 style={[styles.input, fieldErrors.password && styles.inputError]}
                 placeholder={t('auth.passwordPlaceholder')}
-                placeholderTextColor="#999"
+                placeholderTextColor={colors.gray400}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -156,7 +157,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color="#FFF" />
+                <ActivityIndicator color={colors.white} />
               ) : (
                 <Text style={styles.loginButtonText}>{t('auth.login')}</Text>
               )}
@@ -179,7 +180,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
@@ -202,13 +203,13 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 42,
     fontFamily: 'Agdasima-Bold',
-    color: '#1A1A1A',
+    color: colors.gray900,
     letterSpacing: 4,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: colors.gray500,
     fontWeight: '500',
   },
   form: {
@@ -220,30 +221,30 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: colors.gray700,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#1A1A1A',
+    color: colors.gray900,
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 3,
   },
   inputError: {
-    borderColor: '#FF3B30',
+    borderColor: colors.error,
   },
   fieldError: {
     fontSize: 12,
-    color: '#FF3B30',
+    color: colors.error,
     marginTop: 4,
   },
   forgotButton: {
@@ -252,22 +253,22 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     fontSize: 14,
-    color: '#007AFF',
+    color: colors.link,
     fontWeight: '500',
   },
   errorContainer: {
-    backgroundColor: '#FFEBEE',
+    backgroundColor: colors.transparent.error10,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
   errorText: {
     fontSize: 14,
-    color: '#D32F2F',
+    color: colors.error,
     textAlign: 'center',
   },
   loginButton: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.gray900,
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FFF',
+    color: colors.white,
   },
   registerContainer: {
     flexDirection: 'row',
@@ -287,11 +288,11 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontSize: 14,
-    color: '#666',
+    color: colors.gray500,
   },
   registerLink: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#007AFF',
+    color: colors.link,
   },
 });

@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { SpotlightUser, BadgeType } from '../../types/community';
+import { colors, gradients } from '../../theme';
 
 interface SpotlightCardProps {
   spotlight: SpotlightUser;
@@ -32,7 +33,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({ spotlight }) => {
 
       {/* Card principale con gradiente */}
       <LinearGradient
-        colors={['#BDEEE7', '#E6F9F7']}
+        colors={gradients.primaryLight}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradientCard}
@@ -59,7 +60,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({ spotlight }) => {
               {spotlight.user.nickname}
             </Text>
             <View style={styles.locationRow}>
-              <MaterialCommunityIcons name="map-marker" size={14} color="#00A896" />
+              <MaterialCommunityIcons name="map-marker" size={14} color={colors.primaryDark} />
               <Text style={styles.location} numberOfLines={1}>
                 {spotlight.user.location.city}
               </Text>
@@ -71,7 +72,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({ spotlight }) => {
         <View style={styles.statsSection}>
           {spotlight.highlightStats.map((stat, index) => (
             <View key={index} style={styles.statItem}>
-              <MaterialCommunityIcons name="check-circle" size={16} color="#00A896" />
+              <MaterialCommunityIcons name="check-circle" size={16} color={colors.primaryDark} />
               <Text style={styles.statLabel}>{stat.label}</Text>
               {stat.value && (
                 <Text style={styles.statValue}> • {stat.value}</Text>
@@ -102,14 +103,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 16,
     paddingHorizontal: 4,
   },
   subtitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     letterSpacing: 0.2,
     paddingHorizontal: 4,
     marginTop: -12,
@@ -119,8 +120,8 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 20,
     borderWidth: 2,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.5,
     shadowRadius: 16,
@@ -138,24 +139,24 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderWidth: 3,
-    borderColor: '#FFF',
+    borderColor: colors.white,
   },
   avatarPlaceholder: {
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#000',
+    backgroundColor: colors.black,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 3,
-    borderColor: '#FFF',
+    borderColor: colors.white,
   },
   avatarPlaceholderText: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#BDEEE7',
+    color: colors.primary,
   },
   userInfo: {
     flex: 1,
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   nickname: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     marginBottom: 4,
   },
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
   location: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#00A896',
+    color: colors.primaryDark,
     letterSpacing: 0.1,
   },
   statsSection: {
@@ -189,28 +190,28 @@ const styles = StyleSheet.create({
   statLabel: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.1,
     flex: 1,
   },
   statValue: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#00A896',
+    color: colors.primaryDark,
     letterSpacing: 0.1,
   },
   achievementBadge: {
     marginTop: 16,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: '#FFD700',
+    backgroundColor: colors.gold,
     borderRadius: 16,
     alignItems: 'center',
   },
   achievementText: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#000',
+    color: colors.black,
     letterSpacing: 0.3,
     textAlign: 'center',
   },

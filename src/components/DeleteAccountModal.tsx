@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { colors } from '../theme';
 
 interface DeleteAccountModalProps {
   visible: boolean;
@@ -73,7 +74,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
         <View style={styles.dialog}>
           {/* Icon */}
           <View style={styles.iconContainer}>
-            <MaterialCommunityIcons name="alert-outline" size={48} color="#FF3B30" />
+            <MaterialCommunityIcons name="alert-outline" size={48} color={colors.error} />
           </View>
 
           {/* Title */}
@@ -89,7 +90,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
               <TextInput
                 style={styles.input}
                 placeholder={t('auth.passwordPlaceholder')}
-                placeholderTextColor="#999"
+                placeholderTextColor={colors.gray400}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
@@ -104,7 +105,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
                 <MaterialCommunityIcons
                   name={showPassword ? 'eye-off-outline' : 'eye-outline'}
                   size={22}
-                  color="#666"
+                  color={colors.gray500}
                 />
               </TouchableOpacity>
             </View>
@@ -135,7 +136,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
               disabled={loading}
             >
               {loading ? (
-                <ActivityIndicator color="#FFF" size="small" />
+                <ActivityIndicator color={colors.white} size="small" />
               ) : (
                 <Text style={styles.confirmText}>{t('common.delete')}</Text>
               )}
@@ -150,21 +151,21 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.transparent.black50,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   dialog: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     padding: 24,
     width: '100%',
     maxWidth: 340,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#BDEEE7',
-    shadowColor: '#BDEEE7',
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#FF3B3015',
+    backgroundColor: colors.transparent.error15,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -182,13 +183,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     marginBottom: 12,
     textAlign: 'center',
   },
   message: {
     fontSize: 14,
-    color: '#666',
+    color: colors.gray500,
     textAlign: 'center',
     lineHeight: 20,
     marginBottom: 20,
@@ -200,29 +201,29 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: colors.gray700,
     marginBottom: 8,
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: colors.gray200,
   },
   input: {
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#1A1A1A',
+    color: colors.gray900,
   },
   eyeButton: {
     padding: 12,
   },
   errorContainer: {
-    backgroundColor: '#FFEBEE',
+    backgroundColor: colors.errorLight,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 14,
-    color: '#D32F2F',
+    color: colors.errorText,
     textAlign: 'center',
   },
   buttonContainer: {
@@ -246,10 +247,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cancelButton: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   confirmButton: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: colors.error,
   },
   buttonDisabled: {
     opacity: 0.7,
@@ -257,11 +258,11 @@ const styles = StyleSheet.create({
   cancelText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
   },
   confirmText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFF',
+    color: colors.white,
   },
 });

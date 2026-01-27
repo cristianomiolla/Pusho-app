@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoginScreen, RegisterScreen, ForgotPasswordScreen } from '../screens/auth';
+import { colors } from '../theme';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -15,7 +16,7 @@ export const AuthNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: '#F5F5F7' },
+        contentStyle: { backgroundColor: colors.background },
         animation: 'slide_from_right',
       }}
     >

@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { Canvas, Circle, Line, vec } from '@shopify/react-native-skia';
 import type { Pose } from '../types/pose';
 import { resolveCoordinates, type CoordinateTransformOptions } from '../utils/coordinateUtils';
+import { colors } from '../theme';
 
 interface Props {
   pose: Pose;
@@ -102,7 +103,7 @@ export const SkeletonOverlay: React.FC<Props> = ({
               key="neck"
               p1={p1}
               p2={p2}
-              color="#BDEEE7"
+              color={colors.primary}
               style="stroke"
               strokeWidth={4}
             />
@@ -135,7 +136,7 @@ export const SkeletonOverlay: React.FC<Props> = ({
             key={`line-${index}`}
             p1={p1}
             p2={p2}
-            color="#BDEEE7"
+            color={colors.primary}
             style="stroke"
             strokeWidth={4}
           />
@@ -154,7 +155,7 @@ export const SkeletonOverlay: React.FC<Props> = ({
             cx={cx}
             cy={cy}
             r={6}
-            color="#BDEEE7"
+            color={colors.primary}
           />
         );
       })()}
@@ -182,7 +183,7 @@ export const SkeletonOverlay: React.FC<Props> = ({
             cx={cx}
             cy={cy}
             r={6}
-            color="#BDEEE7"
+            color={colors.primary}
           />
         );
       })}

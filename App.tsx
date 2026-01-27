@@ -7,6 +7,7 @@ import { AuthProvider } from './src/contexts/AuthContext';
 import * as Font from 'expo-font';
 import { View, ActivityIndicator } from 'react-native';
 import './src/i18n';
+import { colors } from './src/theme';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -24,8 +25,8 @@ export default function App() {
 
   if (!fontsLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000' }}>
-        <ActivityIndicator size="large" color="#BDEEE7" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.black }}>
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }

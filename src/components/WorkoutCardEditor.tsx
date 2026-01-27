@@ -18,6 +18,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ModernCard } from './ModernCard';
 import { haptics } from '../utils/haptics';
 import { ConfirmDialog } from './ConfirmDialog';
+import { colors } from '../theme';
 
 interface WorkoutCardEditorProps {
   initialName?: string;
@@ -239,7 +240,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
       {/* Header con paddingTop per safe area */}
       <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
         <TouchableOpacity onPress={onCancel} style={styles.headerButton}>
-          <MaterialCommunityIcons name="close" size={28} color="#666" />
+          <MaterialCommunityIcons name="close" size={28} color={colors.gray500} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
           {initialName ? t('cards.editCard') : t('cards.create')}
@@ -253,7 +254,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
             <MaterialCommunityIcons
               name={initialName ? "pencil" : "check"}
               size={28}
-              color={name.trim() ? (initialName ? '#666' : '#000') : '#999'}
+              color={name.trim() ? (initialName ? colors.gray500 : colors.black) : colors.gray400}
             />
           </TouchableOpacity>
         ) : (
@@ -262,7 +263,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
               onPress={handleDeleteAttempt}
               style={styles.headerButton}
             >
-              <MaterialCommunityIcons name="trash-can-outline" size={28} color="#FF3B30" />
+              <MaterialCommunityIcons name="trash-can-outline" size={28} color={colors.error} />
             </TouchableOpacity>
           )
         )}
@@ -281,7 +282,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
           <TextInput
             style={styles.nameInput}
             placeholder={t('cards.cardNamePlaceholder')}
-            placeholderTextColor="#999"
+            placeholderTextColor={colors.gray400}
             value={name}
             onChangeText={setName}
           />
@@ -302,7 +303,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
               <MaterialCommunityIcons
                 name="chevron-down"
                 size={32}
-                color={sets <= 1 ? '#CCC' : '#666'}
+                color={sets <= 1 ? colors.gray200 : colors.gray500}
               />
             </TouchableOpacity>
 
@@ -320,7 +321,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
               <MaterialCommunityIcons
                 name="chevron-up"
                 size={32}
-                color={sets >= 20 ? '#CCC' : '#666'}
+                color={sets >= 20 ? colors.gray200 : colors.gray500}
               />
             </TouchableOpacity>
           </View>
@@ -431,7 +432,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
           <TextInput
             style={styles.variantInput}
             placeholder={t('cards.notesPlaceholder')}
-            placeholderTextColor="#999"
+            placeholderTextColor={colors.gray400}
             value={variant}
             onChangeText={setVariant}
             multiline
@@ -451,8 +452,8 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
         onConfirm={handleConfirmSave}
         onCancel={handleCancelSave}
         icon="check-circle-outline"
-        iconColor="#34C759"
-        confirmButtonColor="#000"
+        iconColor={colors.success}
+        confirmButtonColor={colors.black}
       />
 
       {/* Dialog Conferma Eliminazione */}
@@ -465,7 +466,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
         icon="trash-can-outline"
-        iconColor="#FF3B30"
+        iconColor={colors.error}
       />
     </KeyboardAvoidingView>
   );
@@ -474,7 +475,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
   },
   header: {
     flexDirection: 'row',
@@ -482,9 +483,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 12,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.gray200,
   },
   headerButton: {
     padding: 4,
@@ -499,11 +500,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
   },
   content: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
   },
   contentContainer: {
     padding: 20,
@@ -516,7 +517,7 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
   },
   nameCard: {
     padding: 20,
@@ -525,7 +526,7 @@ const styles = StyleSheet.create({
   nameInput: {
     fontSize: 32,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     textAlign: 'center',
   },
   counterCard: {
@@ -541,7 +542,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -556,13 +557,13 @@ const styles = StyleSheet.create({
   counterValue: {
     fontSize: 64,
     fontFamily: 'Agdasima-Bold',
-    color: '#000',
+    color: colors.black,
     lineHeight: 72,
   },
   counterUnit: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
+    color: colors.gray500,
     marginTop: 4,
   },
   wheelPickersContainer: {
@@ -593,7 +594,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: ITEM_HEIGHT,
-    backgroundColor: '#BDEEE7',
+    backgroundColor: colors.primary,
     opacity: 0.2,
     borderRadius: 12,
     zIndex: 1,
@@ -609,18 +610,18 @@ const styles = StyleSheet.create({
   wheelItemText: {
     fontSize: 18,
     fontFamily: 'Agdasima-Bold',
-    color: '#CCC',
+    color: colors.gray200,
   },
   wheelItemTextSelected: {
     fontSize: 24,
-    color: '#000',
+    color: colors.black,
   },
   variantCard: {
     padding: 20,
   },
   variantInput: {
     fontSize: 16,
-    color: '#000',
+    color: colors.black,
     minHeight: 80,
     textAlignVertical: 'top',
   },
