@@ -75,8 +75,8 @@ export const AllenamentiScreen = () => {
   );
 
   const mainTabs = [
-    { id: 'history', label: t('home.activityTab'), icon: 'flash-outline' as const },
-    { id: 'cards', label: t('home.cardsTab'), icon: 'document-text-outline' as const },
+    { id: 'history', label: t('home.activityTab'), icon: 'lightning-bolt' as const },
+    { id: 'cards', label: t('home.cardsTab'), icon: 'file-document-outline' as const },
   ];
 
   const handleAddCard = async (newCard: Omit<WorkoutCard, 'id' | 'createdAt'>) => {

@@ -7,7 +7,7 @@ import {
   PanResponder,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { haptics } from '../utils/haptics';
 
@@ -130,7 +130,7 @@ export const SlideToStop: React.FC<SlideToStopProps> = ({ onStop }) => {
           ]}
           {...panResponder.panHandlers}
         >
-          <Ionicons name="stop" size={28} color="#FFFFFF" />
+          <MaterialCommunityIcons name="stop" size={28} color="#FFFFFF" />
         </Animated.View>
       </Animated.View>
     </View>

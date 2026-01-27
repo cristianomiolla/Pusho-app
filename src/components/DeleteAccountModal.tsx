@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 interface DeleteAccountModalProps {
@@ -73,7 +73,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
         <View style={styles.dialog}>
           {/* Icon */}
           <View style={styles.iconContainer}>
-            <Ionicons name="warning-outline" size={48} color="#FF3B30" />
+            <MaterialCommunityIcons name="alert-outline" size={48} color="#FF3B30" />
           </View>
 
           {/* Title */}
@@ -101,7 +101,7 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
                 onPress={() => setShowPassword(!showPassword)}
                 disabled={loading}
               >
-                <Ionicons
+                <MaterialCommunityIcons
                   name={showPassword ? 'eye-off-outline' : 'eye-outline'}
                   size={22}
                   color="#666"

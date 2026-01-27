@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Animated, LayoutChangeEvent } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { haptics } from '../utils/haptics';
 
 interface Tab {
   id: string;
   label: string;
-  icon?: keyof typeof Ionicons.glyphMap;
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
 }
 
 interface TabChipsProps {
@@ -67,7 +67,7 @@ export const TabChips: React.FC<TabChipsProps> = ({ tabs, activeTab, onTabChange
           >
             <View style={styles.tabContent}>
               {tab.icon && (
-                <Ionicons
+                <MaterialCommunityIcons
                   name={tab.icon}
                   size={20}
                   color={activeTab === tab.id ? '#FFF' : '#666'}

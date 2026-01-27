@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 interface RestScreenProps {
@@ -26,7 +26,7 @@ export const RestScreen: React.FC<RestScreenProps> = ({
       <View style={styles.content}>
         {/* Icon */}
         <View style={styles.iconContainer}>
-          <Ionicons name="time-outline" size={48} color="#BDEEE7" />
+          <MaterialCommunityIcons name="clock-outline" size={48} color="#BDEEE7" />
         </View>
 
         {/* Title */}
@@ -48,7 +48,7 @@ export const RestScreen: React.FC<RestScreenProps> = ({
           onPress={onSkip}
           activeOpacity={0.7}
         >
-          <Ionicons name="play-skip-forward" size={20} color="#000" />
+          <MaterialCommunityIcons name="skip-next" size={20} color="#000" />
           <Text style={styles.skipButtonText}>{t('workout.skipRest')}</Text>
         </TouchableOpacity>
       </View>

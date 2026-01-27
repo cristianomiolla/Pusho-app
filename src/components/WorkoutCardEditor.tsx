@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ModernCard } from './ModernCard';
 import { haptics } from '../utils/haptics';
 import { ConfirmDialog } from './ConfirmDialog';
@@ -239,7 +239,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
       {/* Header con paddingTop per safe area */}
       <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
         <TouchableOpacity onPress={onCancel} style={styles.headerButton}>
-          <Ionicons name="close" size={28} color="#666" />
+          <MaterialCommunityIcons name="close" size={28} color="#666" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
           {initialName ? t('cards.editCard') : t('cards.create')}
@@ -250,8 +250,8 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
             style={[styles.headerButton, !name.trim() && styles.headerButtonDisabled]}
             disabled={!name.trim()}
           >
-            <Ionicons
-              name={initialName ? "pencil" : "checkmark"}
+            <MaterialCommunityIcons
+              name={initialName ? "pencil" : "check"}
               size={28}
               color={name.trim() ? (initialName ? '#666' : '#000') : '#999'}
             />
@@ -262,7 +262,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
               onPress={handleDeleteAttempt}
               style={styles.headerButton}
             >
-              <Ionicons name="trash-outline" size={28} color="#FF3B30" />
+              <MaterialCommunityIcons name="trash-can-outline" size={28} color="#FF3B30" />
             </TouchableOpacity>
           )
         )}
@@ -299,7 +299,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
               disabled={sets <= 1}
               activeOpacity={0.7}
             >
-              <Ionicons
+              <MaterialCommunityIcons
                 name="chevron-down"
                 size={32}
                 color={sets <= 1 ? '#CCC' : '#666'}
@@ -317,7 +317,7 @@ export const WorkoutCardEditor: React.FC<WorkoutCardEditorProps> = ({
               disabled={sets >= 20}
               activeOpacity={0.7}
             >
-              <Ionicons
+              <MaterialCommunityIcons
                 name="chevron-up"
                 size={32}
                 color={sets >= 20 ? '#CCC' : '#666'}

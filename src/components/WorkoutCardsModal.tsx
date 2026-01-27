@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { haptics } from '../utils/haptics';
 import { WorkoutCard } from '../types/workout';
@@ -51,7 +51,7 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
           <View style={styles.header}>
             <Text style={styles.title}>{t('workout.selectCardTitle')}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Ionicons name="close" size={28} color="#000" />
+              <MaterialCommunityIcons name="close" size={28} color="#000" />
             </TouchableOpacity>
           </View>
 
@@ -90,7 +90,7 @@ export const WorkoutCardsModal: React.FC<WorkoutCardsModalProps> = ({
             {/* Empty State */}
             {workoutCards.length === 0 && (
               <View style={styles.emptyState}>
-                <Ionicons name="document-text-outline" size={64} color="#CCC" />
+                <MaterialCommunityIcons name="file-document-outline" size={64} color="#CCC" />
                 <Text style={styles.emptyText}>{t('workout.noCardsAvailable')}</Text>
                 <Text style={styles.emptySubtext}>
                   {t('workout.createCardFromTab')}
@@ -133,7 +133,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onPress, onToggleFavorite }) 
             onPress={handleFavoritePress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Ionicons
+            <MaterialCommunityIcons
               name={card.isFavorite ? 'star' : 'star-outline'}
               size={18}
               color={card.isFavorite ? '#FFD700' : '#999'}
@@ -144,17 +144,17 @@ const CardItem: React.FC<CardItemProps> = ({ card, onPress, onToggleFavorite }) 
         {/* Metriche come chip */}
         <View style={styles.sessionContent}>
           <View style={styles.chip}>
-            <Ionicons name="barbell" size={15} color="#666" />
+            <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
             <Text style={styles.chipText}>{card.repsPerSet}</Text>
           </View>
 
           <View style={styles.chip}>
-            <Ionicons name="repeat" size={15} color="#666" />
+            <MaterialCommunityIcons name="repeat" size={15} color="#666" />
             <Text style={styles.chipText}>{card.sets}</Text>
           </View>
 
           <View style={styles.chip}>
-            <Ionicons name="time" size={15} color="#666" />
+            <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
             <Text style={styles.chipText}>{formatRestTime(card.restTime)}</Text>
           </View>
 

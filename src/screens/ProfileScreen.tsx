@@ -14,7 +14,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { ConfirmDialog } from '../components/ConfirmDialog';
@@ -150,7 +150,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
       {/* Header con paddingTop per safe area */}
       <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
         <TouchableOpacity onPress={onClose} style={styles.headerButton}>
-          <Ionicons name="close" size={28} color="#666" />
+          <MaterialCommunityIcons name="close" size={28} color="#666" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('profile.title')}</Text>
         <View style={styles.headerButton} />
@@ -185,7 +185,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
                 style={styles.editButton}
                 onPress={() => setIsEditing(true)}
               >
-                <Ionicons name="pencil" size={16} color="#007AFF" />
+                <MaterialCommunityIcons name="pencil" size={16} color="#007AFF" />
                 <Text style={styles.editButtonText}>{t('common.edit')}</Text>
               </TouchableOpacity>
             )}
@@ -246,13 +246,13 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               )}
 
               <View style={styles.infoRow}>
-                <Ionicons name="person-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="account-outline" size={20} color="#666" />
                 <Text style={styles.infoLabel}>{t('profile.nickname')}</Text>
                 <Text style={styles.infoValue}>{profile?.nickname || '-'}</Text>
               </View>
 
               <View style={[styles.infoRow, styles.lastRow]}>
-                <Ionicons name="calendar-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={20} color="#666" />
                 <Text style={styles.infoLabel}>{t('profile.registeredOn')}</Text>
                 <Text style={styles.infoValue}>
                   {profile?.created_at ? formatDate(profile.created_at) : '-'}
@@ -267,45 +267,45 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
           <Text style={[styles.sectionTitle, { marginBottom: 16 }]}>{t('profile.settings')}</Text>
 
           <TouchableOpacity style={styles.settingRow} onPress={handleLeaveReview}>
-            <Ionicons name="star-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="star-outline" size={22} color="#333" />
             <Text style={styles.settingText}>{t('profile.leaveReview')}</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingRow} onPress={() => setShowPrivacyModal(true)}>
-            <Ionicons name="shield-checkmark-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="shield-check-outline" size={22} color="#333" />
             <Text style={styles.settingText}>{t('profile.privacy')}</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingRow} onPress={() => setShowTermsModal(true)}>
-            <Ionicons name="document-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="file-document-outline" size={22} color="#333" />
             <Text style={styles.settingText}>{t('profile.terms')}</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingRow} onPress={handleSupport}>
-            <Ionicons name="help-circle-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="help-circle-outline" size={22} color="#333" />
             <Text style={styles.settingText}>{t('profile.support')}</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.settingRow}
             onPress={() => setShowLicensesModal(true)}
           >
-            <Ionicons name="document-text-outline" size={22} color="#333" />
+            <MaterialCommunityIcons name="file-document-outline" size={22} color="#333" />
             <Text style={styles.settingText}>{t('profile.licenses')}</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.settingRow, styles.lastRow]}
             onPress={handleDeleteAccount}
           >
-            <Ionicons name="trash-outline" size={22} color="#FF3B30" />
+            <MaterialCommunityIcons name="trash-can-outline" size={22} color="#FF3B30" />
             <Text style={[styles.settingText, styles.deleteAccountText]}>{t('profile.deleteAccount')}</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#999" />
           </TouchableOpacity>
         </View>
 
@@ -319,7 +319,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
             <ActivityIndicator color="#FF3B30" />
           ) : (
             <>
-              <Ionicons name="log-out-outline" size={22} color="#FF3B30" />
+              <MaterialCommunityIcons name="logout" size={22} color="#FF3B30" />
               <Text style={styles.logoutText}>{t('auth.logout')}</Text>
             </>
           )}
@@ -363,7 +363,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               onPress={() => setShowLicensesModal(false)}
               style={styles.headerButton}
             >
-              <Ionicons name="close" size={28} color="#666" />
+              <MaterialCommunityIcons name="close" size={28} color="#666" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('profile.licenses')}</Text>
             <View style={styles.headerButton} />
@@ -510,9 +510,9 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               </TouchableOpacity>
             </View>
 
-            {/* Ionicons License */}
+            {/* MaterialCommunityIcons License */}
             <View style={styles.licenseCard}>
-              <Text style={styles.licenseTitle}>Ionicons</Text>
+              <Text style={styles.licenseTitle}>MaterialCommunityIcons</Text>
               <Text style={styles.licenseDescription}>
                 {t('profile.ioniconsDescription')}
               </Text>
@@ -583,7 +583,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               onPress={() => setShowPrivacyModal(false)}
               style={styles.headerButton}
             >
-              <Ionicons name="close" size={28} color="#666" />
+              <MaterialCommunityIcons name="close" size={28} color="#666" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('profile.privacyTitle')}</Text>
             <View style={styles.headerButton} />
@@ -688,7 +688,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
               onPress={() => setShowTermsModal(false)}
               style={styles.headerButton}
             >
-              <Ionicons name="close" size={28} color="#666" />
+              <MaterialCommunityIcons name="close" size={28} color="#666" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('profile.termsTitle')}</Text>
             <View style={styles.headerButton} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { ModernCard } from '../ModernCard';
 import { haptics } from '../../utils/haptics';
@@ -84,13 +84,13 @@ const ChallengeCard: React.FC<{
         {/* Footer info */}
         <View style={styles.challengeFooter}>
           <View style={styles.footerItem}>
-            <Ionicons name="people" size={14} color="#666" />
+            <MaterialCommunityIcons name="account-group" size={14} color="#666" />
             <Text style={styles.footerText}>
               {t('community.participants', { count: challenge.participants.toLocaleString() })}
             </Text>
           </View>
           <View style={styles.footerItem}>
-            <Ionicons name="time" size={14} color="#666" />
+            <MaterialCommunityIcons name="clock-outline" size={14} color="#666" />
             <Text style={styles.footerText}>{getTimeRemainingText()}</Text>
           </View>
         </View>

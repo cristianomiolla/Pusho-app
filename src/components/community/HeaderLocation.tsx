@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, LayoutChangeEvent } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Location, CommunityPeriod, LocationRadius } from '../../types/community';
 import { haptics } from '../../utils/haptics';
@@ -57,7 +57,7 @@ export const HeaderLocation: React.FC<HeaderLocationProps> = ({
       <View style={styles.locationRow}>
         <View style={styles.locationInfo}>
           <View style={styles.cityRow}>
-            <Ionicons name="location" size={20} color="#BDEEE7" />
+            <MaterialCommunityIcons name="map-marker" size={20} color="#BDEEE7" />
             <Text style={styles.cityText}>{location.city}</Text>
           </View>
         </View>

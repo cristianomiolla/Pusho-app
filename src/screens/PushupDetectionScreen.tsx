@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, StatusBar, TouchableOpacity, useWindowDimension
 import { Camera, useCameraDevice, useCameraFormat } from 'react-native-vision-camera';
 import { useKeepAwake } from 'expo-keep-awake';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useCameraPermission } from '../hooks/useCameraPermission';
 import { usePoseDetection } from '../hooks/usePoseDetection';
@@ -460,7 +460,7 @@ export const PushupDetectionScreen = () => {
     return (
       <View style={styles.container}>
         <View style={styles.permissionContainer}>
-          <Ionicons name="camera-outline" size={64} color="#BDEEE7" />
+          <MaterialCommunityIcons name="camera-outline" size={64} color="#BDEEE7" />
           <Text style={styles.permissionTitle}>
             {t('workout.cameraPermissionRequired')}
           </Text>
@@ -569,12 +569,12 @@ export const PushupDetectionScreen = () => {
             <View style={styles.modeBadgeCard}>
               {guidedSession ? (
                 <>
-                  <Ionicons name="document-text" size={18} color="#BDEEE7" />
+                  <MaterialCommunityIcons name="file-document" size={18} color="#BDEEE7" />
                   <Text style={styles.modeBadgeText}>{guidedSession.card.name}</Text>
                 </>
               ) : (
                 <>
-                  <Ionicons name="infinite-outline" size={18} color="#BDEEE7" />
+                  <MaterialCommunityIcons name="infinity" size={18} color="#BDEEE7" />
                   <Text style={styles.modeBadgeText}>{t('workout.freeWorkout')}</Text>
                 </>
               )}
@@ -595,14 +595,14 @@ export const PushupDetectionScreen = () => {
                     {/* Info a destra, impilate verticalmente */}
                     <View style={styles.guidedInfoSection}>
                       <View style={styles.guidedInfoItem}>
-                        <Ionicons name="repeat-outline" size={20} color="#BDEEE7" />
+                        <MaterialCommunityIcons name="repeat" size={20} color="#BDEEE7" />
                         <Text style={styles.guidedInfoValue}>
                           {guidedSession.currentSet}/{guidedSession.card.sets}
                         </Text>
                         <Text style={styles.guidedInfoLabel}>{t('workout.sets')}</Text>
                       </View>
                       <View style={styles.guidedInfoItem}>
-                        <Ionicons name="timer-outline" size={20} color="#BDEEE7" />
+                        <MaterialCommunityIcons name="timer-outline" size={20} color="#BDEEE7" />
                         <Text style={styles.guidedInfoValue}>
                           {formatTime(getSessionTime())}
                         </Text>
@@ -623,7 +623,7 @@ export const PushupDetectionScreen = () => {
                     {/* Info a destra */}
                     <View style={styles.freeInfoSection}>
                       <View style={styles.guidedInfoItem}>
-                        <Ionicons name="timer-outline" size={20} color="#BDEEE7" />
+                        <MaterialCommunityIcons name="timer-outline" size={20} color="#BDEEE7" />
                         <Text style={styles.guidedInfoValue}>
                           {formatTime(freeWorkoutTime)}
                         </Text>
@@ -642,7 +642,7 @@ export const PushupDetectionScreen = () => {
                       style={styles.selectCardButtonFull}
                       onPress={handleShowFreeWorkoutCompleted}
                     >
-                      <Ionicons name="save-outline" size={18} color="#000" />
+                      <MaterialCommunityIcons name="content-save-outline" size={18} color="#000" />
                       <Text style={styles.selectCardButtonText}>{t('workout.saveWorkout')}</Text>
                     </TouchableOpacity>
                   ) : (
@@ -650,7 +650,7 @@ export const PushupDetectionScreen = () => {
                       style={styles.selectCardButtonFull}
                       onPress={() => setShowCardsModal(true)}
                     >
-                      <Ionicons name="document-text-outline" size={18} color="#000" />
+                      <MaterialCommunityIcons name="file-document-outline" size={18} color="#000" />
                       <Text style={styles.selectCardButtonText}>{t('workout.selectCard')}</Text>
                     </TouchableOpacity>
                   )}

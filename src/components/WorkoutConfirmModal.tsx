@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import type { WorkoutCard } from '../types/workout';
 
@@ -40,7 +40,7 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
         <View style={styles.modalContainer}>
           {/* Icon */}
           <View style={styles.iconContainer}>
-            <Ionicons name="fitness" size={48} color="#BDEEE7" />
+            <MaterialCommunityIcons name="arm-flex" size={48} color="#BDEEE7" />
           </View>
 
           {/* Title */}
@@ -52,19 +52,19 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
 
             <View style={styles.detailsContainer}>
               <View style={styles.detailRow}>
-                <Ionicons name="barbell-outline" size={20} color="#BDEEE7" />
+                <MaterialCommunityIcons name="arm-flex-outline" size={20} color="#BDEEE7" />
                 <Text style={styles.detailLabel}>{t('workout.pushupPerSet')}</Text>
                 <Text style={styles.detailValue}>{workoutCard.repsPerSet}</Text>
               </View>
 
               <View style={styles.detailRow}>
-                <Ionicons name="repeat-outline" size={20} color="#BDEEE7" />
+                <MaterialCommunityIcons name="repeat" size={20} color="#BDEEE7" />
                 <Text style={styles.detailLabel}>{t('workout.numberOfSets')}</Text>
                 <Text style={styles.detailValue}>{workoutCard.sets}</Text>
               </View>
 
               <View style={styles.detailRow}>
-                <Ionicons name="timer-outline" size={20} color="#BDEEE7" />
+                <MaterialCommunityIcons name="timer-outline" size={20} color="#BDEEE7" />
                 <Text style={styles.detailLabel}>{t('workout.restTime')}</Text>
                 <Text style={styles.detailValue}>{workoutCard.restTime}s</Text>
               </View>
@@ -79,7 +79,7 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
 
             {/* Info importante */}
             <View style={styles.infoBox}>
-              <Ionicons name="information-circle" size={18} color="#FFB800" />
+              <MaterialCommunityIcons name="information" size={18} color="#FFB800" />
               <Text style={styles.infoText}>
                 {t('workout.navigationDisabled')}
               </Text>
@@ -101,7 +101,7 @@ export const WorkoutConfirmModal: React.FC<WorkoutConfirmModalProps> = ({
               onPress={onConfirm}
               activeOpacity={0.8}
             >
-              <Ionicons name="checkmark-circle" size={20} color="#000" />
+              <MaterialCommunityIcons name="check-circle" size={20} color="#000" />
               <Text style={styles.confirmButtonText}>{t('workout.start')}</Text>
             </TouchableOpacity>
           </View>

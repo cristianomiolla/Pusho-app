@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 interface WorkoutCompletedScreenProps {
@@ -45,7 +45,7 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
       <View style={styles.content}>
         {/* Icon */}
         <View style={styles.iconContainer}>
-          <Ionicons name="trophy" size={48} color="#FFD700" />
+          <MaterialCommunityIcons name="trophy" size={48} color="#FFD700" />
         </View>
 
         {/* Title */}
@@ -59,21 +59,21 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
         {/* Summary */}
         <View style={styles.summaryContainer}>
           <View style={styles.statCard}>
-            <Ionicons name="barbell" size={32} color="#BDEEE7" />
+            <MaterialCommunityIcons name="arm-flex-outline" size={32} color="#BDEEE7" />
             <Text style={styles.statValue}>{totalPushups}</Text>
             <Text style={styles.statLabel}>{t('workout.totalPushups')}</Text>
           </View>
 
           {showSets && (
             <View style={styles.statCard}>
-              <Ionicons name="repeat" size={32} color="#BDEEE7" />
+              <MaterialCommunityIcons name="repeat" size={32} color="#BDEEE7" />
               <Text style={styles.statValue}>{totalSets}</Text>
               <Text style={styles.statLabel}>{t('workout.setsCompleted')}</Text>
             </View>
           )}
 
           <View style={styles.statCard}>
-            <Ionicons name="timer" size={32} color="#BDEEE7" />
+            <MaterialCommunityIcons name="timer-outline" size={32} color="#BDEEE7" />
             <Text style={styles.statValue}>{timeString}</Text>
             <Text style={styles.statLabel}>{t('workout.totalTime')}</Text>
           </View>
@@ -83,7 +83,7 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
         {showQuality && (
           <View style={[styles.qualityCard, { borderColor: qualityColor }]}>
             <View style={styles.qualityHeader}>
-              <Ionicons name="analytics" size={24} color={qualityColor} />
+              <MaterialCommunityIcons name="chart-line" size={24} color={qualityColor} />
               <Text style={[styles.qualityTitle, { color: qualityColor }]}>
                 {t('workout.executionQuality')}
               </Text>
@@ -112,7 +112,7 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
             onPress={onSave}
             activeOpacity={0.7}
           >
-            <Ionicons name="checkmark-circle" size={20} color="#000" />
+            <MaterialCommunityIcons name="check-circle" size={20} color="#000" />
             <Text style={styles.saveButtonText}>{t('common.save')}</Text>
           </TouchableOpacity>
         </View>

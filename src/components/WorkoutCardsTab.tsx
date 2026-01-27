@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal } from 'rea
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { haptics } from '../utils/haptics';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ModernCard } from './ModernCard';
 import { WorkoutCardEditor } from './WorkoutCardEditor';
 import { WorkoutCard } from '../types/workout';
@@ -113,7 +113,7 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
             }}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Ionicons
+            <MaterialCommunityIcons
               name={card.isFavorite ? 'star' : 'star-outline'}
               size={18}
               color={card.isFavorite ? '#FFD700' : '#999'}
@@ -124,17 +124,17 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
         {/* Metriche come chip */}
         <View style={styles.sessionContent}>
           <View style={styles.chip}>
-            <Ionicons name="barbell" size={15} color="#666" />
+            <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
             <Text style={styles.chipText}>{card.repsPerSet}</Text>
           </View>
 
           <View style={styles.chip}>
-            <Ionicons name="repeat" size={15} color="#666" />
+            <MaterialCommunityIcons name="repeat" size={15} color="#666" />
             <Text style={styles.chipText}>{card.sets}</Text>
           </View>
 
           <View style={styles.chip}>
-            <Ionicons name="time" size={15} color="#666" />
+            <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
             <Text style={styles.chipText}>{formatRestTime(card.restTime)}</Text>
           </View>
 
@@ -183,7 +183,7 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
             </View>
           ) : (
             <View style={styles.emptyState}>
-              <Ionicons name="clipboard-outline" size={64} color="#E5E5EA" />
+              <MaterialCommunityIcons name="clipboard-outline" size={64} color="#E5E5EA" />
               <Text style={styles.emptyText}>{t('cards.noCards')}</Text>
               <Text style={styles.emptySubtext}>
                 {t('cards.createFirst')}
@@ -199,7 +199,7 @@ export const WorkoutCardsTab: React.FC<WorkoutCardsTabProps> = ({
         onPress={handleOpenCreateModal}
         activeOpacity={0.8}
       >
-        <Ionicons name="add" size={32} color="#000" />
+        <MaterialCommunityIcons name="plus" size={32} color="#000" />
       </TouchableOpacity>
 
       {/* Modal Creazione/Modifica Scheda */}

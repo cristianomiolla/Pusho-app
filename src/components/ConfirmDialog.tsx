@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 interface ConfirmDialogProps {
@@ -11,7 +11,7 @@ interface ConfirmDialogProps {
   cancelText?: string;
   onConfirm: () => void;
   onCancel: () => void;
-  icon?: keyof typeof Ionicons.glyphMap;
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
   iconColor?: string;
   confirmButtonColor?: string;
 }
@@ -34,7 +34,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   const resolvedCancelText = cancelText ?? t('common.cancel');
   // Determina il colore di sfondo in base al tipo di icona
   const getIconBackgroundColor = () => {
-    if (icon === 'checkmark-circle-outline' || icon === 'checkmark-circle') {
+    if (icon === 'check-circle-outline' || icon === 'check-circle') {
       return '#34C75915'; // Verde con trasparenza
     }
     return `${iconColor}15`; // Default: colore icona con trasparenza
@@ -52,7 +52,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         <View style={styles.dialog}>
           {/* Icon */}
           <View style={[styles.iconContainer, { backgroundColor: getIconBackgroundColor() }]}>
-            <Ionicons name={icon} size={48} color={iconColor} />
+            <MaterialCommunityIcons name={icon} size={48} color={iconColor} />
           </View>
 
           {/* Title */}

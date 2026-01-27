@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { SpotlightUser, BadgeType } from '../../types/community';
 
@@ -59,7 +59,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({ spotlight }) => {
               {spotlight.user.nickname}
             </Text>
             <View style={styles.locationRow}>
-              <Ionicons name="location" size={14} color="#00A896" />
+              <MaterialCommunityIcons name="map-marker" size={14} color="#00A896" />
               <Text style={styles.location} numberOfLines={1}>
                 {spotlight.user.location.city}
               </Text>
@@ -71,7 +71,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({ spotlight }) => {
         <View style={styles.statsSection}>
           {spotlight.highlightStats.map((stat, index) => (
             <View key={index} style={styles.statItem}>
-              <Ionicons name="checkmark-circle" size={16} color="#00A896" />
+              <MaterialCommunityIcons name="check-circle" size={16} color="#00A896" />
               <Text style={styles.statLabel}>{stat.label}</Text>
               {stat.value && (
                 <Text style={styles.statValue}> • {stat.value}</Text>

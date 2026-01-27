@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Animated, Modal, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { haptics } from '../utils/haptics';
 import { ModernCard } from './ModernCard';
@@ -207,7 +207,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         <ModernCard style={styles.overviewCard}>
           <View style={styles.overviewGrid}>
             <View style={styles.overviewItem}>
-              <Ionicons name="barbell-outline" size={18} color="#666" />
+              <MaterialCommunityIcons name="arm-flex-outline" size={18} color="#666" />
               <View style={styles.numberContainer}>
                 <SlotMachineNumber
                   key={`total-${animationTrigger}`}
@@ -222,7 +222,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.overviewDivider} />
 
             <View style={styles.overviewItem}>
-              <Ionicons name="trophy-outline" size={18} color="#666" />
+              <MaterialCommunityIcons name="trophy-outline" size={18} color="#666" />
               <View style={styles.numberContainer}>
                 <SlotMachineNumber
                   key={`max-${animationTrigger}`}
@@ -237,7 +237,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.overviewDivider} />
 
             <View style={styles.overviewItem}>
-              <Ionicons name="time-outline" size={18} color="#666" />
+              <MaterialCommunityIcons name="clock-outline" size={18} color="#666" />
               <View style={styles.numberContainer}>
                 <View style={styles.timeContainer}>
                   {Math.floor(stats.totalTimeUnderTension / 3600) > 0 && (
@@ -270,7 +270,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           <View style={styles.additionalStatsGrid}>
             <View style={styles.additionalStatItem}>
               <View style={styles.additionalStatContent}>
-                <Ionicons name="calendar-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={20} color="#666" />
                 <View style={styles.additionalStatText}>
                   <View style={styles.additionalStatValueContainer}>
                     <SlotMachineNumber
@@ -289,7 +289,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
 
             <View style={styles.additionalStatItem}>
               <View style={styles.additionalStatContent}>
-                <Ionicons name="star-outline" size={20} color="#666" />
+                <MaterialCommunityIcons name="star-outline" size={20} color="#666" />
                 <View style={styles.additionalStatText}>
                   <View style={styles.additionalStatValueContainer}>
                     <SlotMachineNumber
@@ -362,7 +362,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         <View style={styles.sessionsContainer}>
           {filteredSessions.length === 0 ? (
             <View style={styles.emptyState}>
-              <Ionicons name="barbell-outline" size={64} color="#E5E5EA" />
+              <MaterialCommunityIcons name="arm-flex-outline" size={64} color="#E5E5EA" />
               <Text style={styles.emptyText}>
                 {sessions.length === 0 ? t('history.noSessionsYet') : t('history.noSessionsInPeriod')}
               </Text>
@@ -388,13 +388,13 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                   {/* Metriche come chip */}
                   <View style={styles.sessionContent}>
                     <View style={styles.chip}>
-                      <Ionicons name="barbell" size={15} color="#666" />
+                      <MaterialCommunityIcons name="arm-flex-outline" size={15} color="#666" />
                       <Text style={styles.chipText}>{session.totalPushups}</Text>
                     </View>
 
                     {isCardSession && (
                       <View style={styles.chip}>
-                        <Ionicons name="repeat" size={15} color="#666" />
+                        <MaterialCommunityIcons name="repeat" size={15} color="#666" />
                         <Text style={styles.chipText}>
                           {session.completedSets || session.sets.length}
                           {session.targetSets && `/${session.targetSets}`}
@@ -403,7 +403,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                     )}
 
                     <View style={styles.chip}>
-                      <Ionicons name="time" size={15} color="#666" />
+                      <MaterialCommunityIcons name="clock-outline" size={15} color="#666" />
                       <Text style={styles.chipText}>
                         {formatDuration(session.duration)}
                       </Text>
@@ -417,7 +417,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                         { backgroundColor: getQualityColor(session.averageQuality) + '20' }
                       ]}
                     >
-                      <Ionicons
+                      <MaterialCommunityIcons
                         name="star"
                         size={15}
                         color={getQualityColor(session.averageQuality)}
@@ -444,7 +444,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
               onPress={loadMore}
               activeOpacity={0.7}
             >
-              <Ionicons name="chevron-down" size={20} color="#666" />
+              <MaterialCommunityIcons name="chevron-down" size={20} color="#666" />
               <Text style={styles.loadMoreText}>
                 {t('history.loadMore', { count: Math.min(remainingSessions, PAGE_SIZE) })}
               </Text>
@@ -468,7 +468,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           <View style={styles.dateModalContent} onStartShouldSetResponder={() => true}>
             {/* Icon */}
             <View style={styles.dateModalIconContainer}>
-              <Ionicons name="calendar" size={48} color="#BDEEE7" />
+              <MaterialCommunityIcons name="calendar" size={48} color="#BDEEE7" />
             </View>
 
             {/* Title */}
@@ -478,7 +478,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.dateRow}>
               <Text style={styles.dateLabel}>{t('history.from')}</Text>
               <View style={styles.datePickerButton}>
-                <Ionicons name="calendar-outline" size={18} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={18} color="#666" />
                 <Text style={styles.datePickerText}>
                   {customStartDate.toLocaleDateString('it-IT', {
                     day: 'numeric',
@@ -517,7 +517,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
             <View style={styles.dateRow}>
               <Text style={styles.dateLabel}>{t('history.to')}</Text>
               <View style={styles.datePickerButton}>
-                <Ionicons name="calendar-outline" size={18} color="#666" />
+                <MaterialCommunityIcons name="calendar-outline" size={18} color="#666" />
                 <Text style={styles.datePickerText}>
                   {customEndDate.toLocaleDateString('it-IT', {
                     day: 'numeric',

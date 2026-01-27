@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useWindowDimensions, Platform, TouchableOpacity, StyleSheet, View, BackHandler } from 'react-native';
 import { PushupDetectionScreen } from '../screens/PushupDetectionScreen';
@@ -75,29 +75,21 @@ export const MainNavigator = () => {
         tabBarShowLabel: false,
         tabBarButton: (props) => <CustomTabBarButton {...props} focused={props.accessibilityState?.selected} isCTA={route.name === 'Start'} />,
         tabBarIcon: ({ focused }) => {
-          let iconName: keyof typeof Ionicons.glyphMap = 'home';
-          let iconSize = 24;
-          let iconColor = focused ? '#FFFFFF' : '#666666';
+          const iconColor = focused ? '#FFFFFF' : '#666666';
 
           if (route.name === 'Allenamenti') {
-            iconName = 'home';
-            iconSize = 26;
+            return <MaterialCommunityIcons name="home" size={26} color={iconColor} />;
           } else if (route.name === 'Start') {
-            iconName = 'barbell';
-            iconSize = 28;
-            iconColor = '#000000'; // Icona nera su sfondo ciano per contrasto
+            return (
+              <View style={{ width: 34, height: 34, justifyContent: 'center', alignItems: 'center' }}>
+                <MaterialCommunityIcons name="arm-flex" size={34} color="#000000" />
+              </View>
+            );
           } else if (route.name === 'Community') {
-            iconName = 'globe-outline';
-            iconSize = 26;
+            return <MaterialCommunityIcons name="earth" size={26} color={iconColor} />;
           }
 
-          return (
-            <Ionicons
-              name={iconName}
-              size={iconSize}
-              color={iconColor}
-            />
-          );
+          return <MaterialCommunityIcons name="home" size={24} color={iconColor} />;
         },
       })}
     >
@@ -151,6 +143,9 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     backgroundColor: '#BDEEE7',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'visible',
     shadowColor: '#BDEEE7',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.6,
