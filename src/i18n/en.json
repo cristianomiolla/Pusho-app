@@ -97,8 +97,8 @@
     "setCompleted": "Set {{currentSet}} of {{totalSets}} completed",
     "completed": "Workout completed!",
     "greatJob": "Great job! Keep it up to reach your goals.",
-    "totalPushups": "Total push-ups",
-    "setsCompleted": "Sets completed",
+    "totalPushups": "Push-ups",
+    "setsCompleted": "Sets",
     "totalTime": "Total time",
     "executionQuality": "Execution quality",
     "exit": "Exit",
@@ -370,5 +370,17 @@
     "minutes": "minutes",
     "hours": "hours",
     "days": "days"
+  },
+  "share": {
+    "title": "Share result",
+    "takePhoto": "Take a photo",
+    "chooseFromGallery": "Choose from gallery",
+    "share": "Share",
+    "tapToAddPhoto": "Tap to add a photo",
+    "changePhoto": "Change photo",
+    "pushups": "PUSH-UPS",
+    "sets": "SETS",
+    "time": "TIME",
+    "quality": "QUALITY"
   }
 }

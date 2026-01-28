@@ -97,8 +97,8 @@
     "setCompleted": "Serie {{currentSet}} di {{totalSets}} completata",
     "completed": "Allenamento completato!",
     "greatJob": "Ottimo lavoro! Continua così per raggiungere i tuoi obiettivi.",
-    "totalPushups": "Push-up totali",
-    "setsCompleted": "Serie completate",
+    "totalPushups": "Push-up",
+    "setsCompleted": "Serie",
     "totalTime": "Tempo totale",
     "executionQuality": "Qualità esecuzione",
     "exit": "Esci",
@@ -370,5 +370,17 @@
     "minutes": "minuti",
     "hours": "ore",
     "days": "giorni"
+  },
+  "share": {
+    "title": "Condividi risultato",
+    "takePhoto": "Scatta una foto",
+    "chooseFromGallery": "Scegli dalla galleria",
+    "share": "Condividi",
+    "tapToAddPhoto": "Tocca per aggiungere una foto",
+    "changePhoto": "Cambia foto",
+    "pushups": "PUSH-UPS",
+    "sets": "SERIE",
+    "time": "TEMPO",
+    "quality": "QUALITÀ"
   }
 }

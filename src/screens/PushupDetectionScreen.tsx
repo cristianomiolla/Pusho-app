@@ -16,6 +16,7 @@ import { FreeWorkoutConfirmModal } from '../components/FreeWorkoutConfirmModal';
 import { SlideToStop } from '../components/SlideToStop';
 import { RestScreen } from '../components/RestScreen';
 import { WorkoutCompletedScreen } from '../components/WorkoutCompletedScreen';
+import { ShareCardModal } from '../components/share';
 import { useWorkout } from '../contexts/WorkoutContext';
 import { useAuth } from '../contexts/AuthContext';
 import * as cardsService from '../services/cards.service';
@@ -63,6 +64,15 @@ export const PushupDetectionScreen = () => {
   const [isFreeWorkoutMode, setIsFreeWorkoutMode] = useState(false);
   const [showFreeConfirmModal, setShowFreeConfirmModal] = useState(false);
   const [hasUserSelectedMode, setHasUserSelectedMode] = useState(false);
+
+  // Stato per share modal
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareData, setShareData] = useState<{
+    totalPushups: number;
+    totalSets?: number;
+    totalTime: number;
+    qualityScore?: number;
+  } | null>(null);
 
   // Schede da Supabase
   const [workoutCards, setWorkoutCards] = useState<WorkoutCard[]>([]);
@@ -434,6 +444,33 @@ export const PushupDetectionScreen = () => {
     resetFreeWorkoutAndGoHome();
   };
 
+  // ====== GESTIONE SHARE ======
+
+  const handleShareGuidedWorkout = () => {
+    if (!guidedSession) return;
+    setShareData({
+      totalPushups: guidedSession.totalPushups,
+      totalSets: guidedSession.card.sets,
+      totalTime: getSessionTime(),
+      qualityScore: qualityScore,
+    });
+    setShowShareModal(true);
+  };
+
+  const handleShareFreeWorkout = () => {
+    setShareData({
+      totalPushups: freeWorkoutStats.pushups,
+      totalTime: freeWorkoutStats.time,
+      qualityScore: freeWorkoutStats.qualityScore,
+    });
+    setShowShareModal(true);
+  };
+
+  const handleCloseShareModal = () => {
+    setShowShareModal(false);
+    setShareData(null);
+  };
+
   // Effetto: avvia timer modalità libera al primo push-up
   useEffect(() => {
     if (!guidedSession && count > 0 && freeWorkoutStartTime === null) {
@@ -592,27 +629,29 @@ export const PushupDetectionScreen = () => {
         />
       )}
 
-      {/* STEP 8: Schermata Completamento (allenamento guidato) */}
-      {guidedSession?.state === 'completed' && (
+      {/* STEP 8: Schermata Completamento (allenamento guidato) - hide when share modal is open */}
+      {guidedSession?.state === 'completed' && !showShareModal && (
         <WorkoutCompletedScreen
           totalPushups={guidedSession.totalPushups}
           totalSets={guidedSession.card.sets}
           totalTime={getSessionTime()}
           onSave={handleSaveWorkout}
           onExit={handleStopWorkout}
+          onShare={handleShareGuidedWorkout}
           qualityScore={qualityScore}
           averageDepth={averageDepth}
           averageDownTime={averageDownTime}
         />
       )}
 
-      {/* Schermata Completamento (allenamento libero) */}
-      {showFreeWorkoutCompleted && (
+      {/* Schermata Completamento (allenamento libero) - hide when share modal is open */}
+      {showFreeWorkoutCompleted && !showShareModal && (
         <WorkoutCompletedScreen
           totalPushups={freeWorkoutStats.pushups}
           totalTime={freeWorkoutStats.time}
           onSave={handleSaveFreeWorkout}
           onExit={handleExitFreeWorkout}
+          onShare={handleShareFreeWorkout}
           qualityScore={freeWorkoutStats.qualityScore}
           averageDepth={freeWorkoutStats.averageDepth}
           averageDownTime={freeWorkoutStats.averageDownTime}
@@ -753,6 +792,18 @@ export const PushupDetectionScreen = () => {
         onConfirm={handleConfirmStart}
         onCancel={handleCancelStart}
       />
+
+      {/* Share Card Modal */}
+      {shareData && (
+        <ShareCardModal
+          visible={showShareModal}
+          onClose={handleCloseShareModal}
+          totalPushups={shareData.totalPushups}
+          totalSets={shareData.totalSets}
+          totalTime={shareData.totalTime}
+          qualityScore={shareData.qualityScore}
+        />
+      )}
     </View>
   );
 };

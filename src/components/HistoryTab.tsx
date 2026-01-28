@@ -8,6 +8,7 @@ import { haptics } from '../utils/haptics';
 import { ModernCard } from './ModernCard';
 import { SlotMachineNumber } from './SlotMachineNumber';
 import { SessionDetailModal } from './SessionDetailModal';
+import { ShareCardModal } from './share';
 import { WorkoutSession, WorkoutStats, FilterPeriod } from '../types/workout';
 import { colors } from '../theme';
 
@@ -28,6 +29,15 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
   const filterTranslateX = React.useRef(new Animated.Value(0)).current;
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [selectedSession, setSelectedSession] = useState<WorkoutSession | null>(null);
+
+  // Share modal state
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareData, setShareData] = useState<{
+    totalPushups: number;
+    totalSets?: number;
+    totalTime: number;
+    qualityScore?: number;
+  } | null>(null);
 
   // Date picker state
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -120,6 +130,24 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
   const openDatePicker = (mode: 'start' | 'end') => {
     setDatePickerMode(mode);
     setShowDatePicker(true);
+  };
+
+  // Share handlers
+  const handleShareSession = () => {
+    if (!selectedSession) return;
+    const isCardSession = !!selectedSession.workoutCardId;
+    setShareData({
+      totalPushups: selectedSession.totalPushups,
+      totalSets: isCardSession ? (selectedSession.completedSets || selectedSession.sets.length) : undefined,
+      totalTime: selectedSession.duration,
+      qualityScore: selectedSession.averageQuality,
+    });
+    setShowShareModal(true);
+  };
+
+  const handleCloseShareModal = () => {
+    setShowShareModal(false);
+    setShareData(null);
   };
 
   const formatDateShort = (date: Date): string => {
@@ -596,12 +624,25 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
         />
       )}
 
-      {/* Session Detail Modal */}
+      {/* Session Detail Modal - hide when share modal is open */}
       <SessionDetailModal
-        visible={selectedSession !== null}
+        visible={selectedSession !== null && !showShareModal}
         session={selectedSession}
         onClose={() => setSelectedSession(null)}
+        onShare={handleShareSession}
       />
+
+      {/* Share Card Modal */}
+      {shareData && (
+        <ShareCardModal
+          visible={showShareModal}
+          onClose={handleCloseShareModal}
+          totalPushups={shareData.totalPushups}
+          totalSets={shareData.totalSets}
+          totalTime={shareData.totalTime}
+          qualityScore={shareData.qualityScore}
+        />
+      )}
     </ScrollView>
   );
 };

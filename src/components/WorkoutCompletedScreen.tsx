@@ -10,6 +10,7 @@ interface WorkoutCompletedScreenProps {
   totalTime: number; // in secondi
   onSave: () => void;
   onExit: () => void;
+  onShare?: () => void; // callback per aprire share modal
   // Metriche qualità (opzionali)
   qualityScore?: number; // 0-100
   averageDepth?: number; // angolo medio in gradi
@@ -22,6 +23,7 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
   totalTime,
   onSave,
   onExit,
+  onShare,
   qualityScore,
   averageDepth,
   averageDownTime,
@@ -37,6 +39,18 @@ export const WorkoutCompletedScreen: React.FC<WorkoutCompletedScreenProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.content}>
+        {/* Share button - top right */}
+        {onShare && (
+          <TouchableOpacity
+            style={styles.shareButton}
+            onPress={onShare}
+            activeOpacity={0.7}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <MaterialCommunityIcons name="share-variant" size={22} color={colors.primary} />
+          </TouchableOpacity>
+        )}
+
         {/* Icon */}
         <View style={styles.iconContainer}>
           <MaterialCommunityIcons name="trophy" size={48} color={colors.gold} />
@@ -137,6 +151,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 30,
     elevation: 10,
+    position: 'relative',
+  },
+  shareButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.transparent.primary15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
   },
   iconContainer: {
     width: 80,

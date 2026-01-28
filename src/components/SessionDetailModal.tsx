@@ -9,6 +9,7 @@ interface SessionDetailModalProps {
   visible: boolean;
   session: WorkoutSession | null;
   onClose: () => void;
+  onShare?: () => void;
 }
 
 const getQualityColor = (score: number): string => {
@@ -21,6 +22,7 @@ export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
   visible,
   session,
   onClose,
+  onShare,
 }) => {
   const { t, i18n } = useTranslation();
 
@@ -68,6 +70,18 @@ export const SessionDetailModal: React.FC<SessionDetailModalProps> = ({
         onPress={onClose}
       >
         <View style={styles.content} onStartShouldSetResponder={() => true}>
+          {/* Share button - top right */}
+          {onShare && (
+            <TouchableOpacity
+              style={styles.shareButton}
+              onPress={onShare}
+              activeOpacity={0.7}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <MaterialCommunityIcons name="share-variant" size={22} color={colors.primaryDark} />
+            </TouchableOpacity>
+          )}
+
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
@@ -164,6 +178,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 30,
     elevation: 10,
+    position: 'relative',
+  },
+  shareButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.transparent.primary30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
   },
   scrollContent: {
     padding: 24,
