@@ -59,6 +59,61 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
     return () => clearTimeout(timeout);
   }, []);
 
+  // Calcola la streak (giorni consecutivi di allenamento)
+  const streak = useMemo(() => {
+    if (sessions.length === 0) return 0;
+
+    // Ordina le sessioni per data (più recente prima)
+    const sortedSessions = [...sessions].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    // Estrai le date uniche (senza orario)
+    const uniqueDays = new Set<string>();
+    sortedSessions.forEach(session => {
+      const date = new Date(session.date);
+      const dayKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+      uniqueDays.add(dayKey);
+    });
+
+    const sortedDays = Array.from(uniqueDays).sort().reverse();
+    if (sortedDays.length === 0) return 0;
+
+    // Verifica se l'ultimo allenamento è oggi o ieri
+    const today = new Date();
+    const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayKey = `${yesterday.getFullYear()}-${yesterday.getMonth()}-${yesterday.getDate()}`;
+
+    const lastTrainingDay = sortedDays[0];
+    if (lastTrainingDay !== todayKey && lastTrainingDay !== yesterdayKey) {
+      return 0; // La streak è interrotta
+    }
+
+    // Conta i giorni consecutivi
+    let streakCount = 1;
+    let currentDate = new Date(today);
+
+    // Se l'ultimo allenamento è ieri, inizia da ieri
+    if (lastTrainingDay === yesterdayKey) {
+      currentDate = yesterday;
+    }
+
+    for (let i = 1; i < sortedDays.length; i++) {
+      currentDate.setDate(currentDate.getDate() - 1);
+      const expectedKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`;
+
+      if (sortedDays[i] === expectedKey) {
+        streakCount++;
+      } else {
+        break;
+      }
+    }
+
+    return streakCount;
+  }, [sessions]);
+
   // Filtra le sessioni in base al periodo selezionato
   const filteredSessions = useMemo(() => {
     const now = new Date();
@@ -340,7 +395,17 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
 
       {/* Sezione Attività */}
       <View style={styles.historySection}>
-        <Text style={styles.sectionTitle}>{t('history.activity')}</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>{t('history.activity')}</Text>
+          {streak > 0 && (
+            <View style={styles.streakBadge}>
+              <MaterialCommunityIcons name="fire" size={12} color={colors.black} />
+              <Text style={styles.streakText}>
+                {streak} {t('history.streakDays', { count: streak })}
+              </Text>
+            </View>
+          )}
+        </View>
 
         {/* Filtri */}
         <View
@@ -660,12 +725,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 12,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+    gap: 14,
+  },
   sectionTitle: {
     fontSize: 22,
     fontFamily: 'Agdasima-Bold',
     color: colors.black,
     marginBottom: 16,
-    paddingHorizontal: 4,
+  },
+  streakBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    gap: 4,
+    marginBottom: 14,
+  },
+  streakText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.black,
   },
   overviewCard: {
     padding: 20,

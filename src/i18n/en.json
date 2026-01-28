@@ -182,7 +182,9 @@
     "daysAgo": "{{count}} days ago",
     "loadMore": "Load {{count}} more",
     "sessionDetailTime": "at {{time}}",
-    "setsBreakdown": "Sets Breakdown"
+    "setsBreakdown": "Sets Breakdown",
+    "streakDays_one": "day",
+    "streakDays_other": "days"
   },
   "profile": {
     "title": "Profile",
