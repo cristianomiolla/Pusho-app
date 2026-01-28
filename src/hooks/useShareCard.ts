@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
@@ -50,7 +50,7 @@ export const useShareCard = (): UseShareCardReturn => {
     setIsLoading(true);
     try {
       const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
+        allowsEditing: Platform.OS === 'android',
         aspect: [9, 16],
         quality: 1,
       });
@@ -74,7 +74,7 @@ export const useShareCard = (): UseShareCardReturn => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['images'],
-        allowsEditing: true,
+        allowsEditing: Platform.OS === 'android',
         aspect: [9, 16],
         quality: 1,
       });
