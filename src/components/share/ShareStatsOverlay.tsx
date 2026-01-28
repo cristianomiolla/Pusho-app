@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { colors } from '../../theme';
 
 interface ShareStatsOverlayProps {
@@ -7,17 +8,63 @@ interface ShareStatsOverlayProps {
   totalSets?: number;
   totalTime: number; // in secondi
   qualityScore?: number; // 0-100
+  isCapturing?: boolean;
 }
+
+// Fattore di scala per l'export ad alta risoluzione
+const CAPTURE_SCALE = 1920 / 500; // ~3.84x
 
 export const ShareStatsOverlay: React.FC<ShareStatsOverlayProps> = ({
   totalPushups,
   totalSets,
   totalTime,
   qualityScore,
+  isCapturing = false,
 }) => {
+  const { t } = useTranslation();
   const minutes = Math.floor(totalTime / 60);
   const seconds = totalTime % 60;
   const timeString = `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+  // Usa dimensioni scalate per la cattura ad alta risoluzione
+  const scale = isCapturing ? CAPTURE_SCALE : 1;
+
+  const dynamicStyles = {
+    statsContainer: {
+      paddingHorizontal: 24 * scale,
+      paddingBottom: 72 * scale,
+    },
+    mainStatContainer: {
+      marginBottom: 16 * scale,
+    },
+    mainStatValue: {
+      fontSize: 56 * scale,
+    },
+    mainStatLabel: {
+      fontSize: 14 * scale,
+      letterSpacing: 2 * scale,
+    },
+    secondaryStatsRow: {
+      gap: 32 * scale,
+    },
+    secondaryStatValue: {
+      fontSize: 22 * scale,
+    },
+    secondaryStatLabel: {
+      fontSize: 10 * scale,
+      letterSpacing: 1 * scale,
+      marginTop: 2 * scale,
+    },
+    logoContainer: {
+      bottom: 12 * scale,
+      right: 16 * scale,
+    },
+    logo: {
+      width: 48 * scale,
+      height: 48 * scale,
+      borderRadius: 10 * scale,
+    },
+  };
 
   return (
     <View style={styles.container}>
@@ -25,41 +72,41 @@ export const ShareStatsOverlay: React.FC<ShareStatsOverlayProps> = ({
       <View style={styles.gradient} />
 
       {/* Stats content */}
-      <View style={styles.statsContainer}>
+      <View style={[styles.statsContainer, dynamicStyles.statsContainer]}>
         {/* Main stat - Push-ups */}
-        <View style={styles.mainStatContainer}>
-          <Text style={styles.mainStatValue}>{totalPushups}</Text>
-          <Text style={styles.mainStatLabel}>PUSH-UPS</Text>
+        <View style={[styles.mainStatContainer, dynamicStyles.mainStatContainer]}>
+          <Text style={[styles.mainStatValue, dynamicStyles.mainStatValue]}>{totalPushups}</Text>
+          <Text style={[styles.mainStatLabel, dynamicStyles.mainStatLabel]}>{t('share.pushups')}</Text>
         </View>
 
         {/* Secondary stats row */}
-        <View style={styles.secondaryStatsRow}>
+        <View style={[styles.secondaryStatsRow, dynamicStyles.secondaryStatsRow]}>
           {totalSets !== undefined && (
             <View style={styles.secondaryStat}>
-              <Text style={styles.secondaryStatValue}>{totalSets}</Text>
-              <Text style={styles.secondaryStatLabel}>SERIE</Text>
+              <Text style={[styles.secondaryStatValue, dynamicStyles.secondaryStatValue]}>{totalSets}</Text>
+              <Text style={[styles.secondaryStatLabel, dynamicStyles.secondaryStatLabel]}>SERIE</Text>
             </View>
           )}
 
           <View style={styles.secondaryStat}>
-            <Text style={styles.secondaryStatValue}>{timeString}</Text>
-            <Text style={styles.secondaryStatLabel}>TEMPO</Text>
+            <Text style={[styles.secondaryStatValue, dynamicStyles.secondaryStatValue]}>{timeString}</Text>
+            <Text style={[styles.secondaryStatLabel, dynamicStyles.secondaryStatLabel]}>TEMPO</Text>
           </View>
 
           {qualityScore !== undefined && qualityScore > 0 && (
             <View style={styles.secondaryStat}>
-              <Text style={styles.secondaryStatValue}>{qualityScore}%</Text>
-              <Text style={styles.secondaryStatLabel}>QUALITÀ</Text>
+              <Text style={[styles.secondaryStatValue, dynamicStyles.secondaryStatValue]}>{qualityScore}%</Text>
+              <Text style={[styles.secondaryStatLabel, dynamicStyles.secondaryStatLabel]}>QUALITÀ</Text>
             </View>
           )}
         </View>
       </View>
 
       {/* Logo Pusho */}
-      <View style={styles.logoContainer}>
+      <View style={[styles.logoContainer, dynamicStyles.logoContainer]}>
         <Image
           source={require('../../../assets/logo-pittogramma.png')}
-          style={styles.logo}
+          style={[styles.logo, dynamicStyles.logo]}
           resizeMode="contain"
         />
       </View>

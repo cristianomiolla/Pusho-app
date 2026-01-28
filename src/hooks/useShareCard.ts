@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { View, Alert, Platform } from 'react-native';
+import { View, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
@@ -101,12 +101,10 @@ export const useShareCard = (): UseShareCardReturn => {
     setIsLoading(true);
 
     try {
-      // Cattura la view nascosta (senza borderRadius)
+      // Cattura la view nascosta ad alta risoluzione (1080x1920)
       const uri = await captureRef(captureCardRef, {
         format: 'png',
         quality: 1,
-        // Dimensioni per formato 9:16 (TikTok/Reels)
-        ...(Platform.OS === 'ios' && { width: 1080, height: 1920 }),
       });
 
       // Verifica se la condivisione è disponibile

@@ -10,6 +10,12 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const CARD_HEIGHT = Math.min(SCREEN_HEIGHT * 0.55, 500);
 export const CARD_WIDTH = CARD_HEIGHT * CARD_RATIO;
 
+// Dimensioni ad alta risoluzione per l'export (1080x1920)
+export const CAPTURE_WIDTH = 1080;
+export const CAPTURE_HEIGHT = 1920;
+// Fattore di scala per gli elementi (rispetto alle dimensioni preview)
+export const CAPTURE_SCALE = CAPTURE_HEIGHT / CARD_HEIGHT;
+
 interface ShareCardPreviewProps {
   imageUri: string | null;
   totalPushups: number;
@@ -21,8 +27,12 @@ interface ShareCardPreviewProps {
 
 export const ShareCardPreview = forwardRef<View, ShareCardPreviewProps>(
   ({ imageUri, totalPushups, totalSets, totalTime, qualityScore, isCapturing = false }, ref) => {
+    const containerStyle = isCapturing
+      ? [styles.containerCapturing]
+      : [styles.container];
+
     return (
-      <View ref={ref} style={[styles.container, isCapturing && styles.containerCapturing]} collapsable={false}>
+      <View ref={ref} style={containerStyle} collapsable={false}>
         {/* Background image or placeholder */}
         {imageUri ? (
           <Image source={{ uri: imageUri }} style={styles.image} resizeMode="cover" />
@@ -43,6 +53,7 @@ export const ShareCardPreview = forwardRef<View, ShareCardPreviewProps>(
           totalSets={totalSets}
           totalTime={totalTime}
           qualityScore={qualityScore}
+          isCapturing={isCapturing}
         />
       </View>
     );
@@ -60,7 +71,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a1a',
   },
   containerCapturing: {
+    width: CAPTURE_WIDTH,
+    height: CAPTURE_HEIGHT,
     borderRadius: 0,
+    overflow: 'hidden',
+    backgroundColor: '#1a1a1a',
   },
   image: {
     ...StyleSheet.absoluteFillObject,
