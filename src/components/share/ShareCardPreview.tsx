@@ -13,8 +13,6 @@ export const CARD_WIDTH = CARD_HEIGHT * CARD_RATIO;
 // Dimensioni ad alta risoluzione per l'export (1080x1920)
 export const CAPTURE_WIDTH = 1080;
 export const CAPTURE_HEIGHT = 1920;
-// Fattore di scala per gli elementi (rispetto alle dimensioni preview)
-export const CAPTURE_SCALE = CAPTURE_HEIGHT / CARD_HEIGHT;
 
 interface ShareCardPreviewProps {
   imageUri: string | null;

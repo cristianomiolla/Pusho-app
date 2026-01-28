@@ -32,10 +32,10 @@ export const ShareStatsOverlay: React.FC<ShareStatsOverlayProps> = ({
   const dynamicStyles = {
     statsContainer: {
       paddingHorizontal: 24 * scale,
-      paddingBottom: 72 * scale,
+      paddingBottom: 100 * scale,
     },
     mainStatContainer: {
-      marginBottom: 16 * scale,
+      marginBottom: 20 * scale,
     },
     mainStatValue: {
       fontSize: 56 * scale,
@@ -56,7 +56,7 @@ export const ShareStatsOverlay: React.FC<ShareStatsOverlayProps> = ({
       marginTop: 2 * scale,
     },
     logoContainer: {
-      bottom: 12 * scale,
+      bottom: 20 * scale,
       right: 16 * scale,
     },
     logo: {
@@ -68,8 +68,6 @@ export const ShareStatsOverlay: React.FC<ShareStatsOverlayProps> = ({
 
   return (
     <View style={styles.container}>
-      {/* Gradient overlay */}
-      <View style={styles.gradient} />
 
       {/* Stats content */}
       <View style={[styles.statsContainer, dynamicStyles.statsContainer]}>
@@ -119,19 +117,13 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
   },
-  gradient: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
-    // Simuliamo il gradient con un overlay che parte dal basso
-    // In realtà usiamo un LinearGradient nel componente padre
-  },
   statsContainer: {
     paddingHorizontal: 24,
-    paddingBottom: 72,
+    paddingBottom: 100,
   },
   mainStatContainer: {
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   mainStatValue: {
     fontSize: 56,
@@ -178,7 +170,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    bottom: 12,
+    bottom: 20,
     right: 16,
   },
   logo: {

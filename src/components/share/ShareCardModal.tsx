@@ -37,7 +37,6 @@ export const ShareCardModal: React.FC<ShareCardModalProps> = ({
   const {
     imageUri,
     isLoading,
-    cardRef,
     captureCardRef,
     pickImageFromCamera,
     pickImageFromGallery,
@@ -76,7 +75,6 @@ export const ShareCardModal: React.FC<ShareCardModalProps> = ({
           {/* Preview Card with close button */}
           <Pressable onPress={handleImagePress} style={styles.previewContainer}>
             <ShareCardPreview
-              ref={cardRef}
               imageUri={imageUri}
               totalPushups={totalPushups}
               totalSets={totalSets}

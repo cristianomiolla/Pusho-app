@@ -7,7 +7,6 @@ import * as Sharing from 'expo-sharing';
 interface UseShareCardReturn {
   imageUri: string | null;
   isLoading: boolean;
-  cardRef: React.RefObject<View>;
   captureCardRef: React.RefObject<View>;
   pickImageFromCamera: () => Promise<void>;
   pickImageFromGallery: () => Promise<void>;
@@ -18,7 +17,6 @@ interface UseShareCardReturn {
 export const useShareCard = (): UseShareCardReturn => {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const cardRef = useRef<View>(null);
   const captureCardRef = useRef<View>(null);
 
   const requestCameraPermission = useCallback(async (): Promise<boolean> => {
@@ -134,7 +132,6 @@ export const useShareCard = (): UseShareCardReturn => {
   return {
     imageUri,
     isLoading,
-    cardRef,
     captureCardRef,
     pickImageFromCamera,
     pickImageFromGallery,
