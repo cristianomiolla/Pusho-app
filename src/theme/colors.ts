@@ -31,7 +31,6 @@ export const colors = {
 
   // Alias semantici
   background: '#F2F2F7', // Sfondo principale app (alias di gray100)
-  link: '#007AFF', // Blu iOS per link
 
   // ============================================
   // SEMANTIC COLORS - Quality/Feedback (iOS style)

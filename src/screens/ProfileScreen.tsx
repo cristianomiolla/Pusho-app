@@ -186,7 +186,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
                 style={styles.editButton}
                 onPress={() => setIsEditing(true)}
               >
-                <MaterialCommunityIcons name="pencil" size={16} color={colors.link} />
+                <MaterialCommunityIcons name="pencil" size={16} color={colors.gray900} />
                 <Text style={styles.editButtonText}>{t('common.edit')}</Text>
               </TouchableOpacity>
             )}
@@ -899,7 +899,7 @@ const styles = StyleSheet.create({
   editButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: colors.link,
+    color: colors.gray900,
   },
   inputContainer: {
     marginBottom: 16,
@@ -1089,7 +1089,7 @@ const styles = StyleSheet.create({
   licenseType: {
     fontSize: 14,
     fontWeight: '600',
-    color: colors.link,
+    color: colors.gray900,
     marginBottom: 8,
   },
   licenseCopyright: {
@@ -1105,7 +1105,7 @@ const styles = StyleSheet.create({
   },
   licenseLink: {
     fontSize: 12,
-    color: colors.link,
+    color: colors.gray900,
     marginBottom: 12,
     textDecorationLine: 'underline',
   },
