@@ -114,7 +114,6 @@ export const PasswordLoginScreen: React.FC<PasswordLoginScreenProps> = ({ naviga
             />
 
             <Text style={styles.title}>{t('auth.onboarding.passwordLogin.title')}</Text>
-            <Text style={styles.emailText}>{email}</Text>
             <Text style={styles.subtitle}>{t('auth.onboarding.passwordLogin.subtitle')}</Text>
 
             <AuthInput
@@ -188,22 +187,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textAlign: 'center',
   },
-  emailText: {
-    fontSize: 16,
-    color: colors.gray700,
-    fontWeight: '600',
-    marginBottom: 4,
-    textAlign: 'center',
-  },
   subtitle: {
-    fontSize: 14,
+    fontSize: 16,
     color: colors.gray500,
     marginBottom: 32,
     textAlign: 'center',
   },
   forgotButton: {
     alignSelf: 'center',
-    marginTop: -8,
+    marginTop: 8,
     marginBottom: 24,
   },
   forgotText: {

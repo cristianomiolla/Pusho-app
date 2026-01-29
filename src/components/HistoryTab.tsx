@@ -476,10 +476,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
                 <TouchableOpacity
                   key={session.id}
                   activeOpacity={0.7}
-                  onPress={() => {
-                    haptics.light();
-                    setSelectedSession(session);
-                  }}
+                  onPress={() => setSelectedSession(session)}
                 >
                   <ModernCard style={styles.sessionCard}>
                     {/* Header con titolo e data */}

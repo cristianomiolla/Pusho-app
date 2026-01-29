@@ -5,7 +5,22 @@
       "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" status)",
       "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" diff --staged --stat)",
       "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" diff --stat)",
-      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" add App.tsx app.json assets/ eas.json package-lock.json package.json babel.config.js native-modules/ plugins/ scripts/ src/ supabase/ CLAUDE.md BUILD-ANDROID.md SETUP_MAC_REMOTO.md STORE_SUBMISSION_GUIDE.md .claude/)"
+      "Bash(git -C \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\" add App.tsx app.json assets/ eas.json package-lock.json package.json babel.config.js native-modules/ plugins/ scripts/ src/ supabase/ CLAUDE.md BUILD-ANDROID.md SETUP_MAC_REMOTO.md STORE_SUBMISSION_GUIDE.md .claude/)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nReplace Ionicons with MaterialCommunityIcons across the app\n\n- Migrate all icon imports from Ionicons to MaterialCommunityIcons\n- Update icon names to MaterialCommunityIcons equivalents\n- Use arm-flex icon for workout/pushup indicators\n- Use arm-flex-outline for chips and secondary indicators\n- Fix tab icons in AllenamentiScreen \\(lightning-bolt, file-document-outline\\)\n- Adjust navbar CTA icon size and centering\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(npx expo install:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "Bash(npx expo start:*)",
+      "Bash(npx expo:*)",
+      "Bash(npm view:*)",
+      "Bash(npm info:*)",
+      "Bash(del /f \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\\\\src\\\\components\\\\auth\\\\AuthTransition.tsx\" \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\\\\src\\\\hooks\\\\useAuthTransition.ts\")",
+      "Bash(grep:*)",
+      "Bash(cd:*)"
     ]
   }
 }

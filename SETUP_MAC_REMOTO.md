@@ -93,7 +93,8 @@ sudo xcode-select -s /Applications/Xcode.app
 
 ```bash
 cd ~
-git clone <URL_DEL_TUO_REPOSITORY> Pusho
+git clone https://github.com/cristianomiolla/Pusho-app.git Pusho
+
 ```
 
 ## 8. Installa Dipendenze
@@ -101,7 +102,7 @@ git clone <URL_DEL_TUO_REPOSITORY> Pusho
 **IMPORTANTE: Entra nella cartella corretta (doppia Pusho)**
 
 ```bash
-cd ~/Pusho/Pusho
+cd ~/Pusho
 npm install
 ```
 
