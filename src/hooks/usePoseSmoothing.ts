@@ -58,9 +58,6 @@ export const usePoseSmoothing = (
       keypoints: {} as any,
     };
 
-    let totalVelocity = 0;
-    let validPoints = 0;
-
     for (const [name, point] of Object.entries(currentPose.keypoints)) {
       const prevPoint = previousPose.current.keypoints[name as keyof typeof currentPose.keypoints];
 
@@ -80,8 +77,6 @@ export const usePoseSmoothing = (
       // Calcola velocità (distanza dal frame precedente)
       const velocity = calculateDistance(point.x, point.y, prevPoint.x, prevPoint.y);
       velocities.current.set(name, velocity);
-      totalVelocity += velocity;
-      validPoints++;
 
       // OTTIMIZZAZIONE 2: Dead Zone - se movimento < threshold, considera fermo
       if (velocity < cfg.deadZoneThreshold) {

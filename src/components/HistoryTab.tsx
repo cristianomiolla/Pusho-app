@@ -399,7 +399,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({ sessions, stats, ListHea
           <Text style={styles.sectionTitle}>{t('history.activity')}</Text>
           {streak > 0 && (
             <View style={styles.streakBadge}>
-              <MaterialCommunityIcons name="fire" size={12} color={colors.black} />
+              <MaterialCommunityIcons name="fire" size={12} color={colors.warning} />
               <Text style={styles.streakText}>
                 {streak} {t('history.streakDays', { count: streak })}
               </Text>
