@@ -12,22 +12,31 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 import {
   validateEmail,
   sendPasswordResetEmail,
   translateAuthError,
 } from '../../services/auth.service';
 import { colors } from '../../theme';
+import { AuthStackParamList } from '../../navigation/AuthNavigator';
+
+type ForgotPasswordScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'ForgotPassword'>;
+type ForgotPasswordScreenRouteProp = RouteProp<AuthStackParamList, 'ForgotPassword'>;
 
 interface ForgotPasswordScreenProps {
-  onNavigateToLogin: () => void;
+  navigation: ForgotPasswordScreenNavigationProp;
+  route: ForgotPasswordScreenRouteProp;
 }
 
 export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
-  onNavigateToLogin,
+  navigation,
+  route,
 }) => {
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
+  const initialEmail = route.params?.email || '';
+  const [email, setEmail] = useState(initialEmail);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -76,7 +85,7 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
           <Text style={styles.successSubtext}>
             {t('auth.resetEmailSentSubtext')}
           </Text>
-          <TouchableOpacity style={styles.backButton} onPress={onNavigateToLogin}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Text style={styles.backButtonText}>{t('auth.backToLogin')}</Text>
           </TouchableOpacity>
         </View>
@@ -98,7 +107,7 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
           {/* Back button */}
           <TouchableOpacity
             style={styles.backArrow}
-            onPress={onNavigateToLogin}
+            onPress={() => navigation.goBack()}
             disabled={isLoading}
           >
             <Text style={styles.backArrowText}>← {t('auth.back')}</Text>

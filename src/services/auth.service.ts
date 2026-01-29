@@ -64,6 +64,26 @@ export const validateNickname = (nickname: string): string | null => {
   return null;
 };
 
+// Check if email exists in auth.users
+export const checkEmailExists = async (email: string): Promise<{
+  exists: boolean;
+  error: Error | null;
+}> => {
+  try {
+    const { data, error } = await supabase.rpc('check_email_exists', {
+      check_email: email.toLowerCase(),
+    });
+
+    if (error) {
+      return { exists: false, error };
+    }
+
+    return { exists: !!data, error: null };
+  } catch (error) {
+    return { exists: false, error: error as Error };
+  }
+};
+
 // Check if nickname is available
 export const checkNicknameAvailable = async (nickname: string): Promise<boolean> => {
   const { data } = await supabase

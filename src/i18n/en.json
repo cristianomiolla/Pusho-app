@@ -77,6 +77,45 @@
       "databaseError": "Database error. The nickname might already be in use.",
       "duplicateError": "This nickname or email is already in use",
       "invalidPassword": "Invalid password"
+    },
+    "onboarding": {
+      "welcome": {
+        "tagline": "Your smart fitness tracker",
+        "getStarted": "Get Started"
+      },
+      "email": {
+        "title": "What's your email?",
+        "placeholder": "Your email",
+        "continue": "Continue",
+        "checking": "Checking..."
+      },
+      "passwordLogin": {
+        "title": "Welcome back!",
+        "subtitle": "Enter your password to continue",
+        "login": "Log in"
+      },
+      "nickname": {
+        "title": "What should we call you?",
+        "subtitle": "Choose a unique nickname",
+        "placeholder": "Your nickname",
+        "continue": "Continue"
+      },
+      "createPassword": {
+        "title": "Create a password",
+        "subtitle": "Make it strong and memorable",
+        "placeholder": "Your password",
+        "confirmPlaceholder": "Confirm password",
+        "hint": "At least 8 characters, uppercase, lowercase, number and special character",
+        "createAccount": "Create account"
+      },
+      "welcomeComplete": {
+        "title": "Welcome to Pusho, {{nickname}}!",
+        "subtitle": "You're ready to start your fitness journey",
+        "letsGo": "Let's Go!"
+      },
+      "errors": {
+        "emailCheckFailed": "Could not verify email. Please try again."
+      }
     }
   },
   "home": {

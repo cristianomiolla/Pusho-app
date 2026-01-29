@@ -13,12 +13,14 @@ interface AuthContextType {
   profile: Profile | null;
   isLoading: boolean;
   pendingPasswordReset: boolean;
+  isNewlyRegistered: boolean;
   signUp: (email: string, password: string, nickname: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: Error | null }>;
   clearPasswordReset: () => void;
   deleteAccount: (password: string) => Promise<{ error: Error | null }>;
+  completeOnboarding: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,6 +31,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [pendingPasswordReset, setPendingPasswordReset] = useState(false);
+  const [isNewlyRegistered, setIsNewlyRegistered] = useState(false);
 
   // Fetch user profile from database, create if missing
   const fetchProfile = async (userId: string, userMetadata?: Record<string, unknown>) => {
@@ -304,10 +307,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
       }
 
+      // Set flag that user just registered
+      setIsNewlyRegistered(true);
+
       return { error: null };
     } catch (error) {
       return { error: error as Error };
     }
+  };
+
+  // Complete onboarding after registration
+  const completeOnboarding = () => {
+    setIsNewlyRegistered(false);
   };
 
   // Sign in with email and password
@@ -413,12 +424,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         profile,
         isLoading,
         pendingPasswordReset,
+        isNewlyRegistered,
         signUp,
         signIn,
         signOut,
         updateProfile,
         clearPasswordReset,
         deleteAccount,
+        completeOnboarding,
       }}
     >
       {children}

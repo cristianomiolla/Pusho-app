@@ -1,12 +1,26 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen, RegisterScreen, ForgotPasswordScreen } from '../screens/auth';
+import {
+  WelcomeScreen,
+  EmailScreen,
+  PasswordLoginScreen,
+  NicknameScreen,
+  CreatePasswordScreen,
+  WelcomeCompleteScreen,
+  ForgotPasswordScreen,
+  ResetPasswordScreen,
+} from '../screens/auth';
 import { colors } from '../theme';
 
 export type AuthStackParamList = {
-  Login: undefined;
-  Register: undefined;
-  ForgotPassword: undefined;
+  Welcome: undefined;
+  Email: undefined;
+  PasswordLogin: { email: string };
+  Nickname: { email: string };
+  CreatePassword: { email: string; nickname: string };
+  WelcomeComplete: { nickname: string };
+  ForgotPassword: { email?: string };
+  ResetPassword: undefined;
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -19,25 +33,16 @@ export const AuthNavigator = () => {
         contentStyle: { backgroundColor: colors.background },
         animation: 'slide_from_right',
       }}
+      initialRouteName="Welcome"
     >
-      <Stack.Screen name="Login">
-        {({ navigation }) => (
-          <LoginScreen
-            onNavigateToRegister={() => navigation.navigate('Register')}
-            onNavigateToForgotPassword={() => navigation.navigate('ForgotPassword')}
-          />
-        )}
-      </Stack.Screen>
-      <Stack.Screen name="Register">
-        {({ navigation }) => (
-          <RegisterScreen onNavigateToLogin={() => navigation.navigate('Login')} />
-        )}
-      </Stack.Screen>
-      <Stack.Screen name="ForgotPassword">
-        {({ navigation }) => (
-          <ForgotPasswordScreen onNavigateToLogin={() => navigation.navigate('Login')} />
-        )}
-      </Stack.Screen>
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Email" component={EmailScreen} />
+      <Stack.Screen name="PasswordLogin" component={PasswordLoginScreen} />
+      <Stack.Screen name="Nickname" component={NicknameScreen} />
+      <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} />
+      <Stack.Screen name="WelcomeComplete" component={WelcomeCompleteScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
     </Stack.Navigator>
   );
 };
