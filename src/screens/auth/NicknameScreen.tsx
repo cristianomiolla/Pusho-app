@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from 'react-native';
@@ -10,7 +9,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -89,7 +87,7 @@ export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, rout
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <AuthProgressBar currentStep={2} totalSteps={3} />
+      <AuthProgressBar currentStep={2} totalSteps={3} onBack={() => navigation.goBack()} />
 
       <View style={styles.container}>
         <ScrollView
@@ -97,13 +95,6 @@ export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, rout
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons name="arrow-back" size={24} color={colors.gray900} />
-          </TouchableOpacity>
-
           <View style={styles.content}>
             <Animated.Image
               source={require('../../../assets/nobackground.png')}
@@ -152,13 +143,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: 16,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginBottom: 16,
   },
   content: {
     flex: 1,

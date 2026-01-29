@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   },
   qualityCard: {
     width: '100%',
-    backgroundColor: colors.background,
+    backgroundColor: colors.white,
     borderRadius: 16,
     padding: 16,
     marginBottom: 20,
