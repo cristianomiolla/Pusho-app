@@ -2,25 +2,34 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import { AuthButton } from '../../components/auth';
 import { useAuth } from '../../contexts/AuthContext';
 import { colors } from '../../theme';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 
+type WelcomeCompleteScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'WelcomeComplete'>;
 type WelcomeCompleteScreenRouteProp = RouteProp<AuthStackParamList, 'WelcomeComplete'>;
 
 interface WelcomeCompleteScreenProps {
+  navigation: WelcomeCompleteScreenNavigationProp;
   route: WelcomeCompleteScreenRouteProp;
 }
 
-export const WelcomeCompleteScreen: React.FC<WelcomeCompleteScreenProps> = ({ route }) => {
+export const WelcomeCompleteScreen: React.FC<WelcomeCompleteScreenProps> = ({ navigation, route }) => {
   const { t } = useTranslation();
-  const { completeOnboarding } = useAuth();
+  const { signOut } = useAuth();
   const { nickname } = route.params;
 
-  const handleLetsGo = () => {
-    completeOnboarding();
+  const handleBackToLogin = async () => {
+    // Sign out to clear any partial session and go back to welcome
+    await signOut();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Welcome' }],
+    });
   };
 
   return (
@@ -38,12 +47,18 @@ export const WelcomeCompleteScreen: React.FC<WelcomeCompleteScreenProps> = ({ ro
           <Text style={styles.subtitle}>
             {t('auth.onboarding.welcomeComplete.subtitle')}
           </Text>
+          <View style={styles.spamHint}>
+            <Ionicons name="mail-outline" size={16} color={colors.gray400} />
+            <Text style={styles.spamText}>
+              {t('auth.onboarding.welcomeComplete.checkSpam')}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.buttonContainer}>
           <AuthButton
-            title={t('auth.onboarding.welcomeComplete.letsGo')}
-            onPress={handleLetsGo}
+            title={t('auth.onboarding.welcomeComplete.backToLogin')}
+            onPress={handleBackToLogin}
           />
         </View>
       </View>
@@ -82,6 +97,17 @@ const styles = StyleSheet.create({
     color: colors.gray500,
     textAlign: 'center',
     paddingHorizontal: 32,
+    lineHeight: 24,
+  },
+  spamHint: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 24,
+    gap: 6,
+  },
+  spamText: {
+    fontSize: 14,
+    color: colors.gray400,
   },
   buttonContainer: {
     paddingBottom: 40,

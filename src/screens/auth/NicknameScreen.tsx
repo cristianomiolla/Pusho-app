@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,8 +11,16 @@ import { useTranslation } from 'react-i18next';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 import { AuthProgressBar, AuthInput, AuthButton } from '../../components/auth';
 import { validateNickname, checkNicknameAvailable } from '../../services/auth.service';
+import { useKeyboardHeight } from '../../hooks/useKeyboardHeight';
 import { colors } from '../../theme';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 
@@ -29,10 +34,26 @@ interface NicknameScreenProps {
 
 export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, route }) => {
   const { t } = useTranslation();
+  const { buttonContainerStyle } = useKeyboardHeight();
   const { email } = route.params;
   const [nickname, setNickname] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Logo animation
+  const logoScale = useSharedValue(1);
+
+  const logoAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: logoScale.value }],
+  }));
+
+  const triggerLogoAnimation = (onComplete: () => void) => {
+    logoScale.value = withSequence(
+      withTiming(1.12, { duration: 220, easing: Easing.out(Easing.ease) }),
+      withTiming(1, { duration: 220, easing: Easing.inOut(Easing.ease) })
+    );
+    setTimeout(onComplete, 460);
+  };
 
   const handleContinue = async () => {
     setError(null);
@@ -52,13 +73,16 @@ export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, rout
 
       if (!isAvailable) {
         setError(t('auth.validation.nicknameTaken'));
+        setIsLoading(false);
         return;
       }
 
-      navigation.navigate('CreatePassword', { email, nickname: nickname.trim() });
+      triggerLogoAnimation(() => {
+        navigation.navigate('CreatePassword', { email, nickname: nickname.trim() });
+        setIsLoading(false);
+      });
     } catch (err) {
       setError(t('auth.errors.genericError'));
-    } finally {
       setIsLoading(false);
     }
   };
@@ -67,11 +91,7 @@ export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, rout
     <SafeAreaView style={styles.safeArea}>
       <AuthProgressBar currentStep={2} totalSteps={3} />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-      >
+      <View style={styles.container}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
@@ -85,9 +105,9 @@ export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, rout
           </TouchableOpacity>
 
           <View style={styles.content}>
-            <Image
+            <Animated.Image
               source={require('../../../assets/nobackground.png')}
-              style={styles.logo}
+              style={[styles.logo, logoAnimatedStyle]}
               resizeMode="contain"
             />
 
@@ -107,15 +127,15 @@ export const NicknameScreen: React.FC<NicknameScreenProps> = ({ navigation, rout
           </View>
         </ScrollView>
 
-        <View style={styles.buttonContainer}>
+        <Animated.View style={[styles.buttonContainer, buttonContainerStyle]}>
           <AuthButton
             title={t('auth.onboarding.nickname.continue')}
             onPress={handleContinue}
             loading={isLoading}
             disabled={!nickname.trim()}
           />
-        </View>
-      </KeyboardAvoidingView>
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -165,6 +185,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 24,
+    paddingTop: 16,
     paddingBottom: 40,
   },
 });

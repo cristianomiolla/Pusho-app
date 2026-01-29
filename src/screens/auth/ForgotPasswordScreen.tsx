@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
-  TextInput,
+  Image,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
+  StyleSheet,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
+import { AuthInput, AuthButton } from '../../components/auth';
 import {
   validateEmail,
   sendPasswordResetEmail,
   translateAuthError,
 } from '../../services/auth.service';
+import { useKeyboardHeight } from '../../hooks/useKeyboardHeight';
 import { colors } from '../../theme';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 
@@ -35,40 +42,56 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
   route,
 }) => {
   const { t } = useTranslation();
+  const { buttonContainerStyle } = useKeyboardHeight();
   const initialEmail = route.params?.email || '';
   const [email, setEmail] = useState(initialEmail);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [fieldError, setFieldError] = useState<string | null>(null);
+
+  // Logo animation
+  const logoScale = useSharedValue(1);
+
+  const logoAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: logoScale.value }],
+  }));
+
+  const triggerLogoAnimation = (onComplete: () => void) => {
+    logoScale.value = withSequence(
+      withTiming(1.12, { duration: 220, easing: Easing.out(Easing.ease) }),
+      withTiming(1, { duration: 220, easing: Easing.inOut(Easing.ease) })
+    );
+    setTimeout(onComplete, 460);
+  };
 
   const handleResetPassword = async () => {
-    // Reset errors
     setError(null);
-    setFieldError(null);
 
-    // Validate email
     const emailError = validateEmail(email);
     if (emailError) {
-      setFieldError(emailError);
+      setError(emailError);
       return;
     }
 
     setIsLoading(true);
 
-    try {
-      const { error } = await sendPasswordResetEmail(email.trim());
+    // Trigger animation first, then send email
+    triggerLogoAnimation(async () => {
+      try {
+        const { error } = await sendPasswordResetEmail(email.trim());
 
-      if (error) {
-        setError(translateAuthError(error));
-      } else {
-        setSuccess(true);
+        if (error) {
+          setError(translateAuthError(error));
+          setIsLoading(false);
+        } else {
+          setSuccess(true);
+          setIsLoading(false);
+        }
+      } catch (err) {
+        setError(t('auth.errors.genericError'));
+        setIsLoading(false);
       }
-    } catch (err) {
-      setError(t('auth.errors.genericError'));
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   // Success screen
@@ -76,18 +99,25 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.successContainer}>
-          <Text style={styles.successEmoji}>📧</Text>
+          <Image
+            source={require('../../../assets/nobackground.png')}
+            style={styles.successLogo}
+            resizeMode="contain"
+          />
           <Text style={styles.successTitle}>{t('auth.resetEmailSentTitle')}</Text>
           <Text style={styles.successText}>
-            {t('auth.resetEmailSentText')}{'\n'}
-            <Text style={styles.successEmail}>{email}</Text>
+            {t('auth.resetEmailSentText')}
           </Text>
+          <Text style={styles.successEmail}>{email}</Text>
           <Text style={styles.successSubtext}>
             {t('auth.resetEmailSentSubtext')}
           </Text>
-          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-            <Text style={styles.backButtonText}>{t('auth.backToLogin')}</Text>
-          </TouchableOpacity>
+          <View style={styles.successButtonContainer}>
+            <AuthButton
+              title={t('auth.backToLogin')}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -95,73 +125,53 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
+      <View style={styles.container}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Back button */}
           <TouchableOpacity
-            style={styles.backArrow}
+            style={styles.backButton}
             onPress={() => navigation.goBack()}
             disabled={isLoading}
           >
-            <Text style={styles.backArrowText}>← {t('auth.back')}</Text>
+            <Ionicons name="arrow-back" size={24} color={colors.gray900} />
           </TouchableOpacity>
 
-          {/* Header */}
-          <View style={styles.header}>
+          <View style={styles.content}>
+            <Animated.Image
+              source={require('../../../assets/nobackground.png')}
+              style={[styles.logo, logoAnimatedStyle]}
+              resizeMode="contain"
+            />
+
             <Text style={styles.title}>{t('auth.forgotPasswordTitle')}</Text>
-            <Text style={styles.subtitle}>
-              {t('auth.forgotPasswordSubtitle')}
-            </Text>
-          </View>
+            <Text style={styles.subtitle}>{t('auth.forgotPasswordSubtitle')}</Text>
 
-          {/* Form */}
-          <View style={styles.form}>
-            {/* Email */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>{t('auth.email')}</Text>
-              <TextInput
-                style={[styles.input, fieldError && styles.inputError]}
-                placeholder={t('auth.emailPlaceholder')}
-                placeholderTextColor={colors.gray400}
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
-                editable={!isLoading}
-              />
-              {fieldError && <Text style={styles.fieldError}>{fieldError}</Text>}
-            </View>
-
-            {/* Error message */}
-            {error && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{error}</Text>
-              </View>
-            )}
-
-            {/* Reset Button */}
-            <TouchableOpacity
-              style={[styles.resetButton, isLoading && styles.resetButtonDisabled]}
-              onPress={handleResetPassword}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <ActivityIndicator color={colors.white} />
-              ) : (
-                <Text style={styles.resetButtonText}>{t('auth.sendInstructions')}</Text>
-              )}
-            </TouchableOpacity>
+            <AuthInput
+              placeholder={t('auth.onboarding.email.placeholder')}
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              autoComplete="email"
+              editable={!isLoading}
+              error={error || undefined}
+            />
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+
+        <Animated.View style={[styles.buttonContainer, buttonContainerStyle]}>
+          <AuthButton
+            title={t('auth.sendInstructions')}
+            onPress={handleResetPassword}
+            loading={isLoading}
+            disabled={!email.trim()}
+          />
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -177,105 +187,59 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 40,
+    paddingTop: 16,
   },
-  backArrow: {
-    marginBottom: 32,
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginBottom: 16,
   },
-  backArrowText: {
-    fontSize: 16,
-    color: colors.link,
-    fontWeight: '500',
+  content: {
+    flex: 1,
+    justifyContent: 'center',
   },
-  header: {
-    marginBottom: 32,
+  logo: {
+    width: 120,
+    height: 120,
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   title: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: 'Agdasima-Bold',
     color: colors.gray900,
-    marginBottom: 12,
+    marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     color: colors.gray500,
+    marginBottom: 32,
+    textAlign: 'center',
     lineHeight: 24,
   },
-  form: {
-    marginBottom: 32,
-  },
-  inputContainer: {
-    marginBottom: 24,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.gray700,
-    marginBottom: 8,
-  },
-  input: {
-    backgroundColor: colors.white,
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 16,
-    color: colors.gray900,
-    borderWidth: 1,
-    borderColor: colors.primary,
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  inputError: {
-    borderColor: colors.error,
-  },
-  fieldError: {
-    fontSize: 12,
-    color: colors.error,
-    marginTop: 4,
-  },
-  errorContainer: {
-    backgroundColor: colors.errorLight,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-  },
-  errorText: {
-    fontSize: 14,
-    color: colors.errorText,
-    textAlign: 'center',
-  },
-  resetButton: {
-    backgroundColor: colors.gray900,
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-  },
-  resetButtonDisabled: {
-    opacity: 0.7,
-  },
-  resetButtonText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.white,
+  buttonContainer: {
+    paddingHorizontal: 24,
+    paddingTop: 16,
+    paddingBottom: 40,
   },
   // Success screen styles
   successContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 32,
+    paddingHorizontal: 24,
   },
-  successEmoji: {
-    fontSize: 64,
+  successLogo: {
+    width: 120,
+    height: 120,
     marginBottom: 24,
   },
   successTitle: {
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 28,
+    fontFamily: 'Agdasima-Bold',
     color: colors.gray900,
     marginBottom: 16,
     textAlign: 'center',
@@ -288,8 +252,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   successEmail: {
+    fontSize: 16,
     fontWeight: '600',
     color: colors.gray900,
+    marginBottom: 8,
+    textAlign: 'center',
   },
   successSubtext: {
     fontSize: 14,
@@ -298,15 +265,8 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     lineHeight: 20,
   },
-  backButton: {
-    backgroundColor: colors.gray900,
-    borderRadius: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
-  },
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.white,
+  successButtonContainer: {
+    width: '100%',
+    paddingHorizontal: 24,
   },
 });

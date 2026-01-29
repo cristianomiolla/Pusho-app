@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,9 +11,17 @@ import { useTranslation } from 'react-i18next';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 import { AuthProgressBar, AuthInput, AuthButton } from '../../components/auth';
 import { useAuth } from '../../contexts/AuthContext';
 import { translateAuthError } from '../../services/auth.service';
+import { useKeyboardHeight } from '../../hooks/useKeyboardHeight';
 import { colors } from '../../theme';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 
@@ -30,12 +35,28 @@ interface PasswordLoginScreenProps {
 
 export const PasswordLoginScreen: React.FC<PasswordLoginScreenProps> = ({ navigation, route }) => {
   const { t } = useTranslation();
+  const { buttonContainerStyle } = useKeyboardHeight();
   const { signIn } = useAuth();
   const { email } = route.params;
 
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Logo animation
+  const logoScale = useSharedValue(1);
+
+  const logoAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: logoScale.value }],
+  }));
+
+  const triggerLogoAnimation = (onComplete: () => void) => {
+    logoScale.value = withSequence(
+      withTiming(1.12, { duration: 220, easing: Easing.out(Easing.ease) }),
+      withTiming(1, { duration: 220, easing: Easing.inOut(Easing.ease) })
+    );
+    setTimeout(onComplete, 460);
+  };
 
   const handleLogin = async () => {
     setError(null);
@@ -47,18 +68,21 @@ export const PasswordLoginScreen: React.FC<PasswordLoginScreenProps> = ({ naviga
 
     setIsLoading(true);
 
-    try {
-      const { error } = await signIn(email, password);
+    // Trigger animation first, then sign in after animation completes
+    triggerLogoAnimation(async () => {
+      try {
+        const { error } = await signIn(email, password);
 
-      if (error) {
-        setError(translateAuthError(error));
+        if (error) {
+          setError(translateAuthError(error));
+          setIsLoading(false);
+        }
+        // Success - AuthContext handles navigation
+      } catch (err) {
+        setError(t('auth.errors.genericError'));
+        setIsLoading(false);
       }
-      // If success, AuthContext will handle navigation to MainApp
-    } catch (err) {
-      setError(t('auth.errors.genericError'));
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   const handleForgotPassword = () => {
@@ -69,11 +93,7 @@ export const PasswordLoginScreen: React.FC<PasswordLoginScreenProps> = ({ naviga
     <SafeAreaView style={styles.safeArea}>
       <AuthProgressBar currentStep={2} totalSteps={2} />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-      >
+      <View style={styles.container}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
@@ -87,9 +107,9 @@ export const PasswordLoginScreen: React.FC<PasswordLoginScreenProps> = ({ naviga
           </TouchableOpacity>
 
           <View style={styles.content}>
-            <Image
+            <Animated.Image
               source={require('../../../assets/nobackground.png')}
-              style={styles.logo}
+              style={[styles.logo, logoAnimatedStyle]}
               resizeMode="contain"
             />
 
@@ -118,15 +138,15 @@ export const PasswordLoginScreen: React.FC<PasswordLoginScreenProps> = ({ naviga
           </View>
         </ScrollView>
 
-        <View style={styles.buttonContainer}>
+        <Animated.View style={[styles.buttonContainer, buttonContainerStyle]}>
           <AuthButton
             title={t('auth.onboarding.passwordLogin.login')}
             onPress={handleLogin}
             loading={isLoading}
             disabled={!password}
           />
-        </View>
-      </KeyboardAvoidingView>
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -193,6 +213,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 24,
+    paddingTop: 16,
     paddingBottom: 40,
   },
 });

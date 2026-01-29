@@ -109,9 +109,10 @@
         "createAccount": "Crea account"
       },
       "welcomeComplete": {
-        "title": "Benvenuto in Pusho, {{nickname}}!",
-        "subtitle": "Sei pronto per iniziare il tuo percorso fitness",
-        "letsGo": "Iniziamo!"
+        "title": "Quasi fatto, {{nickname}}!",
+        "subtitle": "Ti abbiamo inviato un'email di conferma. Clicca sul link per attivare il tuo account e iniziare ad allenarti.",
+        "checkSpam": "Controlla anche la cartella spam",
+        "backToLogin": "Torna al login"
       },
       "errors": {
         "emailCheckFailed": "Impossibile verificare l'email. Riprova."

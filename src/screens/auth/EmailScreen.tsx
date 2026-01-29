@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 import { AuthProgressBar, AuthInput, AuthButton } from '../../components/auth';
 import { validateEmail, checkEmailExists } from '../../services/auth.service';
+import { useKeyboardHeight } from '../../hooks/useKeyboardHeight';
 import { colors } from '../../theme';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 
@@ -26,9 +31,26 @@ interface EmailScreenProps {
 
 export const EmailScreen: React.FC<EmailScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
+  const { buttonContainerStyle } = useKeyboardHeight();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const pendingNavigation = useRef<{ screen: 'PasswordLogin' | 'Nickname'; email: string } | null>(null);
+
+  // Logo animation
+  const logoScale = useSharedValue(1);
+
+  const logoAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: logoScale.value }],
+  }));
+
+  const triggerLogoAnimation = (onComplete: () => void) => {
+    logoScale.value = withSequence(
+      withTiming(1.12, { duration: 220, easing: Easing.out(Easing.ease) }),
+      withTiming(1, { duration: 220, easing: Easing.inOut(Easing.ease) })
+    );
+    setTimeout(onComplete, 460);
+  };
 
   const handleContinue = async () => {
     setError(null);
@@ -47,19 +69,27 @@ export const EmailScreen: React.FC<EmailScreenProps> = ({ navigation }) => {
 
       if (checkError) {
         setError(t('auth.onboarding.errors.emailCheckFailed'));
+        setIsLoading(false);
         return;
       }
 
-      if (exists) {
-        // Existing user - go to password login
-        navigation.navigate('PasswordLogin', { email: email.trim() });
-      } else {
-        // New user - go to nickname screen
-        navigation.navigate('Nickname', { email: email.trim() });
-      }
+      // Store navigation target and trigger animation
+      pendingNavigation.current = {
+        screen: exists ? 'PasswordLogin' : 'Nickname',
+        email: email.trim(),
+      };
+
+      triggerLogoAnimation(() => {
+        if (pendingNavigation.current) {
+          navigation.navigate(pendingNavigation.current.screen, {
+            email: pendingNavigation.current.email,
+          });
+          pendingNavigation.current = null;
+        }
+        setIsLoading(false);
+      });
     } catch (err) {
       setError(t('auth.onboarding.errors.emailCheckFailed'));
-    } finally {
       setIsLoading(false);
     }
   };
@@ -68,11 +98,7 @@ export const EmailScreen: React.FC<EmailScreenProps> = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <AuthProgressBar currentStep={1} totalSteps={3} />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-      >
+      <View style={styles.container}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
@@ -86,9 +112,9 @@ export const EmailScreen: React.FC<EmailScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
 
           <View style={styles.content}>
-            <Image
+            <Animated.Image
               source={require('../../../assets/nobackground.png')}
-              style={styles.logo}
+              style={[styles.logo, logoAnimatedStyle]}
               resizeMode="contain"
             />
 
@@ -108,15 +134,15 @@ export const EmailScreen: React.FC<EmailScreenProps> = ({ navigation }) => {
           </View>
         </ScrollView>
 
-        <View style={styles.buttonContainer}>
+        <Animated.View style={[styles.buttonContainer, buttonContainerStyle]}>
           <AuthButton
             title={isLoading ? t('auth.onboarding.email.checking') : t('auth.onboarding.email.continue')}
             onPress={handleContinue}
             loading={isLoading}
             disabled={!email.trim()}
           />
-        </View>
-      </KeyboardAvoidingView>
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -160,6 +186,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 24,
+    paddingTop: 16,
     paddingBottom: 40,
   },
 });
