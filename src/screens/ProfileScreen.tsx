@@ -339,7 +339,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
         cancelText={t('common.cancel')}
         onConfirm={confirmLogout}
         onCancel={() => setShowLogoutDialog(false)}
-        icon="log-out-outline"
+        icon="logout"
         iconColor={colors.error}
         confirmButtonColor={colors.error}
       />

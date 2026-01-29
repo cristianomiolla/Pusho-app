@@ -11,12 +11,24 @@ export const AuthProgressBar: React.FC<AuthProgressBarProps> = ({
   currentStep,
   totalSteps,
 }) => {
-  const progress = currentStep / totalSteps;
-
   return (
     <View style={styles.container}>
-      <View style={styles.track}>
-        <View style={[styles.fill, { width: `${progress * 100}%` }]} />
+      <View style={styles.segmentsRow}>
+        {Array.from({ length: totalSteps }, (_, index) => {
+          const stepNumber = index + 1;
+          const isCompleted = stepNumber <= currentStep;
+
+          return (
+            <View
+              key={index}
+              style={[
+                styles.segment,
+                isCompleted ? styles.segmentCompleted : styles.segmentIncomplete,
+                index < totalSteps - 1 && styles.segmentMargin,
+              ]}
+            />
+          );
+        })}
       </View>
     </View>
   );
@@ -25,17 +37,25 @@ export const AuthProgressBar: React.FC<AuthProgressBarProps> = ({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingTop: 16,
+    paddingBottom: 12,
   },
-  track: {
-    height: 4,
+  segmentsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  segment: {
+    flex: 1,
+    height: 5,
+    borderRadius: 2.5,
+  },
+  segmentCompleted: {
+    backgroundColor: colors.gray900,
+  },
+  segmentIncomplete: {
     backgroundColor: colors.gray200,
-    borderRadius: 2,
-    overflow: 'hidden',
   },
-  fill: {
-    height: '100%',
-    backgroundColor: colors.primary,
-    borderRadius: 2,
+  segmentMargin: {
+    marginRight: 8,
   },
 });

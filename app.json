@@ -20,11 +20,12 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.cristianomiolla.pusho",
-      "buildNumber": "2",
+      "buildNumber": "3",
       "icon": "./assets/icon-ios.png",
       "infoPlist": {
         "NSCameraUsageDescription": "Pusho ha bisogno della fotocamera per contare i tuoi push-up tramite riconoscimento della postura.",
         "NSLocationWhenInUseUsageDescription": "Pusho non utilizza la tua posizione.",
+        "NSPhotoLibraryUsageDescription": "Pusho usa la libreria foto per creare share card personalizzate.",
         "ITSAppUsesNonExemptEncryption": false
       },
       "privacyManifests": {
@@ -56,6 +57,12 @@
         {
           "cameraPermissionText": "Pusho ha bisogno della fotocamera per contare i tuoi push-up tramite riconoscimento della postura.",
           "enableMicrophonePermission": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Pusho usa le tue foto per creare share card personalizzate."
         }
       ],
       "expo-font",
