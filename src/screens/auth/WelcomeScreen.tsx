@@ -76,7 +76,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
       {/* Top dark section with logo */}
       <View style={[styles.topSection, { paddingTop: insets.top }]}>
         <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>
-          <SpriteAnimation fps={36} width={280} height={280} />
+          <SpriteAnimation fps={28} width={300} height={300} startDelay={700} />
         </Animated.View>
       </View>
 
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 40,
   },
   logo: {
     width: 200,

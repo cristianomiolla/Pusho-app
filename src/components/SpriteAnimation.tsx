@@ -90,40 +90,72 @@ interface SpriteAnimationProps {
   style?: ViewStyle;
   width?: number;
   height?: number;
+  startDelay?: number;
 }
 
 export const SpriteAnimation: React.FC<SpriteAnimationProps> = ({
-  fps = 24,
+  fps = 32,
   style,
   width = 300,
   height = 300,
+  startDelay = 0,
 }) => {
-  // Double buffer approach: two images that alternate
   const [bufferA, setBufferA] = useState(0);
   const [bufferB, setBufferB] = useState(1);
   const [showA, setShowA] = useState(true);
+  const [isStarted, setIsStarted] = useState(startDelay === 0);
   const frameRef = useRef(0);
+  const lastTimeRef = useRef(0);
+  const rafRef = useRef<number>();
+  const showARef = useRef(true);
   const frameInterval = 1000 / fps;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      frameRef.current = (frameRef.current + 1) % frames.length;
-      const nextFrame = (frameRef.current + 1) % frames.length;
+    if (startDelay > 0) {
+      const timeout = setTimeout(() => {
+        setIsStarted(true);
+      }, startDelay);
+      return () => clearTimeout(timeout);
+    }
+  }, [startDelay]);
 
-      if (showA) {
-        setBufferB(frameRef.current);
-        // Preload next frame in A
-        setBufferA(nextFrame);
-      } else {
-        setBufferA(frameRef.current);
-        // Preload next frame in B
-        setBufferB(nextFrame);
+  useEffect(() => {
+    if (!isStarted) return;
+
+    const animate = (timestamp: number) => {
+      if (!lastTimeRef.current) {
+        lastTimeRef.current = timestamp;
       }
-      setShowA(!showA);
-    }, frameInterval);
 
-    return () => clearInterval(interval);
-  }, [frameInterval, showA]);
+      const elapsed = timestamp - lastTimeRef.current;
+
+      if (elapsed >= frameInterval) {
+        frameRef.current = (frameRef.current + 1) % frames.length;
+        const nextFrame = (frameRef.current + 1) % frames.length;
+
+        if (showARef.current) {
+          setBufferB(frameRef.current);
+          setBufferA(nextFrame);
+        } else {
+          setBufferA(frameRef.current);
+          setBufferB(nextFrame);
+        }
+        showARef.current = !showARef.current;
+        setShowA(showARef.current);
+        lastTimeRef.current = timestamp - (elapsed % frameInterval);
+      }
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [frameInterval, isStarted]);
 
   const imageStyle = { width, height };
 
