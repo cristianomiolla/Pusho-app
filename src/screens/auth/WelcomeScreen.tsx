@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -12,6 +12,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { AuthButton } from '../../components/auth';
+import { SpriteAnimation } from '../../components/SpriteAnimation';
 import { colors } from '../../theme';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 
@@ -74,13 +75,9 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
     <View style={styles.container}>
       {/* Top dark section with logo */}
       <View style={[styles.topSection, { paddingTop: insets.top }]}>
-        <View style={styles.logoContainer}>
-          <Animated.Image
-            source={require('../../../assets/nobackground.png')}
-            style={[styles.logo, logoAnimatedStyle]}
-            resizeMode="contain"
-          />
-        </View>
+        <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>
+          <SpriteAnimation fps={36} width={280} height={280} />
+        </Animated.View>
       </View>
 
       {/* Bottom light section with text and button */}
