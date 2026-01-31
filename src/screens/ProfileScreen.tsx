@@ -11,6 +11,7 @@ import {
   Linking,
   Platform,
 } from 'react-native';
+import Constants from 'expo-constants';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
@@ -327,7 +328,7 @@ export const ProfileScreen = ({ onClose }: ProfileScreenProps) => {
         </TouchableOpacity>
 
         {/* Version */}
-        <Text style={styles.version}>Pusho v1.0.0</Text>
+        <Text style={styles.version}>Pusho v{Constants.expoConfig?.version || '1.0.0'}</Text>
       </ScrollView>
 
       {/* Logout Confirmation Dialog */}

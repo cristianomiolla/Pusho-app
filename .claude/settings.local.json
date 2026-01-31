@@ -20,7 +20,14 @@
       "Bash(npm info:*)",
       "Bash(del /f \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\\\\src\\\\components\\\\auth\\\\AuthTransition.tsx\" \"c:\\\\Users\\\\crist\\\\Desktop\\\\Pusho\\\\src\\\\hooks\\\\useAuthTransition.ts\")",
       "Bash(grep:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(dir:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npx --version)",
+      "Bash(npm init:*)",
+      "Bash(git init:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git rm:*)"
     ]
   }
 }

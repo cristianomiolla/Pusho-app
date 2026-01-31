@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.cristianomiolla.pusho",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "icon": "./assets/icon-ios.png",
       "infoPlist": {
         "NSCameraUsageDescription": "Pusho ha bisogno della fotocamera per contare i tuoi push-up tramite riconoscimento della postura.",

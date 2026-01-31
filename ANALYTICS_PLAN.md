@@ -12,8 +12,8 @@ Capire il funnel utente e la retention per ottimizzare l'app.
 |---------|------|------|
 | Iscritti | `analytics_iscritti` | iscritti per settimana |
 | Attivazione | `analytics_attivazione_retention` | % iscritti che hanno fatto almeno 1 workout |
-| Retention 7gg | `analytics_attivazione_retention` | % attivati che tornano entro 7gg |
-| Retention 30gg | `analytics_attivazione_retention` | % attivati che tornano entro 30gg |
+| Retention 7gg | `analytics_attivazione_retention` | % iscritti che si allenano dopo 7gg dalla registrazione |
+| Retention 30gg | `analytics_attivazione_retention` | % iscritti che si allenano dopo 30gg dalla registrazione |
 
 ### Engagement Allenamenti
 | Metrica | VIEW | Dati |

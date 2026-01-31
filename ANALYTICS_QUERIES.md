@@ -24,6 +24,10 @@ GROUP BY DATE_TRUNC('week', created_at);
 ### 2. analytics_attivazione_retention
 Iscritti, attivati, retention 7gg e 30gg per settimana.
 
+- **Attivati**: utenti che hanno fatto almeno 1 workout
+- **Retention 7gg**: utenti che hanno fatto almeno 1 workout dopo 7+ giorni dalla registrazione
+- **Retention 30gg**: utenti che hanno fatto almeno 1 workout dopo 30+ giorni dalla registrazione
+
 ```sql
 CREATE VIEW analytics_attivazione_retention AS
 WITH primo_workout AS (
@@ -37,6 +41,7 @@ coorti AS (
   SELECT
     DATE_TRUNC('week', p.created_at)::date as week_start,
     p.id as user_id,
+    p.created_at as data_registrazione,
     pw.data_primo
   FROM profiles p
   LEFT JOIN primo_workout pw ON pw.user_id = p.id
@@ -54,19 +59,17 @@ SELECT
 FROM coorti c
 LEFT JOIN workout_sessions ws7
   ON ws7.user_id = c.user_id
-  AND ws7.date > c.data_primo
-  AND ws7.date <= c.data_primo + INTERVAL '7 days'
+  AND ws7.date >= c.data_registrazione + INTERVAL '7 days'
 LEFT JOIN workout_sessions ws30
   ON ws30.user_id = c.user_id
-  AND ws30.date > c.data_primo
-  AND ws30.date <= c.data_primo + INTERVAL '30 days'
+  AND ws30.date >= c.data_registrazione + INTERVAL '30 days'
 GROUP BY c.week_start;
 ```
 
 **Calcolo percentuali nella dashboard:**
 - Attivazione % = attivati / iscritti * 100
-- Retention 7gg % = ritornati_7gg / attivati * 100
-- Retention 30gg % = ritornati_30gg / attivati * 100
+- Retention 7gg % = ritornati_7gg / iscritti * 100
+- Retention 30gg % = ritornati_30gg / iscritti * 100
 
 ---
 
@@ -95,27 +98,25 @@ GROUP BY DATE_TRUNC('week', ws.date);
 ---
 
 ### 4. analytics_comportamento_orario
-Distribuzione workout per ora del giorno (globale, filtrabile per periodo).
+Distribuzione workout per ora del giorno (globale).
 
 ```sql
 CREATE VIEW analytics_comportamento_orario AS
 SELECT
-  DATE_TRUNC('week', date)::date as week_start,
   EXTRACT(hour FROM date)::integer as ora,
   COUNT(*) as workout
 FROM workout_sessions
-GROUP BY DATE_TRUNC('week', date), EXTRACT(hour FROM date);
+GROUP BY EXTRACT(hour FROM date);
 ```
 
 ---
 
 ### 5. analytics_comportamento_giorni
-Distribuzione workout per giorno della settimana (globale, filtrabile per periodo).
+Distribuzione workout per giorno della settimana (globale).
 
 ```sql
 CREATE VIEW analytics_comportamento_giorni AS
 SELECT
-  DATE_TRUNC('week', date)::date as week_start,
   EXTRACT(dow FROM date)::integer as giorno_num,
   CASE EXTRACT(dow FROM date)
     WHEN 0 THEN 'Domenica'
@@ -128,7 +129,7 @@ SELECT
   END as giorno,
   COUNT(*) as workout
 FROM workout_sessions
-GROUP BY DATE_TRUNC('week', date), EXTRACT(dow FROM date);
+GROUP BY EXTRACT(dow FROM date);
 ```
 
 ---
@@ -162,5 +163,11 @@ const attivazionePct = (totaleAttivati / totaleIscritti) * 100;
 | `analytics_iscritti` | iscritti | per settimana |
 | `analytics_attivazione_retention` | iscritti, attivati, ritornati_7gg, ritornati_30gg | per settimana |
 | `analytics_engagement` | workout, utenti, durata, pushup, qualità, free/guided | per settimana |
-| `analytics_comportamento_orario` | workout per ora | per settimana + ora |
-| `analytics_comportamento_giorni` | workout per giorno | per settimana + giorno |
+| `analytics_comportamento_orario` | workout per ora | globale (per ora) |
+| `analytics_comportamento_giorni` | workout per giorno | globale (per giorno) |
+
+REVOKE SELECT ON analytics_iscritti FROM anon, authenticated;
+REVOKE SELECT ON analytics_attivazione_retention FROM anon, authenticated;
+REVOKE SELECT ON analytics_engagement FROM anon, authenticated;
+REVOKE SELECT ON analytics_comportamento_orario FROM anon, authenticated;
+REVOKE SELECT ON analytics_comportamento_giorni FROM anon, authenticated;
