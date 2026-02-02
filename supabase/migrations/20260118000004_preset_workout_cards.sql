@@ -12,7 +12,7 @@ RETURNS TRIGGER AS $$
 BEGIN
   -- Scheda base: 3 serie x 10 ripetizioni
   INSERT INTO public.workout_cards (user_id, name, sets, reps_per_set, rest_time, variant, is_favorite, is_preset)
-  VALUES (NEW.id, 'Scheda Base', 3, 10, 60, 'Perfetta per iniziare', false, true);
+  VALUES (NEW.id, 'Starter', 3, 10, 60, 'Perfect for beginners', false, true);
 
   RETURN NEW;
 END;
@@ -31,7 +31,7 @@ CREATE OR REPLACE TRIGGER on_profile_created_add_presets
 -- NOTE: Per utenti esistenti, eseguire manualmente:
 --
 -- INSERT INTO workout_cards (user_id, name, sets, reps_per_set, rest_time, variant, is_favorite, is_preset)
--- SELECT p.id, 'Scheda Base', 3, 10, 60, 'Perfetta per iniziare', false, true
+-- SELECT p.id, 'Starter', 3, 10, 60, 'Perfect for beginners', false, true
 -- FROM profiles p
 -- WHERE NOT EXISTS (
 --   SELECT 1 FROM workout_cards wc
